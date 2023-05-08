@@ -5,8 +5,9 @@ import 'package:coolwell_tech/common/custom_widget.dart';
 import 'package:coolwell_tech/screens/technician/tech_dashboard.dart';
 import 'package:coolwell_tech/screens/technician/tech_orders.dart';
 import 'package:coolwell_tech/screens/user/profile/profile.dart';
-import 'package:coolwell_tech/screens/user/service/history.dart';
 import 'package:flutter/material.dart';
+
+import '../user/service/history_details.dart';
 
 class TechHome extends StatefulWidget {
   const TechHome({Key? key}) : super(key: key);
@@ -23,9 +24,8 @@ class _TechHomeState extends State<TechHome> {
   List<Widget>  bottomPage = [
 
    Tech_DashBoard_Screen(),
-
    Tech_Orders_Screen(),
-    Service_history(),
+    Service_History_Details(),
     Profile_Screen()
   ];
 
@@ -108,7 +108,7 @@ class _TechHomeState extends State<TechHome> {
   List<BottomNavItem> createBottomItems() {
     final bottomItems = [
       new BottomNavItem("assets/menu/cool.svg", label: "loc_side_cool"),
-      new BottomNavItem("assets/menu/service.svg", label: "loc_side_service"),
+      new BottomNavItem("assets/menu/service.svg", label: "loc_side_order"),
       new BottomNavItem("assets/menu/history.svg", label: "loc_side_history"),
       new BottomNavItem("assets/menu/account.svg", label: "loc_side_account")
     ];

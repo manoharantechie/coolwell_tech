@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:coolwell_tech/common/model/profile_model.dart';
 import 'package:coolwell_tech/common/model/register.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'assigned_order_model.dart';
 import 'complaint_history.dart';
 import 'get_services_details.dart';
 import 'login.dart';
@@ -23,6 +23,7 @@ class APIUtils {
   static const String activateURL = '/verifyOtp';
   static const String profileUpdateURL = '/profile';
   static const String complaintHistoryURL = '/users/getComplaintHistory';
+  static const String assignedServicesURL = '/technician/AssignedJobs';
 
 
   Future<CommonModel> doRegisterEmail(
@@ -71,20 +72,26 @@ class APIUtils {
     };
     final response = await http.post(Uri.parse(baseURL + activateURL),
         body: emailbodyData);
-    print(response.body);
+    // print(response.body);
     return CommonModel.fromJson(json.decode(response.body));
   }
 
-  Future<ProfileDetailsModel> updateProfileDetails(String address, String pincode,) async {
+  Future<CommonModel> updateProfileDetails(String name, String address, String pincode,) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var auth = "Bearer "+preferences.getString("token").toString();
+    Map<String, String> requestHeaders = {
+      'authorization': auth.toString(),
+    };
     var emailbodyData = {
+      'name': name,
       'address': address,
       'pincode': pincode
     };
 
     final response =
-    await http.post(Uri.parse(baseURL + profileUpdateURL), body: emailbodyData);
-
-    return ProfileDetailsModel.fromJson(json.decode(response.body));
+    await http.patch(Uri.parse(baseURL + profileUpdateURL),headers: requestHeaders, body: emailbodyData);
+    print(response.body);
+    return CommonModel.fromJson(json.decode(response.body));
   }
 
   Future<ComplaintHistoryModel> getComplaintDetails() async {
@@ -96,6 +103,20 @@ class APIUtils {
     await http.post(Uri.parse(baseURL + complaintHistoryURL), body: emailbodyData);
 
     return ComplaintHistoryModel.fromJson(json.decode(response.body));
+  }
+
+  Future<AssignedOrdersModel> getServiceDetails() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var auth = "Bearer "+preferences.getString("token").toString();
+    Map<String, String> requestHeaders = {
+      'authorization': auth.toString(),
+    };
+
+
+    final response =
+    await http.get(Uri.parse(baseURL + assignedServicesURL),headers: requestHeaders);
+    print(response.body);
+    return AssignedOrdersModel.fromJson(json.decode(response.body));
   }
 
 }
