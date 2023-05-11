@@ -28,6 +28,8 @@ class _Profile_ScreenState extends State<Profile_Screen> {
   String role="";
   String userName ="";
   String gender ="";
+  String email ="";
+  String profileImage ="";
   GetProfileResult? details;
 
 
@@ -104,13 +106,13 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Theme.of(context).focusColor,
-                            image: details!.profile_pic == "" || details!.profile_pic == "null" ? DecorationImage(
-                              image: NetworkImage(details!.profile_pic.toString()),
-                              fit: BoxFit.cover,
-                            ) : DecorationImage(
+                            image: profileImage == "" || profileImage == "null"  || profileImage == null? DecorationImage(
                               image: AssetImage("assets/images/profile.png"),
                               fit: BoxFit.cover,
-                            ),
+                            ):DecorationImage(
+                              image: NetworkImage(profileImage),
+                              fit: BoxFit.cover,
+                            ) ,
                             // image:  DecorationImage(
                             //   image: NetworkImage(details!.profile_pic.toString()),
                             //   fit: BoxFit.cover,
@@ -169,8 +171,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                               ),
                               const SizedBox(height: 5.0,),
                               Text(
-                                // "example@gmail.com",
-                                details!.email.toString(),
+                               email,
                                 style: CustomWidget(context: context)
                                     .CustomSizedTextStyle(
                                     14.0,
@@ -646,6 +647,10 @@ class _Profile_ScreenState extends State<Profile_Screen> {
             var str = loginData.result!.name!.split(".");
             userName =str[1].trim().toString();
             gender=str[0].trim().toString();
+            email=details!.email.toString();
+            profileImage=details!.profile_pic.toString();
+            print("Mano");
+            print(profileImage);
 
           });
           // CustomWidget(context: context).
