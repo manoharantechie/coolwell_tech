@@ -1,4 +1,8 @@
+
+import 'dart:io';
+
 import 'package:coolwell_tech/common/model/register.dart';
+import 'package:coolwell_tech/screens/user/profile/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,8 +10,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:coolwell_tech/common/custom_widget.dart';
 import 'package:coolwell_tech/common/localization/localizations.dart';
 import 'package:coolwell_tech/common/textformfield_custom.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
+import '../../../common/custom_button.dart';
 import '../../../common/model/api_utils.dart';
+import '../../../common/model/upload_image_model.dart';
 
 class Edit_Profile_Screen extends StatefulWidget {
   const Edit_Profile_Screen({Key? key}) : super(key: key);
@@ -36,6 +44,13 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
   TextEditingController addressController = TextEditingController();
   TextEditingController addressLineController = TextEditingController();
   TextEditingController pinCodeController = TextEditingController();
+
+
+  String profileImage = "";
+  bool? selectImg = false;
+  File? imageFile;
+  final ImagePicker picker = ImagePicker();
+  final profileformKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -138,10 +153,18 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Theme.of(context).focusColor,
-                                  image: DecorationImage(
-                                    image: AssetImage("assets/images/profile.png"),
-                                    fit: BoxFit.cover,
-                                  ),
+                                    image: profileImage == "" || profileImage == "null"
+                                        ? DecorationImage(
+                                        image:
+                                        AssetImage("assets/images/profile.png"),
+                                        fit: BoxFit.cover)
+                                        : selectImg!
+                                        ? DecorationImage(
+                                        image: FileImage(File(imageFile!.path)),
+                                        fit: BoxFit.cover)
+                                        : DecorationImage(
+                                        image: NetworkImage(profileImage),
+                                        fit: BoxFit.cover)
                                 ),
                                 child: Stack(
                                   children: [
@@ -149,7 +172,7 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                                       alignment: Alignment.bottomRight,
                                       child:  InkWell(
                                         onTap: (){
-
+                                          onRequestPermission();
                                         },
                                         child: Container(
                                           width: 30.0,
@@ -204,7 +227,7 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                                             onChanged: (value) async {
                                               setState(() {
                                                 selectedValue = value.toString();
-                                                loading=true;
+                                                loading= false;
 
                                               });
                                             },
@@ -338,7 +361,7 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                               TextFormFieldCustom(
                                 onEditComplete: () {
                                   addressFocus.unfocus();
-                                  FocusScope.of(context).requestFocus(addressLineFocus);
+                                  FocusScope.of(context).requestFocus(pinCodeFocus);
                                 },
                                 radius: 6.0,
                                 error: "Enter Address",
@@ -588,7 +611,7 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
         selectedValue.toString()+"."+
         nameController.text.toString(),
         addressController.text.toString(),
-        pinCodeController.text.toString())
+        pinCodeController.text.toString(), profileImage)
         .then((CommonModel loginData) {
       setState(() {
         if (loginData.success!) {
@@ -601,6 +624,7 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
           nameController.clear();
           addressController.clear();
           pinCodeController.clear();
+          Navigator.pop(context);
 
         }
         else {
@@ -615,6 +639,179 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
 
 
       print(error);
+      setState(() {
+        loading = false;
+      });
+    });
+  }
+
+  onRequestPermission() async {
+    var status = await Permission.storage.status;
+    if (status.isDenied) {
+      // You can request multiple permissions at once.
+      Map<Permission, PermissionStatus> statuses = await [
+        Permission.storage,
+        Permission.camera,
+      ].request();
+
+    } else {
+      _pickedImageDialog();
+    }
+  }
+
+  _pickedImageDialog() {
+    showModalBottomSheet<void>(
+      //background color for modal bottom screen
+      backgroundColor: Theme.of(context).focusColor,
+      //elevates modal bottom screen
+      elevation: 10,
+      isScrollControlled: true,
+      // gives rounded corner to modal bottom screen
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10.0),
+          topRight: Radius.circular(10.0),
+        ),
+      ),
+      // context and builder are
+      // required properties in this widget
+      context: context,
+      builder: (BuildContext context) {
+        // we set up a container inside which
+        // we create center column and display text
+
+        // Returning SizedBox instead of a Container
+        return SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Choose image source",
+                          style: CustomWidget(context: context)
+                              .CustomSizedTextStyle(16.0, Theme.of(context).primaryColor,
+                              FontWeight.w600, 'FontRegular'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Container(
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: ButtonCustom(
+                                  text: "Gallery",
+                                  iconEnable: false,
+                                  radius: 5.0,
+                                  icon: "",
+                                  textStyle: CustomWidget(context: context)
+                                      .CustomSizedTextStyle(
+                                      18.0,
+                                      Theme.of(context).focusColor,
+                                      FontWeight.w500,
+                                      'FontRegular'),
+                                  iconColor: Theme.of(context).focusColor,
+                                  buttonColor: Theme.of(context).cardColor,
+                                  splashColor: Theme.of(context).focusColor,
+                                  onPressed: () {
+                                    setState(() {
+                                      Navigator.pop(context);
+                                      getImage(ImageSource.gallery);
+                                    });
+                                  },
+                                  paddng: 1.0),
+                              flex: 4,
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Flexible(
+                              child: ButtonCustom(
+                                  text: "Camera",
+                                  iconEnable: false,
+                                  radius: 5.0,
+                                  icon: "",
+                                  textStyle: CustomWidget(context: context)
+                                      .CustomSizedTextStyle(
+                                      18.0,
+                                      Theme.of(context).focusColor,
+                                      FontWeight.w500,
+                                      'FontRegular'),
+                                  iconColor: Theme.of(context).focusColor,
+                                  buttonColor: Theme.of(context).cardColor,
+                                  splashColor: Theme.of(context).focusColor,
+                                  onPressed: () {
+                                    setState(() {
+
+                                      Navigator.pop(context);
+                                      getImage(ImageSource.camera);
+                                    });
+                                  },
+                                  paddng: 1.0),
+                              flex: 4,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ));
+      },
+    );
+  }
+
+  /// Get from gallery
+  getImage(ImageSource type) async {
+
+    var pickedFile = await picker.pickImage(source: type);
+    if (pickedFile != null) {
+      setState(() {
+        selectImg = true;
+        imageFile = File(pickedFile.path);
+        doUploadImage(imageFile!);
+
+      });
+    }
+  }
+
+  doUploadImage(File? img) {
+
+    setState(() {
+      loading=true;
+    });
+    apiUtils.doUpload(img!.path).then((UploadImageModel loginData) {
+      if (loginData.success!) {
+        setState(() {
+          loading = false;
+          setState(() {
+            profileImage = loginData.result!.toString();
+          });
+          CustomWidget(context: context)
+              .custombar("Profile","Profile Image uploaded successfully", true);
+        });
+      } else {
+        setState(() {
+          loading = false;
+          CustomWidget(context: context)
+              .custombar("Profile", loginData.message.toString(), false);
+        });
+      }
+    }).catchError((Object error) {
       setState(() {
         loading = false;
       });

@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:coolwell_tech/common/model/register.dart';
+import 'package:coolwell_tech/common/model/upload_image_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'assigned_order_model.dart';
 import 'complaint_history.dart';
+import 'get_assigned_job_list_model.dart';
+import 'get_profile_details_model.dart';
 import 'get_services_details.dart';
 import 'login.dart';
 
@@ -22,8 +25,10 @@ class APIUtils {
   static const String createComplaintURL = '/users/createcomplaint';
   static const String activateURL = '/verifyOtp';
   static const String profileUpdateURL = '/profile';
+  static const String profileUploadImageURL = '/uploadimage';
   static const String complaintHistoryURL = '/users/getComplaintHistory';
-  static const String assignedServicesURL = '/technician/AssignedJobs';
+  static const String assignedServicesURL = '/technician/AssignedJobsList';
+  static const String assignedServicesDetailsURL = '/technician/AssignedJobs';
 
 
   Future<CommonModel> doRegisterEmail(
@@ -76,7 +81,7 @@ class APIUtils {
     return CommonModel.fromJson(json.decode(response.body));
   }
 
-  Future<CommonModel> updateProfileDetails(String name, String address, String pincode,) async {
+  Future<CommonModel> updateProfileDetails(String name, String address, String pincode, String profileImage,) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var auth = "Bearer "+preferences.getString("token").toString();
     Map<String, String> requestHeaders = {
@@ -85,13 +90,43 @@ class APIUtils {
     var emailbodyData = {
       'name': name,
       'address': address,
-      'pincode': pincode
+      'pincode': pincode,
+      'profile_pic': profileImage
+
     };
 
     final response =
     await http.patch(Uri.parse(baseURL + profileUpdateURL),headers: requestHeaders, body: emailbodyData);
-    print(response.body);
+    // print(response.body);
     return CommonModel.fromJson(json.decode(response.body));
+  }
+
+  Future<GetProfileDetailsModel> getProfileDetails() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var auth = "Bearer "+preferences.getString("token").toString();
+    Map<String, String> requestHeaders = {
+      'authorization': auth.toString(),
+    };
+
+    final response =
+    await http.get(Uri.parse(baseURL + profileUpdateURL),headers: requestHeaders);
+    // print(response.body);
+    return GetProfileDetailsModel.fromJson(json.decode(response.body));
+  }
+
+  Future<UploadImageModel> doUpload(String front) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var request =
+    http.MultipartRequest("POST", Uri.parse(baseURL + profileUploadImageURL));
+    request.headers['authorization'] =
+        "Bearer "+preferences.getString("token").toString();
+    request.headers['Accept'] = 'application/json';
+
+    var pic = await http.MultipartFile.fromPath("image", front);
+    request.files.add(pic);
+    http.Response response =
+    await http.Response.fromStream(await request.send());
+    return UploadImageModel.fromJson(json.decode(response.body.toString()));
   }
 
   Future<ComplaintHistoryModel> getComplaintDetails() async {
@@ -105,7 +140,7 @@ class APIUtils {
     return ComplaintHistoryModel.fromJson(json.decode(response.body));
   }
 
-  Future<AssignedOrdersModel> getServiceDetails() async {
+  Future<GetAssignedJobsListModel> getServiceDetails() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var auth = "Bearer "+preferences.getString("token").toString();
     Map<String, String> requestHeaders = {
@@ -115,7 +150,23 @@ class APIUtils {
 
     final response =
     await http.get(Uri.parse(baseURL + assignedServicesURL),headers: requestHeaders);
-    print(response.body);
+    // print(response.body);
+    return GetAssignedJobsListModel.fromJson(json.decode(response.body));
+  }
+
+  Future<AssignedOrdersModel> getServiceFullDetails(String jobId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var auth = "Bearer "+preferences.getString("token").toString();
+    Map<String, String> requestHeaders = {
+      'authorization': auth.toString(),
+    };
+    var bodyData = {
+      'job_id': jobId,
+    };
+
+    final response =
+    await http.post(Uri.parse(baseURL + assignedServicesDetailsURL),headers: requestHeaders, body: bodyData);
+    // print(response.body);
     return AssignedOrdersModel.fromJson(json.decode(response.body));
   }
 

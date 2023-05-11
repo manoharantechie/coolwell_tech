@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:coolwell_tech/common/custom_button.dart';
 import 'package:coolwell_tech/common/custom_widget.dart';
 import 'package:coolwell_tech/common/localization/localizations.dart';
+import '../../../common/model/api_utils.dart';
+import '../../../common/model/get_profile_details_model.dart';
 import 'slot_screen.dart';
 import 'edit_profile.dart';
 
@@ -22,12 +23,18 @@ class Profile_Screen extends StatefulWidget {
 class _Profile_ScreenState extends State<Profile_Screen> {
 
   bool loading = false;
+  APIUtils apiUtils = APIUtils();
+  var snackBar;
   String role="";
+  String userName ="";
+  String gender ="";
+  GetProfileResult? details;
+
 
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    profile();
   }
   getDetails()async{
     SharedPreferences preferences=await SharedPreferences.getInstance();
@@ -97,10 +104,17 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Theme.of(context).focusColor,
-                            image: DecorationImage(
+                            image: details!.profile_pic == "" || details!.profile_pic == "null" ? DecorationImage(
+                              image: NetworkImage(details!.profile_pic.toString()),
+                              fit: BoxFit.cover,
+                            ) : DecorationImage(
                               image: AssetImage("assets/images/profile.png"),
                               fit: BoxFit.cover,
                             ),
+                            // image:  DecorationImage(
+                            //   image: NetworkImage(details!.profile_pic.toString()),
+                            //   fit: BoxFit.cover,
+                            // )
                           ),
                           child: Stack(
                             children: [
@@ -113,15 +127,15 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                                             Edit_Profile_Screen()));
                                   },
                                   child: Container(
-                                  width: 30.0,
-                                  height: 30.0,
-                                  padding: EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color:  Theme.of(context).cardColor,
-                                  ),
-                                  child: SvgPicture.asset("assets/images/edit.svg",),
-                                ),),
+                                    width: 30.0,
+                                    height: 30.0,
+                                    padding: EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color:  Theme.of(context).cardColor,
+                                    ),
+                                    child: SvgPicture.asset("assets/images/edit.svg",),
+                                  ),),
                               )
 
                             ],
@@ -133,7 +147,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Mr,",
+                                gender+",",
                                 style: CustomWidget(context: context)
                                     .CustomSizedTextStyle(
                                     14.0,
@@ -144,7 +158,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                               ),
                               const SizedBox(height: 5.0,),
                               Text(
-                                "Username",
+                                userName,
                                 style: CustomWidget(context: context)
                                     .CustomSizedTextStyle(
                                     18.0,
@@ -155,7 +169,8 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                               ),
                               const SizedBox(height: 5.0,),
                               Text(
-                                "example@gmail.com",
+                                // "example@gmail.com",
+                                details!.email.toString(),
                                 style: CustomWidget(context: context)
                                     .CustomSizedTextStyle(
                                     14.0,
@@ -192,8 +207,8 @@ class _Profile_ScreenState extends State<Profile_Screen> {
               decoration: BoxDecoration(
                 color: Theme.of(context).focusColor,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0)
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0)
                 ),
               ),
               child: Column(
@@ -224,8 +239,8 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                           Flexible(child: Text(
                             // AppLocalizations.instance
                             //     .text("loc_booking"),
-                              AppLocalizations.instance
-                                  .text("loc_side_service"),
+                            AppLocalizations.instance
+                                .text("loc_side_service"),
                             style: CustomWidget(context: context)
                                 .CustomSizedTextStyle(
                                 16.0,
@@ -339,7 +354,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                     ),
                   ),
                   const SizedBox(height: 10.0,),
-              role=="user"?Container():    InkWell(
+                  role=="user"?Container():    InkWell(
                     child: Container(
                       padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 20.0, right: 20.0),
                       decoration: BoxDecoration(
@@ -618,4 +633,41 @@ class _Profile_ScreenState extends State<Profile_Screen> {
         });
     // show the dialog
   }
+
+  profile() {
+    apiUtils
+        .getProfileDetails()
+        .then((GetProfileDetailsModel loginData) {
+      setState(() {
+        if (loginData.success!) {
+          setState(() {
+            loading = false;
+            details = loginData.result!;
+            var str = loginData.result!.name!.split(".");
+            userName =str[1].trim().toString();
+            gender=str[0].trim().toString();
+
+          });
+          // CustomWidget(context: context).
+          // custombar("Profile", loginData.message.toString(), true);
+
+        }
+        else {
+          loading = false;
+          CustomWidget(context: context)
+              .custombar("Profile", loginData.message.toString(), false);
+
+        }
+      });
+
+    }).catchError((Object error) {
+
+
+      print(error);
+      setState(() {
+        loading = false;
+      });
+    });
+  }
+
 }

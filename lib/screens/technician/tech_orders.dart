@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../common/dotted_line_widget.dart';
 import '../../common/model/api_utils.dart';
 import '../../common/model/assigned_order_model.dart';
+import '../../common/model/get_assigned_job_list_model.dart';
 import '../../common/theme/custom_theme.dart';
 import '../../common/ticket_design.dart';
 
@@ -20,10 +21,18 @@ class Tech_Orders_Screen extends StatefulWidget {
 
 class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    serviceDetails();
+    loading= true;
+  }
+
   APIUtils apiUtils = APIUtils();
   var snackBar;
   ScrollController _scrollController = ScrollController();
-  List<String> texts = [];
+  List<GetAssignedResult> OrderList = [];
   bool loading = false;
 
   @override
@@ -112,11 +121,11 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                 const SizedBox(
                   height: 5.0,
                 ),
-                texts.length>0 ? Container(
+                OrderList.length>0 ? Container(
                   margin: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.1),
                   child: ListView.builder(
-                    itemCount: texts.length,
+                    itemCount: OrderList.length,
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     controller: _scrollController,
@@ -151,8 +160,7 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
-                                        Tech_Order_Details_Screen()));
-
+                                        Tech_Order_Details_Screen( j_id: OrderList[index].jobId.toString())));
                               },
                               child: Container(
                                 padding: EdgeInsets.only(
@@ -228,7 +236,7 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                                                                   child: Text(
                                                                     // AppLocalizations.instance
                                                                     //     .text("loc_cleaning"),
-                                                                    texts[index].toString(),
+                                                                    OrderList[index].serviceName!.toString(),
                                                                     style: CustomWidget(
                                                                         context:
                                                                         context)
@@ -296,7 +304,8 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                                                                       .start,
                                                                   children: [
                                                                     Text(
-                                                                      "₹499",
+                                                                      // "₹499",
+                                                                      "₹"+ OrderList[index].amount!.toString(),
                                                                       style: CustomWidget(
                                                                           context:
                                                                           context)
@@ -454,11 +463,6 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
               ],
             ),
           ),
-          loading
-              ? CustomWidget(context: context).loadingIndicator(
-            Theme.of(context).primaryColor,
-          )
-              : Container()
         ],
       )
     );
@@ -467,14 +471,16 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
   serviceDetails() {
     apiUtils
         .getServiceDetails()
-        .then((AssignedOrdersModel loginData) {
+        .then((GetAssignedJobsListModel loginData) {
       setState(() {
         if (loginData.success!) {
           setState(() {
             loading = false;
+            OrderList = loginData.result!;
+
           });
-          CustomWidget(context: context).
-          custombar("Service", loginData.message.toString(), true);
+          // CustomWidget(context: context).
+          // custombar("Service", loginData.message.toString(), true);
 
         }
         else {
