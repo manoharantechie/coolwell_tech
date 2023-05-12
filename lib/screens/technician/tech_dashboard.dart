@@ -1,9 +1,11 @@
+import 'package:coolwell_tech/common/model/get_profile_details_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../common/custom_widget.dart';
 import '../../common/localization/localizations.dart';
+import '../../common/model/api_utils.dart';
 
 class Tech_DashBoard_Screen extends StatefulWidget {
   const Tech_DashBoard_Screen({Key? key}) : super(key: key);
@@ -15,6 +17,19 @@ class Tech_DashBoard_Screen extends StatefulWidget {
 class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
 
   ScrollController _scrollController = ScrollController();
+  bool loading = false;
+  APIUtils apiUtils = APIUtils();
+  var snackBar;
+  String userName ="";
+  GetProfileResult? details;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loading = true;
+    profile();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +102,8 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                         height: 5.0,
                       ),
                       Text(
-                        "Vinoth Kumar",
+                        // "Vinoth Kumar",
+                          userName,
                         style: CustomWidget(context: context)
                             .CustomSizedTextStyle(
                             20.0,
@@ -729,12 +745,49 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
               ),
             ),
 
-
-
+            loading
+                ? CustomWidget(context: context).loadingIndicator(
+              Theme.of(context).primaryColor,
+            )
+                : Container(),
 
           ],
         ),
       ),
     );
+  }
+
+  profile() {
+    apiUtils
+        .getProfileDetails()
+        .then((GetProfileDetailsModel loginData) {
+      setState(() {
+        if (loginData.success!) {
+          setState(() {
+            loading = false;
+            details = loginData.result!;
+            var str = loginData.result!.name!.split(".");
+            userName =str[1].trim().toString();
+          });
+          // CustomWidget(context: context).
+          // custombar("Profile", loginData.message.toString(), true);
+
+        }
+        else {
+          loading = false;
+          CustomWidget(context: context)
+              .custombar("Profile", loginData.message.toString(), false);
+
+        }
+      });
+
+    }).catchError((Object error) {
+
+
+      print(error);
+      setState(() {
+        loading = false;
+      });
+    });
   }
 }
