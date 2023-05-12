@@ -22,11 +22,17 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
   bool loading = false;
   APIUtils apiUtils = APIUtils();
   AssignedOrdersResult? OrderFullList;
+  String Servicename ="";
+  String Serviceamount ="";
+  String Servicetime ="";
+  String CustomerNum ="";
+  String Customername ="";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    loading= true;
     servicesDetails();
 
   }
@@ -112,7 +118,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                               child: Text(
                                                 // AppLocalizations.instance
                                                 //     .text("loc_cleaning"),
-                                                OrderFullList!.services!.serviceName.toString(),
+                                                Servicename,
                                                 style: CustomWidget(
                                                     context:
                                                     context)
@@ -143,7 +149,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                                   .start,
                                               children: [
                                                 Text(
-                                                  "₹"+ OrderFullList!.services!.amount.toString(),
+                                                  "₹"+ Serviceamount,
                                                   style: CustomWidget(
                                                       context:
                                                       context)
@@ -177,7 +183,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                                   width: 5.0,
                                                 ),
                                                 Text(
-                                                  "Target time "+ OrderFullList!.services!.time.toString(),
+                                                  "Target time "+ Servicetime,
                                                   style: CustomWidget(
                                                       context:
                                                       context)
@@ -232,7 +238,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                 const SizedBox(height: 20.0,),
                                 Text(
                                   // "User name",
-                                  OrderFullList!.item!.userId!.name.toString(),
+                                  Customername,
                                   style: CustomWidget(
                                       context:
                                       context)
@@ -547,7 +553,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                               const SizedBox(width: 5.0,),
                                               Text(
                                                 // "+91 9876543210",
-                                                OrderFullList!.item!.userId!.phone.toString(),
+                                                CustomerNum,
                                                 style: CustomWidget(context: context)
                                                     .CustomSizedTextStyle(
                                                     12.0,
@@ -733,6 +739,11 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
           setState(() {
             loading = false;
             OrderFullList = loginData.result!;
+            Servicename =OrderFullList!.services!.serviceName.toString();
+            Serviceamount =OrderFullList!.services!.amount.toString();
+            Servicetime =OrderFullList!.services!.time.toString();
+            CustomerNum =OrderFullList!.item!.userId!.phone.toString();
+            Customername =OrderFullList!.item!.userId!.name.toString();
 
           });
           // CustomWidget(context: context).
