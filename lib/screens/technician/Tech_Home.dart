@@ -7,7 +7,8 @@ import 'package:coolwell_tech/screens/technician/tech_orders.dart';
 import 'package:coolwell_tech/screens/user/profile/profile.dart';
 import 'package:flutter/material.dart';
 
-import '../user/service/history_details.dart';
+import '../user/service/tech_service_history.dart';
+import '../user/service/tech_service_history_details.dart';
 
 class TechHome extends StatefulWidget {
   const TechHome({Key? key}) : super(key: key);
@@ -22,10 +23,9 @@ class _TechHomeState extends State<TechHome> {
   int currentIndex=0;
   int selectIndex=0;
   List<Widget>  bottomPage = [
-
-   Tech_DashBoard_Screen(),
-   Tech_Orders_Screen(),
-    Service_History_Details(),
+    Tech_DashBoard_Screen(),
+    Tech_Orders_Screen(),
+    Tech_Service_History(),
     Profile_Screen()
   ];
 

@@ -10,6 +10,7 @@ import 'package:coolwell_tech/common/custom_widget.dart';
 import 'package:coolwell_tech/common/localization/localizations.dart';
 import '../../../common/model/api_utils.dart';
 import '../../../common/model/get_profile_details_model.dart';
+import '../basics/notification.dart';
 import 'slot_screen.dart';
 import 'edit_profile.dart';
 
@@ -261,9 +262,9 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                       const SizedBox(height: 5.0,),
                       InkWell(
                         onTap: (){
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  Slot_Screen()));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) =>
+                          //         Slot_Screen()));
                         },
                         child: Container(
                           padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 20.0, right: 20.0),
@@ -278,39 +279,6 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                               Flexible(child: Text(
                                 AppLocalizations.instance
                                     .text("loc_your_add"),
-                                style: CustomWidget(context: context)
-                                    .CustomSizedTextStyle(
-                                    16.0,
-                                    Theme.of(context).primaryColor,
-                                    FontWeight.w500,
-                                    'FontRegular'),
-                                textAlign: TextAlign.center,
-                              ), flex: 4,),
-
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 5.0,),
-                      InkWell(
-                        onTap: (){
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  Payment_Summary_Screen()));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 20.0, right: 20.0),
-                          decoration: BoxDecoration(
-
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Flexible(child: SvgPicture.asset("assets/profile/wallet.svg", height: 20.0, color: Theme.of(context).primaryColor,),flex: 1,),
-                              const SizedBox(width: 15.0,),
-                              Flexible(child: Text(
-                                AppLocalizations.instance
-                                    .text("loc_pay_method"),
                                 style: CustomWidget(context: context)
                                     .CustomSizedTextStyle(
                                     16.0,
@@ -358,7 +326,12 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                         ),
                       ),
                       const SizedBox(height: 10.0,),
-                      role=="user"?Container():    InkWell(
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  Notification_Screen()));
+                        },
                         child: Container(
                           padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 20.0, right: 20.0),
                           decoration: BoxDecoration(
