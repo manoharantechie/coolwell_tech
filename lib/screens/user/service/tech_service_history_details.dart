@@ -31,94 +31,67 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
         color: Theme.of(context).focusColor,
         child: Stack(
           children: [
-            Container(
-                margin: EdgeInsets.only(top: 30.0),
-                width: MediaQuery.of(context).size.width,
-                height: 35.0,
-                padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 0.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                     Container(
-
-
-                       padding: EdgeInsets.only(right: 50.0),
-                       decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(30.0),
-                         gradient: LinearGradient(
-                           begin: Alignment.centerLeft,
-                           end: Alignment.centerRight,
-                           colors: [
-                             const Color(0xFFF4F4F4).withOpacity(0.8),
-                             const Color(0xFFF4F4F4).withOpacity(0.5),
-                             const Color(0xFFF4F4F4).withOpacity(0.2),
-                           ],
-                         ),
-                       ),
-                       child: Row(
-                         children: [
-                           InkWell(
-                             onTap: () {
-                               Navigator.pop(context);
-                             },
-                             child: Container(
-                               padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-                               decoration: BoxDecoration(
-                                 shape: BoxShape.circle,
-                                 color: Theme.of(context).cardColor,
-                               ),
-                               child: Center(
-                                 child: Icon(
-                                   Icons.arrow_back,
-                                   size: 20.0,
-                                 ),
-                               ),
-                             ),
-                           ),
-                           const SizedBox(width: 10.0,),
-                           Text(
-                             AppLocalizations.instance.text("loc_serv_his"),
-                             style: CustomWidget(context: context)
-                                 .CustomSizedTextStyle(
-                                 18.0,
-                                 Theme.of(context).primaryColor,
-                                 FontWeight.w400,
-                                 'FontRegular'),
-                             textAlign: TextAlign.start,
-                           ),
-                         ],
-                       ),
-                     ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30.0),
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                          colors: [
-                            const Color(0xFF0DD8FF),
-                            const Color(0xFF0FABFF),
-                            const Color(0xFF1457FF).withOpacity(0.8),
-                            const Color(0xFF1636FF),
-                            const Color(0xFF0E69C7),
-                          ],
-                        ),
-                      ),
-                      child: Text(
-                        AppLocalizations.instance.text("loc_help"),
-                        style: CustomWidget(context: context)
-                            .CustomSizedTextStyle(
-                                14.0,
-                                Theme.of(context).focusColor,
-                                FontWeight.w500,
-                                'FontRegular'),
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
+            Padding( padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                      colors: [
+                        const Color(0xFFF4F4F4),
+                        const Color(0xFFF4F4F4).withOpacity(0.1),
+                      ],
+                    ),
+                  ),
+                  child:  Text(
+                    AppLocalizations.instance.text("loc_serv_his"),
+                    style: CustomWidget(context: context)
+                        .CustomSizedTextStyle(
+                        18.0,
+                        Theme.of(context).primaryColor,
+                        FontWeight.w400,
+                        'FontRegular'),
+                    textAlign: TextAlign.start,
+                  ),
                 )),
+                const SizedBox(
+                  width: 10.0,
+                ),
+                Flexible(child: Container(
+                  padding: EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.0),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                      colors: [
+                        const Color(0xFF0DD8FF),
+                        const Color(0xFF0FABFF),
+                        const Color(0xFF1457FF).withOpacity(0.8),
+                        const Color(0xFF1636FF),
+                        const Color(0xFF0E69C7),
+                      ],
+                    ),
+                  ),
+                  child: Text(
+                    AppLocalizations.instance.text("loc_help"),
+                    style: CustomWidget(context: context)
+                        .CustomSizedTextStyle(
+                        14.0,
+                        Theme.of(context).focusColor,
+                        FontWeight.w500,
+                        'FontRegular'),
+                    textAlign: TextAlign.center,
+                  ),
+                ))
+              ],
+            ),),
             const SizedBox(
               height: 5.0,
             ),

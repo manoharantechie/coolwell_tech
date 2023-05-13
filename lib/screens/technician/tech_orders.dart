@@ -121,8 +121,9 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
             ),
             OrderList.length>0 ? Container(
               margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.1),
+                  top: MediaQuery.of(context).size.height * 0.11),
               child: ListView.builder(
+                padding: EdgeInsets.zero,
                 itemCount: OrderList.length,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
