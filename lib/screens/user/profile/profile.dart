@@ -632,8 +632,8 @@ class _Profile_ScreenState extends State<Profile_Screen> {
             gender=str[0].trim().toString();
             email=details!.email.toString();
             profileImage=details!.profile_pic.toString();
-            print("Mano");
-            print(profileImage);
+            // print("Mano");
+            // print(profileImage);
 
           });
           // CustomWidget(context: context).
