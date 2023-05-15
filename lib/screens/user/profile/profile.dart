@@ -31,7 +31,9 @@ class _Profile_ScreenState extends State<Profile_Screen> {
   String gender ="";
   String email ="";
   String profileImage ="";
+  String mobileNo ="";
   GetProfileResult? details;
+
 
 
   @override
@@ -186,7 +188,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                                   ),
                                   const SizedBox(height: 5.0,),
                                   Text(
-                                    "+91 9876543210",
+                                    mobileNo == ""|| mobileNo== null || mobileNo=="null" ? "+91 9876543210" : "+91 "+ mobileNo,
                                     style: CustomWidget(context: context)
                                         .CustomSizedTextStyle(
                                         12.0,
@@ -632,6 +634,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
             gender=str[0].trim().toString();
             email=details!.email.toString();
             profileImage=details!.profile_pic.toString();
+            mobileNo=details!.phone.toString();
             // print("Mano");
             // print(profileImage);
 

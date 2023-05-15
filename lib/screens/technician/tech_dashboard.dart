@@ -747,7 +747,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
 
             loading
                 ? CustomWidget(context: context).loadingIndicator(
-              Theme.of(context).primaryColor,
+              Theme.of(context).cardColor,
             )
                 : Container(),
 

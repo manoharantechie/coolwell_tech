@@ -168,34 +168,57 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Flexible(child: Container(child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                        Flexible(child: Container(child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "10:50" + " Am",
-                              style: CustomWidget(context: context)
-                                  .CustomSizedTextStyle(
-                                  10.0,
-                                  Theme.of(context).primaryColor,
-                                  FontWeight.w600,
-                                  'FontRegular'),
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.ellipsis,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "10:50" + " Am",
+                                  style: CustomWidget(context: context)
+                                      .CustomSizedTextStyle(
+                                      10.0,
+                                      Theme.of(context).primaryColor,
+                                      FontWeight.w600,
+                                      'FontRegular'),
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 5.0,),
+                                Text(
+                                  "11:00" + " Am",
+                                  style: CustomWidget(context: context)
+                                      .CustomSizedTextStyle(
+                                      8.0,
+                                      Theme.of(context).primaryColor,
+                                      FontWeight.w400,
+                                      'FontRegular'),
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 5.0,),
-                            Text(
-                              "11:00" + " Am",
-                              style: CustomWidget(context: context)
-                                  .CustomSizedTextStyle(
-                                  8.0,
-                                  Theme.of(context).primaryColor,
-                                  FontWeight.w400,
-                                  'FontRegular'),
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            const SizedBox(width: 8.0,),
+                            Container(
+                              height: 15.0,
+                              width: 15.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [
+                                    const Color(0xFF0DD8FF),
+                                    const Color(0xFF0FABFF),
+                                    const Color(0xFF1457FF),
+                                  ],
+                                ),
+                              ),
+                            )
                           ],
                         ),), flex: 1,),
+                        const SizedBox(width: 8.0,),
                         Flexible(child: Container(
                           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           width: MediaQuery.of(context).size.width,
@@ -311,7 +334,7 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
           monthColor: Colors.white.withOpacity(0.5),
           dayColor: Theme.of(context).primaryColor,
           dayNameColor: Theme.of(context).focusColor,
-          activeDayColor: Colors.black,
+          activeDayColor: Colors.white,
           activeBackgroundDayColor: Theme.of(context).focusColor,
           dotsColor: const Color(0xFF333A47),
           selectableDayPredicate: (date) => date.day != 23,

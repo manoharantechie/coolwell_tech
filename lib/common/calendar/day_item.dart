@@ -51,12 +51,11 @@ class DayItem extends StatelessWidget {
             ? BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
+              end: Alignment.centerRight,
               colors: [
-                const Color(0xFF0DD8FF).withOpacity(0.3),
-                const Color(0xFF0FABFF).withOpacity(0.3),
-                const Color(0xFF1457FF).withOpacity(0.3),
-                const Color(0xFF1636FF).withOpacity(0.3),
+                const Color(0xFF0DD8FF),
+                const Color(0xFF0FABFF),
+                const Color(0xFF1636FF),
               ],
             ),
                 borderRadius: BorderRadius.circular(12),
@@ -85,7 +84,7 @@ class DayItem extends StatelessWidget {
               Text(
                 shortName,
                 style: TextStyle(
-                  color: isSelected ? Colors.black:Colors.black,
+                  color: isSelected ? Colors.white:Colors.black,
                   fontWeight: FontWeight.w400,
                   fontSize: shrink ? 12 : 14,
                 ),
