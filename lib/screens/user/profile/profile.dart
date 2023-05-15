@@ -11,6 +11,7 @@ import 'package:coolwell_tech/common/localization/localizations.dart';
 import '../../../common/model/api_utils.dart';
 import '../../../common/model/get_profile_details_model.dart';
 import '../basics/notification.dart';
+import '../service/customer_help.dart';
 import 'slot_screen.dart';
 import 'edit_profile.dart';
 
@@ -377,6 +378,11 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                         height: 1.0,color: Theme.of(context).shadowColor.withOpacity(0.5),
                       ),
                       InkWell(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  Customer_Help_Support()));
+                        },
                         child: Container(
                           padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 20.0, right: 20.0),
                           decoration: BoxDecoration(
