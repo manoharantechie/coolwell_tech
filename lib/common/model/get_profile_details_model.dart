@@ -33,18 +33,22 @@ class GetProfileResult {
   String? name;
   String? email;
   String? profile_pic;
+  String? phone;
 
   GetProfileResult({
     this.id,
     this.name,
     this.email,
     this.profile_pic,
+    this.phone,
   });
 
   factory GetProfileResult.fromJson(Map<String, dynamic> json) => GetProfileResult(
     id: json["_id"],
     name: json["name"],
     email: json["email"],
+    profile_pic: json["profile_pic"],
+    phone: json["phone"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -52,5 +56,6 @@ class GetProfileResult {
     "name": name,
     "email": email,
     "email": profile_pic,
+    "phone": phone,
   };
 }

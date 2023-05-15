@@ -456,7 +456,7 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
             ),
             loading
                 ? CustomWidget(context: context).loadingIndicator(
-              Theme.of(context).primaryColor,
+              Theme.of(context).cardColor,
             )
                 : Container(),
           ],
