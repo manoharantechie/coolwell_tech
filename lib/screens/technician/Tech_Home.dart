@@ -8,6 +8,7 @@ import 'package:coolwell_tech/screens/user/profile/profile.dart';
 import 'package:flutter/material.dart';
 
 import '../user/service/tech_service_history.dart';
+import '../user/service/tech_service_history_details.dart';
 
 class TechHome extends StatefulWidget {
   const TechHome({Key? key}) : super(key: key);
