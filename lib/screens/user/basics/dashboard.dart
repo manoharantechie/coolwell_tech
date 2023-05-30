@@ -125,13 +125,13 @@ class _DashBoard_ScreenState extends State<DashBoard_Screen> {
                   padding: EdgeInsets.fromLTRB(10.0, 12.0, 10.0, 12.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(width: 1.0,color: Theme.of(context).accentColor,)
+                      border: Border.all(width: 1.0,color: Theme.of(context).shadowColor,)
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SvgPicture.asset("assets/images/search.svg", height: 20.0, color: Theme.of(context).accentColor,),
+                      SvgPicture.asset("assets/images/search.svg", height: 20.0, color: Theme.of(context).shadowColor,),
                       SizedBox(width: 10.0,),
                       Text(
                         AppLocalizations.instance
@@ -139,7 +139,7 @@ class _DashBoard_ScreenState extends State<DashBoard_Screen> {
                         style: CustomWidget(context: context)
                             .CustomSizedTextStyle(
                             14.0,
-                            Theme.of(context).accentColor,
+                            Theme.of(context).shadowColor,
                             FontWeight.w400,
                             'FontRegular'),
                         textAlign: TextAlign.end,
@@ -333,7 +333,7 @@ class _DashBoard_ScreenState extends State<DashBoard_Screen> {
                                             borderRadius: BorderRadius.circular(10.0),
                                             boxShadow: [
                                               BoxShadow(
-                                                  color: Theme.of(context).accentColor.withOpacity(0.5),
+                                                  color: Theme.of(context).shadowColor.withOpacity(0.5),
                                                   blurRadius: 15.0,
                                                   offset: Offset(0.0, 0.5)
                                               ),
@@ -359,7 +359,7 @@ class _DashBoard_ScreenState extends State<DashBoard_Screen> {
                                                 Container(
                                                   padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                                                   decoration: BoxDecoration(
-                                                    color:  Theme.of(context).buttonColor,
+                                                    color:  Theme.of(context).dialogBackgroundColor,
                                                     borderRadius: BorderRadius.only(
                                                         bottomLeft: Radius.circular(6.0),
                                                         bottomRight: Radius.circular(6.0)),
@@ -409,7 +409,7 @@ class _DashBoard_ScreenState extends State<DashBoard_Screen> {
                                             borderRadius: BorderRadius.circular(10.0),
                                             boxShadow: [
                                               BoxShadow(
-                                                  color: Theme.of(context).accentColor.withOpacity(0.5),
+                                                  color: Theme.of(context).shadowColor.withOpacity(0.5),
                                                   blurRadius: 15.0,
                                                   offset: Offset(0.0, 0.5)
                                               ),
@@ -435,7 +435,7 @@ class _DashBoard_ScreenState extends State<DashBoard_Screen> {
                                                 Container(
                                                   padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                                                   decoration: BoxDecoration(
-                                                    color:  Theme.of(context).buttonColor,
+                                                    color:  Theme.of(context).dialogBackgroundColor,
                                                     borderRadius: BorderRadius.only(
                                                         bottomLeft: Radius.circular(6.0),
                                                         bottomRight: Radius.circular(6.0)),
@@ -491,7 +491,7 @@ class _DashBoard_ScreenState extends State<DashBoard_Screen> {
                                             borderRadius: BorderRadius.circular(10.0),
                                             boxShadow: [
                                               BoxShadow(
-                                                  color: Theme.of(context).accentColor.withOpacity(0.5),
+                                                  color: Theme.of(context).shadowColor.withOpacity(0.5),
                                                   blurRadius: 15.0,
                                                   offset: Offset(0.0, 0.5)
                                               ),
@@ -517,7 +517,7 @@ class _DashBoard_ScreenState extends State<DashBoard_Screen> {
                                                 Container(
                                                   padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                                                   decoration: BoxDecoration(
-                                                    color:  Theme.of(context).buttonColor,
+                                                    color:  Theme.of(context).dialogBackgroundColor,
                                                     borderRadius: BorderRadius.only(
                                                         bottomLeft: Radius.circular(6.0),
                                                         bottomRight: Radius.circular(6.0)),
@@ -567,7 +567,7 @@ class _DashBoard_ScreenState extends State<DashBoard_Screen> {
                                             borderRadius: BorderRadius.circular(10.0),
                                             boxShadow: [
                                               BoxShadow(
-                                                  color: Theme.of(context).accentColor.withOpacity(0.5),
+                                                  color: Theme.of(context).shadowColor.withOpacity(0.5),
                                                   blurRadius: 15.0,
                                                   offset: Offset(0.0, 0.5)
                                               ),
@@ -593,7 +593,7 @@ class _DashBoard_ScreenState extends State<DashBoard_Screen> {
                                                 Container(
                                                   padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                                                   // decoration: BoxDecoration(
-                                                  //   color:  Theme.of(context).buttonColor,
+                                                  //   color:  Theme.of(context).dialogBackgroundColor,
                                                   //   borderRadius: BorderRadius.only(
                                                   //       bottomLeft: Radius.circular(6.0),
                                                   //       bottomRight: Radius.circular(6.0)),
@@ -809,7 +809,7 @@ class _DashBoard_ScreenState extends State<DashBoard_Screen> {
                                                           fontSize: 8.0,
                                                           decoration: TextDecoration.lineThrough,
                                                           fontWeight: FontWeight.w400,
-                                                          color: Theme.of(context).accentColor,
+                                                          color: Theme.of(context).shadowColor,
                                                           fontStyle: FontStyle.normal
                                                       ),
                                                       textAlign: TextAlign.center,

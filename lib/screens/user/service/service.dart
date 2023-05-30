@@ -372,7 +372,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                                                               width: 1.0,
                                                               color: Theme.of(
                                                                   context)
-                                                                  .accentColor,
+                                                                  .shadowColor,
                                                             ),
                                                             SizedBox(
                                                               width: 10.0,
@@ -390,7 +390,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                                                                       .w600,
                                                                   color: Theme.of(
                                                                       context)
-                                                                      .accentColor,
+                                                                      .shadowColor,
                                                                   fontStyle:
                                                                   FontStyle
                                                                       .normal),
@@ -451,7 +451,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                                                 Container(
                                                   height: 1.0,
                                                   color: Theme.of(context)
-                                                      .accentColor,
+                                                      .shadowColor,
                                                 ),
                                                 SizedBox(
                                                   height: 10.0,
@@ -493,7 +493,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                                                 DottedLine(
                                                   dashColor:
                                                   Theme.of(context)
-                                                      .accentColor,
+                                                      .shadowColor,
                                                 ),
                                                 SizedBox(
                                                   height: 10.0,
@@ -599,7 +599,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                                                         8.0,
                                                         Theme.of(
                                                             context)
-                                                            .buttonColor,
+                                                            .dialogBackgroundColor,
                                                         FontWeight
                                                             .w400,
                                                         'FontRegular'),
@@ -660,7 +660,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                                                           6.0),
                                                       color: Theme.of(
                                                           context)
-                                                          .buttonColor,
+                                                          .dialogBackgroundColor,
                                                     ),
                                                     child: Text(
                                                       // "61% OFF",
@@ -894,7 +894,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                         padding: EdgeInsets.fromLTRB(25.0, 13.0, 25.0, 13.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.0),
-                          color: Theme.of(context).buttonColor,
+                          color: Theme.of(context).dialogBackgroundColor,
                         ),
                         child: Text(
                           AppLocalizations.instance
@@ -1087,7 +1087,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                                         fontSize: 10.0,
                                         decoration: TextDecoration.lineThrough,
                                         fontWeight: FontWeight.w600,
-                                        color: Theme.of(context).accentColor,
+                                        color: Theme.of(context).shadowColor,
                                         fontStyle: FontStyle.normal
                                     ),
                                     textAlign: TextAlign.center,
@@ -1123,7 +1123,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                               ),
                               SizedBox(height: 10.0,),
                               DottedLine(
-                                dashColor: Theme.of(context).accentColor,
+                                dashColor: Theme.of(context).shadowColor,
                               ),
                               SizedBox(height: 25.0,),
                               Container(
@@ -1195,7 +1195,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                               SizedBox(height: 20.0,),
                               Container(
                                 height: 1.0,
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).shadowColor,
                               ),
                               SizedBox(height: 20.0,),
                               Container(
@@ -1334,7 +1334,7 @@ class _Service_ScreenState extends State<Service_Screen> {
                                           margin: EdgeInsets.only(top: 170.0),
                                           padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(30.0),color: Theme.of(context).buttonColor,
+                                            borderRadius: BorderRadius.circular(30.0),color: Theme.of(context).dialogBackgroundColor,
                                           ),
                                           child: Text(
                                             AppLocalizations.instance

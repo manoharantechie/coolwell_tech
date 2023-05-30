@@ -570,7 +570,7 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                               padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 15.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30.0),
-                                color: Theme.of(context).buttonColor,
+                                color: Theme.of(context).dialogBackgroundColor,
                               ),
                               child: Text(
                                 AppLocalizations.instance
@@ -724,7 +724,7 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                                       FontWeight.w500,
                                       'FontRegular'),
                                   iconColor: Theme.of(context).focusColor,
-                                  buttonColor: Theme.of(context).cardColor,
+                                  dialogBackgroundColor: Theme.of(context).cardColor,
                                   splashColor: Theme.of(context).focusColor,
                                   onPressed: () {
                                     setState(() {
@@ -751,7 +751,7 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                                       FontWeight.w500,
                                       'FontRegular'),
                                   iconColor: Theme.of(context).focusColor,
-                                  buttonColor: Theme.of(context).cardColor,
+                                  dialogBackgroundColor: Theme.of(context).cardColor,
                                   splashColor: Theme.of(context).focusColor,
                                   onPressed: () {
                                     setState(() {
