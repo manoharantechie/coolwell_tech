@@ -36,7 +36,6 @@ class _TechHomeState extends State<TechHome> {
       selectIndex=index;
       currentIndex = index;
       screen = bottomPage[index];
-
     });
   }
 
