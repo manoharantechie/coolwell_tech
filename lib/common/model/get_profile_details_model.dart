@@ -7,7 +7,7 @@ String getProfileDetailsModelToJson(GetProfileDetailsModel data) => json.encode(
 class GetProfileDetailsModel {
   bool? success;
   GetProfileResult? result;
-  dynamic message;
+  String? message;
 
   GetProfileDetailsModel({
     this.success,
@@ -29,33 +29,45 @@ class GetProfileDetailsModel {
 }
 
 class GetProfileResult {
+  String? profilePic;
+  String? phone;
+  dynamic addressDefault;
+  dynamic addressHome;
+  List<dynamic>? addressOther;
   String? id;
   String? name;
   String? email;
-  String? profile_pic;
-  String? phone;
 
   GetProfileResult({
+    this.profilePic,
+    this.phone,
+    this.addressDefault,
+    this.addressHome,
+    this.addressOther,
     this.id,
     this.name,
     this.email,
-    this.profile_pic,
-    this.phone,
   });
 
   factory GetProfileResult.fromJson(Map<String, dynamic> json) => GetProfileResult(
+    profilePic: json["profile_pic"],
+    phone: json["phone"],
+    addressDefault: json["addressDefault"],
+    addressHome: json["addressHome"],
+    addressOther: List<dynamic>.from(json["addressOther"].map((x) => x)),
     id: json["_id"],
     name: json["name"],
     email: json["email"],
-    profile_pic: json["profile_pic"],
-    phone: json["phone"],
   );
 
   Map<String, dynamic> toJson() => {
+    "profile_pic": profilePic,
+    "phone": phone,
+    "addressDefault": addressDefault,
+    "addressHome": addressHome,
+    "addressOther": List<dynamic>.from(addressOther!.map((x) => x)),
     "_id": id,
     "name": name,
     "email": email,
-    "email": profile_pic,
-    "phone": phone,
   };
 }

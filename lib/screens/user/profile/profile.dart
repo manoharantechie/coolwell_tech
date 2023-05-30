@@ -156,7 +156,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    gender+",",
+                                    gender,
                                     style: CustomWidget(context: context)
                                         .CustomSizedTextStyle(
                                         14.0,
@@ -372,7 +372,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                           ),
                         ),
                       ),
-                      role=="user"?Container(): const SizedBox(height: 10.0,),
+                      const SizedBox(height: 10.0,),
                       Container(
                         margin: EdgeInsets.only(left: 20.0, right: 20.0),
                         height: 1.0,color: Theme.of(context).shadowColor.withOpacity(0.5),
@@ -636,14 +636,11 @@ class _Profile_ScreenState extends State<Profile_Screen> {
             loading = false;
             details = loginData.result!;
             var str = loginData.result!.name!.split(".");
-            userName =str[1].trim().toString();
-            gender=str[0].trim().toString();
+            userName =loginData.result!.name!.contains(".")?str[1].trim().toString():loginData.result!.name!;
+            gender=loginData.result!.name!.contains(".")?str[0].trim().toString():"";
             email=details!.email.toString();
-            profileImage=details!.profile_pic.toString();
+            profileImage=details!.profilePic.toString();
             mobileNo=details!.phone.toString();
-            // print("Mano");
-            // print(profileImage);
-
           });
           // CustomWidget(context: context).
           // custombar("Profile", loginData.message.toString(), true);

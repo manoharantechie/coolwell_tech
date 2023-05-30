@@ -15,6 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../../../common/custom_button.dart';
 import '../../../common/model/api_utils.dart';
+import '../../../common/model/get_profile_details_model.dart';
 import '../../../common/model/upload_image_model.dart';
 
 class Edit_Profile_Screen extends StatefulWidget {
@@ -52,11 +53,20 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
   final ImagePicker picker = ImagePicker();
   final profileformKey = GlobalKey<FormState>();
 
+  GetProfileResult? details;
+  String email ="";
+  String userName ="";
+  String mobileNo ="";
+  String profileImagetech ="";
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    loading = true;
     selectedValue = coinlist.first;
+    profile();
+
   }
 
   @override
@@ -163,7 +173,7 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                                         image: FileImage(File(imageFile!.path)),
                                         fit: BoxFit.cover)
                                         : DecorationImage(
-                                        image: NetworkImage(profileImage),
+                                        image: NetworkImage(profileImagetech),
                                         fit: BoxFit.cover)
                                 ),
                                 child: Stack(
@@ -266,7 +276,7 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                                       decoration: InputDecoration(
                                         contentPadding: const EdgeInsets.only(
                                             left: 12, right: 0, top: 2, bottom: 2),
-                                        hintText: "Name",
+                                        hintText: userName.toString(),
                                         hintStyle: CustomWidget(context: context).CustomSizedTextStyle(
                                             14.0,
                                             Theme.of(context).primaryColor.withOpacity(0.3),
@@ -325,58 +335,25 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                                 ),
                               ),
                               const SizedBox(height: 15.0,),
-                              // TextFormFieldCustom(
-                              //   onEditComplete: () {
-                              //     emailFocus.unfocus();
-                              //     FocusScope.of(context).requestFocus(addressFocus);
-                              //   },
-                              //   radius: 6.0,
-                              //   error: "Enter E-Mail Id",
-                              //   textColor: Theme.of(context).primaryColor,
-                              //   borderColor: Theme.of(context).dividerColor,
-                              //   fillColor: Theme.of(context).focusColor,
-                              //   hintStyle: CustomWidget(context: context).CustomSizedTextStyle(
-                              //       14.0, Theme.of(context).primaryColor.withOpacity(0.3), FontWeight.w500, 'FontRegular'),
-                              //   textStyle: CustomWidget(context: context).CustomSizedTextStyle(
-                              //       14.0, Theme.of(context).primaryColor, FontWeight.w500, 'FontRegular'),
-                              //   textInputAction: TextInputAction.next,
-                              //   focusNode: emailFocus,
-                              //   maxlines: 1,
-                              //   text: '',
-                              //   hintText: "Mail ID",
-                              //   obscureText: false,
-                              //   textChanged: (value) {},
-                              //   onChanged: () {},
-                              //   suffix: Container(
-                              //     width: 0.0,
-                              //   ),
-                              //   validator: (value) {
-                              //
-                              //   },
-                              //   enabled: true,
-                              //   textInputType: TextInputType.emailAddress,
-                              //   controller: emailController,
-                              // ),
-                              // const SizedBox(height: 15.0,),
                               TextFormFieldCustom(
                                 onEditComplete: () {
-                                  addressFocus.unfocus();
-                                  FocusScope.of(context).requestFocus(pinCodeFocus);
+                                  emailFocus.unfocus();
+                                  FocusScope.of(context).requestFocus(addressFocus);
                                 },
                                 radius: 6.0,
-                                error: "Enter Address",
+                                error: "Enter E-Mail Id",
                                 textColor: Theme.of(context).primaryColor,
                                 borderColor: Theme.of(context).dividerColor,
                                 fillColor: Theme.of(context).focusColor,
                                 hintStyle: CustomWidget(context: context).CustomSizedTextStyle(
-                                    14.0, Theme.of(context).primaryColor.withOpacity(0.3), FontWeight.w500, 'FontRegular'),
+                                    14.0, Theme.of(context).primaryColor, FontWeight.w500, 'FontRegular'),
                                 textStyle: CustomWidget(context: context).CustomSizedTextStyle(
                                     14.0, Theme.of(context).primaryColor, FontWeight.w500, 'FontRegular'),
                                 textInputAction: TextInputAction.next,
-                                focusNode: addressFocus,
+                                focusNode: emailFocus,
                                 maxlines: 1,
                                 text: '',
-                                hintText: "Address",
+                                hintText: email.toString(),
                                 obscureText: false,
                                 textChanged: (value) {},
                                 onChanged: () {},
@@ -386,63 +363,30 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                                 validator: (value) {
 
                                 },
-                                enabled: true,
-                                textInputType: TextInputType.streetAddress,
-                                controller: addressController,
+                                enabled: false,
+                                textInputType: TextInputType.emailAddress,
+                                controller: emailController,
                               ),
                               const SizedBox(height: 15.0,),
-                              // TextFormFieldCustom(
-                              //   onEditComplete: () {
-                              //     addressLineFocus.unfocus();
-                              //     FocusScope.of(context).requestFocus(pinCodeFocus);
-                              //   },
-                              //   radius: 6.0,
-                              //   error: "Enter Address line",
-                              //   textColor: Theme.of(context).primaryColor,
-                              //   borderColor: Theme.of(context).dividerColor,
-                              //   fillColor: Theme.of(context).focusColor,
-                              //   hintStyle: CustomWidget(context: context).CustomSizedTextStyle(
-                              //       14.0, Theme.of(context).primaryColor.withOpacity(0.3), FontWeight.w500, 'FontRegular'),
-                              //   textStyle: CustomWidget(context: context).CustomSizedTextStyle(
-                              //       14.0, Theme.of(context).primaryColor, FontWeight.w500, 'FontRegular'),
-                              //   textInputAction: TextInputAction.next,
-                              //   focusNode: addressLineFocus,
-                              //   maxlines: 1,
-                              //   text: '',
-                              //   hintText: "Address line",
-                              //   obscureText: false,
-                              //   textChanged: (value) {},
-                              //   onChanged: () {},
-                              //   suffix: Container(
-                              //     width: 0.0,
-                              //   ),
-                              //   validator: (value) {
-                              //
-                              //   },
-                              //   enabled: true,
-                              //   textInputType: TextInputType.streetAddress,
-                              //   controller: addressLineController,
-                              // ),
-                              // const SizedBox(height: 15.0,),
+
                               TextFormFieldCustom(
                                 onEditComplete: () {
-                                  pinCodeFocus.unfocus();
-                                  // FocusScope.of(context).requestFocus(phoneNumFocus);
+
                                 },
                                 radius: 6.0,
-                                error: "Enter Pin code",
+                                error: "Enter Mobile",
                                 textColor: Theme.of(context).primaryColor,
                                 borderColor: Theme.of(context).dividerColor,
                                 fillColor: Theme.of(context).focusColor,
                                 hintStyle: CustomWidget(context: context).CustomSizedTextStyle(
-                                    14.0, Theme.of(context).primaryColor.withOpacity(0.3), FontWeight.w500, 'FontRegular'),
+                                    14.0, Theme.of(context).primaryColor, FontWeight.w500, 'FontRegular'),
                                 textStyle: CustomWidget(context: context).CustomSizedTextStyle(
                                     14.0, Theme.of(context).primaryColor, FontWeight.w500, 'FontRegular'),
                                 textInputAction: TextInputAction.next,
-                                focusNode: pinCodeFocus,
+                                focusNode: emailFocus,
                                 maxlines: 1,
                                 text: '',
-                                hintText: "Pin code",
+                                hintText: mobileNo.toString(),
                                 obscureText: false,
                                 textChanged: (value) {},
                                 onChanged: () {},
@@ -452,47 +396,10 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                                 validator: (value) {
 
                                 },
-                                enabled: true,
-                                textInputType: TextInputType.number,
-                                controller: pinCodeController,
+                                enabled: false,
+                                textInputType: TextInputType.phone,
+                                controller: emailController,
                               ),
-                              // const SizedBox(height: 15.0,),
-                              // TextFormFieldCustom(
-                              //   onEditComplete: () {
-                              //     documentFocus.unfocus();
-                              //     // FocusScope.of(context).requestFocus(phoneNumFocus);
-                              //   },
-                              //   radius: 6.0,
-                              //   error: "Enter Update document",
-                              //   textColor: Theme.of(context).primaryColor,
-                              //   borderColor: Theme.of(context).dividerColor,
-                              //   fillColor: Theme.of(context).focusColor,
-                              //   hintStyle: CustomWidget(context: context).CustomSizedTextStyle(
-                              //       14.0, Theme.of(context).primaryColor.withOpacity(0.3), FontWeight.w500, 'FontRegular'),
-                              //   textStyle: CustomWidget(context: context).CustomSizedTextStyle(
-                              //       14.0, Theme.of(context).primaryColor, FontWeight.w500, 'FontRegular'),
-                              //   textInputAction: TextInputAction.next,
-                              //   focusNode: documentFocus,
-                              //   maxlines: 1,
-                              //   text: '',
-                              //   hintText: "Update document",
-                              //   obscureText: false,
-                              //   textChanged: (value) {},
-                              //   onChanged: () {},
-                              //   suffix: Container(
-                              //     child: Icon(
-                              //       Icons.file_upload_outlined,
-                              //       size: 18.0,
-                              //       color: Theme.of(context).primaryColor,
-                              //     ),
-                              //   ),
-                              //   validator: (value) {
-                              //
-                              //   },
-                              //   enabled: true,
-                              //   textInputType: TextInputType.text,
-                              //   controller: documentController,
-                              // ),
                             ],
                           ),
                         ),
@@ -525,24 +432,6 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10.0,),
-                        Row(
-                          children: [
-                            SvgPicture.asset("assets/profile/delete.svg", height: 15.0,),
-                            const SizedBox(width: 5.0,),
-                            Text(
-                              AppLocalizations.instance
-                                  .text("loc_dele_acc"),
-                              style: CustomWidget(context: context)
-                                  .CustomSizedTextStyle(
-                                  14.0,
-                                  Theme.of(context).disabledColor,
-                                  FontWeight.w400,
-                                  'FontRegular'),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
                         const SizedBox(height: 50.0,),
                         Align(
                           alignment: Alignment.center,
@@ -551,13 +440,15 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
                               if(nameController.text.isEmpty){
                                 CustomWidget(context: context)
                                     .custombar("Profile", "Please Enter Name", false);
-                              } else if(addressController.text.isEmpty){
-                                CustomWidget(context: context)
-                                    .custombar("Profile", "Please Enter Address details", false);
-                              } else if(pinCodeController.text.isEmpty){
-                                CustomWidget(context: context)
-                                    .custombar("Profile", "Please Enter Pincode ", false);
-                              } else{
+                              }
+                              // else if(addressController.text.isEmpty){
+                              //   CustomWidget(context: context)
+                              //       .custombar("Profile", "Please Enter Address details", false);
+                              // } else if(pinCodeController.text.isEmpty){
+                              //   CustomWidget(context: context)
+                              //       .custombar("Profile", "Please Enter Pincode ", false);
+                              // }
+                              else{
                                 setState(() {
                                   loading = true;
                                   updateProfile();
@@ -604,14 +495,54 @@ class _Edit_Profile_ScreenState extends State<Edit_Profile_Screen> {
     );
   }
 
+  profile() {
+    apiUtils
+        .getProfileDetails()
+        .then((GetProfileDetailsModel loginData) {
+      setState(() {
+        if (loginData.success!) {
+          setState(() {
+            loading = false;
+            details = loginData.result!;
+
+            var str = loginData.result!.name!.split(".");
+            print(str);
+            userName =loginData.result!.name!.contains(".")?str[1].trim().toString():loginData.result!.name!;
+            // gender=loginData.result!.name!.contains(".")?str[0].trim().toString():"";
+            email=details!.email.toString();
+            mobileNo=details!.phone.toString();
+            profileImagetech=details!.profilePic.toString();
+
+          });
+          // CustomWidget(context: context).
+          // custombar("Profile", loginData.message.toString(), true);
+
+        }
+        else {
+          loading = false;
+          CustomWidget(context: context)
+              .custombar("Profile", loginData.message.toString(), false);
+
+        }
+      });
+
+    }).catchError((Object error) {
+
+
+      print(error);
+      setState(() {
+        loading = false;
+      });
+    });
+  }
+
 
   updateProfile() {
     apiUtils
         .updateProfileDetails(
         selectedValue.toString()+"."+
-        nameController.text.toString(),
-        addressController.text.toString(),
-        pinCodeController.text.toString(), profileImage)
+            nameController.text.toString(),
+        profileImage)
         .then((CommonModel loginData) {
       setState(() {
         if (loginData.success!) {

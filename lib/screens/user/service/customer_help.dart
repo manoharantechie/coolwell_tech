@@ -309,7 +309,7 @@ class _Customer_Help_SupportState extends State<Customer_Help_Support> {
                                 ),
                                 Container(
                                   height: 1.0,
-                                  color: Theme.of(context).accentColor,
+                                  color: Theme.of(context).shadowColor,
                                 ),
                               ],
                             ),

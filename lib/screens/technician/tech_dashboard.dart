@@ -2,6 +2,7 @@ import 'package:coolwell_tech/common/model/get_profile_details_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/custom_widget.dart';
 import '../../common/localization/localizations.dart';
@@ -21,6 +22,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
   APIUtils apiUtils = APIUtils();
   var snackBar;
   String userName ="";
+  String name ="";
   GetProfileResult? details;
 
   @override
@@ -29,6 +31,14 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
     super.initState();
     loading = true;
     profile();
+    getData();
+  }
+
+  getData()async{
+    SharedPreferences preferences=await SharedPreferences.getInstance();
+    setState(() {
+      name = preferences.getString("name").toString();
+    });
   }
 
   @override
@@ -103,7 +113,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                       ),
                       Text(
                         // "Vinoth Kumar",
-                          userName,
+                        userName.toString(),
                         style: CustomWidget(context: context)
                             .CustomSizedTextStyle(
                             20.0,
@@ -767,7 +777,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
             loading = false;
             details = loginData.result!;
             var str = loginData.result!.name!.split(".");
-            userName =str[1].trim().toString();
+            userName =loginData.result!.name!.contains(".")?str[1].trim().toString():loginData.result!.name!;;
           });
           // CustomWidget(context: context).
           // custombar("Profile", loginData.message.toString(), true);
@@ -789,5 +799,10 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
         loading = false;
       });
     });
+  }
+
+  storeData(String name) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("name", name);
   }
 }

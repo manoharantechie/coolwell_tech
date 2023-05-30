@@ -47,6 +47,13 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   TextEditingController mobileController = TextEditingController();
   final emailformKey = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nameController=TextEditingController(text: "raju@mailinator.com");
+    passController=TextEditingController(text: "Raju@123");
+  }
 
   void initCountry() async {
     final country = await getDefaultCountry(context);
@@ -507,18 +514,9 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
               loginData.result!.user!.role.toString(),
               loginData.result!.user!.name.toString());
 
-          if(loginData.result!.user!.role.toString().toLowerCase()=="user")
-            {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) =>
-                      Location_Screen()));
-            }
-        else  if(loginData.result!.user!.role.toString().toLowerCase()=="technician")
-          {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) =>
-                    TechHome()));
-          }
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) =>
+                  TechHome()));
 
           nameController.clear();
           passController.clear();
