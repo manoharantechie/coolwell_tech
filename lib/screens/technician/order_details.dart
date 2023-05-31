@@ -27,6 +27,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
   String Servicetime ="";
   String CustomerNum ="";
   String Customername ="";
+  String CustomerAdd ="";
 
   @override
   void initState() {
@@ -89,8 +90,11 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                 colorFilter: ColorFilter.mode(
                                     Color(0xFF1F598E).withOpacity(0.6),
                                     BlendMode.dstATop),
-                                image: AssetImage(
-                                    "assets/images/serv_back_2.png"),
+                                image: NetworkImage(
+                                    OrderFullList!.services!.coverImage![0].toString()
+                                ),
+                                // image: AssetImage(
+                                //     "assets/images/serv_back_2.png"),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -527,17 +531,21 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                                 color: Theme.of(context).primaryColor,
                                               ),
                                               const SizedBox(width: 5.0,),
-                                              Text(
-                                                AppLocalizations.instance
-                                                    .text("loc_track_location"),
-                                                style: CustomWidget(context: context)
-                                                    .CustomSizedTextStyle(
-                                                    12.0,
-                                                    Theme.of(context).primaryColor,
-                                                    FontWeight.w600,
-                                                    'FontRegular'),
-                                                textAlign: TextAlign.start,
-                                              )
+                                             Flexible(
+                                               child:  Text(
+                                                 // AppLocalizations.instance
+                                                 //     .text("loc_track_location"),
+                                                 CustomerAdd.toString(),
+                                                 style: CustomWidget(context: context)
+                                                     .CustomSizedTextStyle(
+                                                     10.0,
+                                                     Theme.of(context).primaryColor,
+                                                     FontWeight.w600,
+                                                     'FontRegular'),
+                                                 textAlign: TextAlign.start,
+                                                 overflow: TextOverflow.ellipsis,
+                                               ),
+                                             )
 
                                             ],
                                           ),
@@ -551,9 +559,9 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                                 color: Theme.of(context).primaryColor,
                                               ),
                                               const SizedBox(width: 5.0,),
-                                              Text(
+                                              Flexible(child: Text(
                                                 // "+91 9876543210",
-                                                CustomerNum,
+                                                CustomerNum.toString(),
                                                 style: CustomWidget(context: context)
                                                     .CustomSizedTextStyle(
                                                     12.0,
@@ -561,7 +569,8 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                                     FontWeight.w600,
                                                     'FontRegular'),
                                                 textAlign: TextAlign.start,
-                                              )
+                                                overflow: TextOverflow.ellipsis,
+                                              ))
 
                                             ],
                                           )
@@ -738,12 +747,13 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
         if (loginData.success!) {
           setState(() {
             loading = false;
-            OrderFullList = loginData.result!;
+            OrderFullList = loginData.result![0];
             Servicename =OrderFullList!.services!.serviceName.toString();
             Serviceamount =OrderFullList!.services!.amount.toString();
             Servicetime =OrderFullList!.services!.time.toString();
-            CustomerNum =OrderFullList!.item!.userId!.phone.toString();
-            Customername =OrderFullList!.item!.userId!.name.toString();
+            CustomerNum =OrderFullList!.users!.phone.toString();
+            Customername =OrderFullList!.users!.name.toString();
+            CustomerAdd =OrderFullList!.complaints!.address.toString();
 
           });
           // CustomWidget(context: context).

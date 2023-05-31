@@ -6,7 +6,7 @@ String getAssignedJobsListModelToJson(GetAssignedJobsListModel data) => json.enc
 
 class GetAssignedJobsListModel {
   bool? success;
-  List<GetAssignedResult>? result;
+  List<GetAssignedJobsResult>? result;
   String? message;
 
   GetAssignedJobsListModel({
@@ -17,7 +17,7 @@ class GetAssignedJobsListModel {
 
   factory GetAssignedJobsListModel.fromJson(Map<String, dynamic> json) => GetAssignedJobsListModel(
     success: json["success"],
-    result: List<GetAssignedResult>.from(json["result"].map((x) => GetAssignedResult.fromJson(x))),
+    result: List<GetAssignedJobsResult>.from(json["result"].map((x) => GetAssignedJobsResult.fromJson(x))),
     message: json["message"],
   );
 
@@ -28,38 +28,78 @@ class GetAssignedJobsListModel {
   };
 }
 
-class GetAssignedResult {
+class GetAssignedJobsResult {
   String? id;
-  String? serviceName;
-  String? category;
-  String? amount;
-  dynamic date;
-  String? jobId;
+  GetAssignedServices? services;
 
-  GetAssignedResult({
+  GetAssignedJobsResult({
     this.id,
-    this.serviceName,
-    this.category,
-    this.amount,
-    this.date,
-    this.jobId,
+    this.services,
   });
 
-  factory GetAssignedResult.fromJson(Map<String, dynamic> json) => GetAssignedResult(
+  factory GetAssignedJobsResult.fromJson(Map<String, dynamic> json) => GetAssignedJobsResult(
     id: json["_id"],
-    serviceName: json["Service_Name"],
-    category: json["Category"],
-    amount: json["Amount"],
-    date: json["Date"],
-    jobId: json["job_id"],
+    services: GetAssignedServices.fromJson(json["services"]),
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
+    "services": services!.toJson(),
+  };
+}
+
+class GetAssignedServices {
+  String? id;
+  List<String>? checkList;
+  List<String>? coverImage;
+  String? serviceName;
+  String? category;
+  String? amount;
+  String? time;
+  String? notes;
+  dynamic rattings;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  GetAssignedServices({
+    this.id,
+    this.checkList,
+    this.coverImage,
+    this.serviceName,
+    this.category,
+    this.amount,
+    this.time,
+    this.notes,
+    this.rattings,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory GetAssignedServices.fromJson(Map<String, dynamic> json) => GetAssignedServices(
+    id: json["_id"],
+    checkList: List<String>.from(json["Check_List"].map((x) => x)),
+    coverImage: List<String>.from(json["Cover_Image"].map((x) => x)),
+    serviceName: json["Service_Name"],
+    category: json["Category"],
+    amount: json["Amount"],
+    time: json["Time"],
+    notes: json["Notes"],
+    rattings: json["Rattings"],
+    createdAt: DateTime.parse(json["createdAt"]),
+    updatedAt: DateTime.parse(json["updatedAt"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "Check_List": List<dynamic>.from(checkList!.map((x) => x)),
+    "Cover_Image": List<dynamic>.from(coverImage!.map((x) => x)),
     "Service_Name": serviceName,
     "Category": category,
     "Amount": amount,
-    "Date": date,
-    "job_id": jobId,
+    "Time": time,
+    "Notes": notes,
+    "Rattings": rattings,
+    "createdAt": createdAt!.toIso8601String(),
+    "updatedAt": updatedAt!.toIso8601String(),
   };
 }

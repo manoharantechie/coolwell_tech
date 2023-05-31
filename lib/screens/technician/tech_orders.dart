@@ -32,7 +32,7 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
   APIUtils apiUtils = APIUtils();
   var snackBar;
   ScrollController _scrollController = ScrollController();
-  List<GetAssignedResult> OrderList = [];
+  List<GetAssignedJobsResult> orderList = [];
   bool loading = false;
 
   @override
@@ -119,12 +119,12 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
             const SizedBox(
               height: 5.0,
             ),
-            OrderList.length>0 ? Container(
+            orderList.length>0 ? Container(
               margin: EdgeInsets.only(
                   top: MediaQuery.of(context).size.height * 0.11),
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount: OrderList.length,
+                itemCount: orderList.length,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 controller: _scrollController,
@@ -159,7 +159,7 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>
-                                    Tech_Order_Details_Screen( j_id: OrderList[index].jobId.toString())));
+                                    Tech_Order_Details_Screen( j_id: orderList[index].id.toString())));
                           },
                           child: Container(
                             padding: EdgeInsets.only(
@@ -180,8 +180,9 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                                       colorFilter: ColorFilter.mode(
                                           Color(0xFF1F598E).withOpacity(0.6),
                                           BlendMode.dstATop),
-                                      image: AssetImage(
-                                          "assets/images/serv_back_2.png"),
+                                      image: NetworkImage(orderList[index].services!.coverImage![0].toString()),
+                                      // image: AssetImage(
+                                      //     "assets/images/serv_back_2.png"),
                                       fit: BoxFit.cover,
                                     ),
                                     borderRadius: BorderRadius.circular(15.0)),
@@ -235,7 +236,7 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                                                               child: Text(
                                                                 // AppLocalizations.instance
                                                                 //     .text("loc_cleaning"),
-                                                                OrderList[index].serviceName!.toString(),
+                                                                orderList[index].services!.serviceName.toString(),
                                                                 style: CustomWidget(
                                                                     context:
                                                                     context)
@@ -273,7 +274,8 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                                                                   width: 5.0,
                                                                 ),
                                                                 Text(
-                                                                  "4.81 (1.2M)",
+                                                                  // "4.81 (1.2M)",
+                                                                  orderList[index].services!.rattings.toString(),
                                                                   style: CustomWidget(
                                                                       context:
                                                                       context)
@@ -304,7 +306,7 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                                                               children: [
                                                                 Text(
                                                                   // "₹499",
-                                                                  "₹"+ OrderList[index].amount!.toString(),
+                                                                  "₹"+ orderList[index].services!.amount.toString(),
                                                                   style: CustomWidget(
                                                                       context:
                                                                       context)
@@ -381,7 +383,7 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                                                                       width: 5.0,
                                                                     ),
                                                                     Text(
-                                                                      "45 mins",
+                                                                      orderList[index].services!.time.toString(),
                                                                       style: CustomWidget(context: context).CustomSizedTextStyle(
                                                                           10.0,
                                                                           Theme.of(
@@ -473,7 +475,7 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
         if (loginData.success!) {
           setState(() {
             loading = false;
-            OrderList = loginData.result!;
+            orderList = loginData.result!;
 
           });
           // CustomWidget(context: context).
