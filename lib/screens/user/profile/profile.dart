@@ -189,7 +189,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                                   ),
                                   const SizedBox(height: 5.0,),
                                   Text(
-                                    mobileNo == ""|| mobileNo== null || mobileNo=="null" ? "+91 9876543210" : "+91 "+ mobileNo,
+                                    mobileNo == ""|| mobileNo== null || mobileNo=="null" ? "" : mobileNo,
                                     style: CustomWidget(context: context)
                                         .CustomSizedTextStyle(
                                         12.0,

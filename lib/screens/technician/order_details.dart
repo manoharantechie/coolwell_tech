@@ -59,7 +59,11 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                 ],
               ),
             ),
-            child: Stack(
+            child:loading
+                ? CustomWidget(context: context).loadingIndicator(
+              Theme.of(context).cardColor,
+            )
+                :  Stack(
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,10 +97,8 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                 image: NetworkImage(
                                     OrderFullList!.services!.coverImage![0].toString()
                                 ),
-                                // image: AssetImage(
-                                //     "assets/images/serv_back_2.png"),
                                 fit: BoxFit.cover,
-                              ),
+                              )
                             ),
                           ),
                           Container(
@@ -261,25 +263,25 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                       .ellipsis,
                                 ),
                                 const SizedBox(height: 5.0,),
-                                Text(
-                                  "User id",
-                                  style: CustomWidget(
-                                      context:
-                                      context)
-                                      .CustomSizedTextStyle(
-                                      10.0,
-                                      Theme.of(
-                                          context)
-                                          .primaryColor,
-                                      FontWeight
-                                          .w700,
-                                      'FontRegular'),
-                                  textAlign:
-                                  TextAlign.start,
-                                  overflow:
-                                  TextOverflow
-                                      .ellipsis,
-                                ),
+                                // Text(
+                                //   "User id",
+                                //   style: CustomWidget(
+                                //       context:
+                                //       context)
+                                //       .CustomSizedTextStyle(
+                                //       10.0,
+                                //       Theme.of(
+                                //           context)
+                                //           .primaryColor,
+                                //       FontWeight
+                                //           .w700,
+                                //       'FontRegular'),
+                                //   textAlign:
+                                //   TextAlign.start,
+                                //   overflow:
+                                //   TextOverflow
+                                //       .ellipsis,
+                                // ),
                                 const SizedBox(height: 20.0,),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -635,11 +637,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
               ],
             ),
           ),
-          loading
-              ? CustomWidget(context: context).loadingIndicator(
-            Theme.of(context).primaryColor,
-          )
-              : Container()
+
         ],
       ),
     );
