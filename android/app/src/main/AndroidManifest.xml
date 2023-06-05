@@ -11,7 +11,7 @@
     <!-- Permissions options for the `camera` group -->
     <uses-permission android:name="android.permission.CAMERA"/>
    <application
-        android:label="Technician"
+        android:label="CoolWell Tech"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
