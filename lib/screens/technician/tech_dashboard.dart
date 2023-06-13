@@ -1,4 +1,5 @@
 import 'package:coolwell_tech/common/model/get_profile_details_model.dart';
+import 'package:coolwell_tech/screens/technician/tech_orders.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/custom_widget.dart';
 import '../../common/localization/localizations.dart';
 import '../../common/model/api_utils.dart';
+import '../user/basics/notification.dart';
 
 class Tech_DashBoard_Screen extends StatefulWidget {
   const Tech_DashBoard_Screen({Key? key}) : super(key: key);
@@ -83,10 +85,10 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                           ),
                           InkWell(
                             onTap: (){
-                              // Navigator.of(context).push(
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             Notification_Screen()));
+                              Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Notification_Screen()));
                             },
                             child: Padding(
                               padding: EdgeInsets.only(right: 30.0),
@@ -125,39 +127,39 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                     ],
                   ),
                 ),
-                Padding(padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(10.0, 12.0, 10.0, 12.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(width: 1.0,color: Theme.of(context).shadowColor,)
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset("assets/images/search.svg", height: 20.0, color: Theme.of(context).shadowColor,),
-                      SizedBox(width: 10.0,),
-                      Text(
-                        AppLocalizations.instance
-                            .text("loc_search"),
-                        style: CustomWidget(context: context)
-                            .CustomSizedTextStyle(
-                            14.0,
-                            Theme.of(context).shadowColor,
-                            FontWeight.w400,
-                            'FontRegular'),
-                        textAlign: TextAlign.end,
-                      ),
-                    ],
-                  ),
-                ),),
+                // Padding(padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),child: Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   padding: EdgeInsets.fromLTRB(10.0, 12.0, 10.0, 12.0),
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(10.0),
+                //       border: Border.all(width: 1.0,color: Theme.of(context).shadowColor,)
+                //   ),
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: [
+                //       SvgPicture.asset("assets/images/search.svg", height: 20.0, color: Theme.of(context).shadowColor,),
+                //       SizedBox(width: 10.0,),
+                //       Text(
+                //         AppLocalizations.instance
+                //             .text("loc_search"),
+                //         style: CustomWidget(context: context)
+                //             .CustomSizedTextStyle(
+                //             14.0,
+                //             Theme.of(context).shadowColor,
+                //             FontWeight.w400,
+                //             'FontRegular'),
+                //         textAlign: TextAlign.end,
+                //       ),
+                //     ],
+                //   ),
+                // ),),
               ],
             ),
 
             Container(
               height: MediaQuery.of(context).size.height,
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.35),
+              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.26),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +224,10 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                      ),
                                      InkWell(
                                        onTap:(){
-
+                                         Navigator.of(context).push(
+                                             MaterialPageRoute(
+                                                 builder: (context) =>
+                                                     Tech_Orders_Screen()));
                                        },
                                        child: Container(
                                          padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),

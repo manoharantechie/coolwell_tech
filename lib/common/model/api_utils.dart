@@ -29,6 +29,7 @@ class APIUtils {
   static const String complaintHistoryURL = '/users/getComplaintHistory';
   static const String assignedServicesURL = '/technician/AssignedJobsList';
   static const String assignedServicesDetailsURL = '/technician/AssignedJobs';
+  static const String googleRegisterURL = '/googleregister';
 
 
   Future<CommonModel> doRegisterEmail(
@@ -168,6 +169,19 @@ class APIUtils {
     await http.post(Uri.parse(baseURL + assignedServicesDetailsURL),headers: requestHeaders, body: bodyData);
     // print(response.body);
     return AssignedOrdersModel.fromJson(json.decode(response.body));
+  }
+
+  Future<Login> googleRegistration(
+      String name, String email, String type) async {
+    var bodyData = {
+      'name': name,
+      'email': email,
+      'type': type,
+    };
+
+    final response =
+    await http.post(Uri.parse(baseURL + googleRegisterURL), body: bodyData);
+    return Login.fromJson(json.decode(response.body));
   }
 
 }
