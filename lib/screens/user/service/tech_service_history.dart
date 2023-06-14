@@ -1,3 +1,5 @@
+import 'package:coolwell_tech/screens/user/service/service_details.dart';
+import 'package:coolwell_tech/screens/user/service/tech_service_history_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -219,85 +221,92 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                           ],
                         ),), flex: 1,),
                         const SizedBox(width: 8.0,),
-                        Flexible(child: Container(
-                          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14.0),
-                              color: Theme.of(context).focusColor,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Theme.of(context).splashColor,
-                                    blurRadius: 10.0,
-                                    offset: Offset(0.0, 0.5)
+                        Flexible(child: InkWell(
+                          onTap:(){
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    Service_History_Details()));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14.0),
+                                color: Theme.of(context).focusColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Theme.of(context).splashColor,
+                                      blurRadius: 10.0,
+                                      offset: Offset(0.0, 0.5)
+                                  ),
+                                ]
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  texts[index].toString(),
+                                  style: CustomWidget(context: context)
+                                      .CustomSizedTextStyle(
+                                      18.0,
+                                      Theme.of(context).primaryColor,
+                                      FontWeight.w700,
+                                      'FontRegular'),
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ]
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                texts[index].toString(),
-                                style: CustomWidget(context: context)
-                                    .CustomSizedTextStyle(
-                                    18.0,
-                                    Theme.of(context).primaryColor,
-                                    FontWeight.w700,
-                                    'FontRegular'),
-                                textAlign: TextAlign.start,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 10.0,),
-                              Text(
-                                "Cleaning foam",
-                                style: CustomWidget(context: context)
-                                    .CustomSizedTextStyle(
-                                    14.0,
-                                    Theme.of(context).primaryColor,
-                                    FontWeight.w400,
-                                    'FontRegular'),
-                                textAlign: TextAlign.start,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 5.0,),
-                              Text(
-                                "Power jet cleaning",
-                                style: CustomWidget(context: context)
-                                    .CustomSizedTextStyle(
-                                    14.0,
-                                    Theme.of(context).primaryColor,
-                                    FontWeight.w400,
-                                    'FontRegular'),
-                                textAlign: TextAlign.start,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 5.0,),
-                              Text(
-                                "indoor & outer unit servicing",
-                                style: CustomWidget(context: context)
-                                    .CustomSizedTextStyle(
-                                    14.0,
-                                    Theme.of(context).primaryColor,
-                                    FontWeight.w400,
-                                    'FontRegular'),
-                                textAlign: TextAlign.start,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 5.0,),
-                              Text(
-                                "Duration",
-                                style: CustomWidget(context: context)
-                                    .CustomSizedTextStyle(
-                                    14.0,
-                                    Theme.of(context).primaryColor,
-                                    FontWeight.w400,
-                                    'FontRegular'),
-                                textAlign: TextAlign.start,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                                const SizedBox(height: 10.0,),
+                                Text(
+                                  "Cleaning foam",
+                                  style: CustomWidget(context: context)
+                                      .CustomSizedTextStyle(
+                                      14.0,
+                                      Theme.of(context).primaryColor,
+                                      FontWeight.w400,
+                                      'FontRegular'),
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 5.0,),
+                                Text(
+                                  "Power jet cleaning",
+                                  style: CustomWidget(context: context)
+                                      .CustomSizedTextStyle(
+                                      14.0,
+                                      Theme.of(context).primaryColor,
+                                      FontWeight.w400,
+                                      'FontRegular'),
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 5.0,),
+                                Text(
+                                  "indoor & outer unit servicing",
+                                  style: CustomWidget(context: context)
+                                      .CustomSizedTextStyle(
+                                      14.0,
+                                      Theme.of(context).primaryColor,
+                                      FontWeight.w400,
+                                      'FontRegular'),
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 5.0,),
+                                Text(
+                                  "Duration",
+                                  style: CustomWidget(context: context)
+                                      .CustomSizedTextStyle(
+                                      14.0,
+                                      Theme.of(context).primaryColor,
+                                      FontWeight.w400,
+                                      'FontRegular'),
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
 
 
-                            ],
+                              ],
+                            ),
                           ),
                         ), flex: 4,)
 

@@ -22,12 +22,15 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
   bool loading = false;
   APIUtils apiUtils = APIUtils();
   AssignedOrdersResult? OrderFullList;
+  Services? ServiceList;
   String Servicename ="";
   String Serviceamount ="";
   String Servicetime ="";
+  // String ServiceList ="";
   String CustomerNum ="";
   String Customername ="";
   String CustomerAdd ="";
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -85,20 +88,20 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                           Container(
                             height: MediaQuery.of(context).size.height *0.2,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(22.0),
-                                  topRight: Radius.circular(22.0)
-                              ),
-                              color: Color(0xFF1F598E),
-                              image: DecorationImage(
-                                colorFilter: ColorFilter.mode(
-                                    Color(0xFF1F598E).withOpacity(0.6),
-                                    BlendMode.dstATop),
-                                image: NetworkImage(
-                                    OrderFullList!.services!.coverImage![0].toString()
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(22.0),
+                                    topRight: Radius.circular(22.0)
                                 ),
-                                fit: BoxFit.cover,
-                              )
+                                color: Color(0xFF1F598E),
+                                image: DecorationImage(
+                                  colorFilter: ColorFilter.mode(
+                                      Color(0xFF1F598E).withOpacity(0.6),
+                                      BlendMode.dstATop),
+                                  image: NetworkImage(
+                                      ServiceList!.coverImage![0].toString()
+                                  ),
+                                  fit: BoxFit.cover,
+                                )
                             ),
                           ),
                           Container(
@@ -325,76 +328,57 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                     const SizedBox(
                                       height: 10.0,
                                     ),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            AppLocalizations.instance
-                                                .text("loc_clean_foam"),
-                                            style: CustomWidget(context: context)
-                                                .CustomSizedTextStyle(
-                                                14.0,
-                                                Theme.of(context).primaryColor,
-                                                FontWeight.w400,
-                                                'FontRegular'),
-                                            textAlign: TextAlign.start,
+                                          ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            itemCount: ServiceList!.checkList!.length,
+                                            scrollDirection: Axis.vertical,
+                                            shrinkWrap: true,
+                                            controller: _scrollController,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return Column(
+                                                children: [
+                                                  Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Flexible(
+                                                        child: Text(
+                                                          // AppLocalizations.instance
+                                                          //     .text("loc_clean_foam"),
+                                                          ServiceList!.checkList![index].toString(),
+                                                          style: CustomWidget(context: context)
+                                                              .CustomSizedTextStyle(
+                                                              14.0,
+                                                              Theme.of(context).primaryColor,
+                                                              FontWeight.w400,
+                                                              'FontRegular'),
+                                                          textAlign: TextAlign.start,
+                                                        ),
+                                                        flex: 3,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 2.0,
+                                                      ),
+                                                      Flexible(
+                                                        child: Container(
+                                                          child: Center(
+                                                            child: Icon(
+                                                              Icons.check,
+                                                              color:
+                                                              Theme.of(context).selectedRowColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        flex: 1,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              );
+                                            },
                                           ),
-                                          flex: 3,
-                                        ),
-                                        const SizedBox(
-                                          width: 2.0,
-                                        ),
-                                        Flexible(
-                                          child: Container(
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.check,
-                                                color:
-                                                Theme.of(context).selectedRowColor,
-                                              ),
-                                            ),
-                                          ),
-                                          flex: 1,
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            AppLocalizations.instance
-                                                .text("loc_clean_power"),
-                                            style: CustomWidget(context: context)
-                                                .CustomSizedTextStyle(
-                                                14.0,
-                                                Theme.of(context).primaryColor,
-                                                FontWeight.w400,
-                                                'FontRegular'),
-                                            textAlign: TextAlign.start,
-                                          ),
-                                          flex: 3,
-                                        ),
-                                        const SizedBox(
-                                          width: 2.0,
-                                        ),
-                                        Flexible(
-                                          child: Container(
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.check,
-                                                color:
-                                                Theme.of(context).selectedRowColor,
-                                              ),
-                                            ),
-                                          ),
-                                          flex: 1,
-                                        ),
-                                      ],
-                                    ),
+
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -533,21 +517,21 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                                 color: Theme.of(context).primaryColor,
                                               ),
                                               const SizedBox(width: 5.0,),
-                                             Flexible(
-                                               child:  Text(
-                                                 // AppLocalizations.instance
-                                                 //     .text("loc_track_location"),
-                                                 CustomerAdd.toString(),
-                                                 style: CustomWidget(context: context)
-                                                     .CustomSizedTextStyle(
-                                                     10.0,
-                                                     Theme.of(context).primaryColor,
-                                                     FontWeight.w600,
-                                                     'FontRegular'),
-                                                 textAlign: TextAlign.start,
-                                                 overflow: TextOverflow.ellipsis,
-                                               ),
-                                             )
+                                              Flexible(
+                                                child:  Text(
+                                                  // AppLocalizations.instance
+                                                  //     .text("loc_track_location"),
+                                                  CustomerAdd.toString(),
+                                                  style: CustomWidget(context: context)
+                                                      .CustomSizedTextStyle(
+                                                      10.0,
+                                                      Theme.of(context).primaryColor,
+                                                      FontWeight.w600,
+                                                      'FontRegular'),
+                                                  textAlign: TextAlign.start,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              )
 
                                             ],
                                           ),
@@ -689,7 +673,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                     Container(
                       margin: EdgeInsets.only(top: 7.0, bottom: 10.0),
                       height: 2.0,
-                     color: Theme.of(context).dividerColor,
+                      color: Theme.of(context).dividerColor,
                     ),
                     GestureDetector(
                       onTap: (){
@@ -714,20 +698,20 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                       height: 2.0,
                       color: Theme.of(context).dividerColor,
                     ),
-                   InkWell(
-                     onTap: (){
+                    InkWell(
+                      onTap: (){
 
-                     },
-                     child:  Text(
-                       "Track order location",
-                       style: TextStyle(
-                         fontSize: 17.0,
-                         color: Color(0xFF007AFF),
-                         fontWeight: FontWeight.w400,
-                         fontFamily: 'OpenSans',
-                       ),
-                     ),
-                   )
+                      },
+                      child:  Text(
+                        "Track order location",
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          color: Color(0xFF007AFF),
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -749,6 +733,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
             Servicename =OrderFullList!.services!.serviceName.toString();
             Serviceamount =OrderFullList!.services!.amount.toString();
             Servicetime =OrderFullList!.services!.time.toString();
+            ServiceList =OrderFullList!.services!;
             CustomerNum =OrderFullList!.users!.phone.toString();
             Customername =OrderFullList!.users!.name.toString();
             CustomerAdd =OrderFullList!.complaints!.address.toString();

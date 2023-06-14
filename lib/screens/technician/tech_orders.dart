@@ -160,7 +160,6 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>
                                     Tech_Order_Details_Screen( j_id: orderList[index].id.toString())));
-                            print(orderList[index].id.toString());
                           },
                           child: Container(
                             padding: EdgeInsets.only(

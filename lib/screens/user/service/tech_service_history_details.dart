@@ -185,7 +185,7 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
                                 children: [
                                   Text(
                                     AppLocalizations.instance
-                                        .text("loc_tech_name"),
+                                        .text("loc_user_name"),
                                     style: CustomWidget(context: context)
                                         .CustomSizedTextStyle(
                                             18.0,
@@ -199,7 +199,7 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
                                   ),
                                   Text(
                                     AppLocalizations.instance
-                                        .text("loc_tech_id"),
+                                        .text("loc_user_id"),
                                     style: CustomWidget(context: context)
                                         .CustomSizedTextStyle(
                                             10.0,
@@ -917,405 +917,402 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
                         ),
                       ),
                       const SizedBox(
-                        height: 10.0,
+                        height: 20.0,
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.only(
-                            left: 20.0, right: 20.0, bottom: 20.0, top: 0.0),
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).focusColor,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Theme.of(context)
-                                      .cardColor
-                                      .withOpacity(0.2),
-                                  blurRadius: 10.0,
-                                  offset: Offset(0.0, 0.5)),
-                            ]),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            Text(
-                              AppLocalizations.instance.text("loc_add_review"),
-                              style: CustomWidget(context: context)
-                                  .CustomSizedTextStyle(
-                                      16.0,
-                                      Theme.of(context).primaryColor,
-                                      FontWeight.w600,
-                                      'FontRegular'),
-                              textAlign: TextAlign.start,
-                            ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            TextFormFieldCustom(
-                              onEditComplete: () {
-                                reviewFocus.unfocus();
-                                // FocusScope.of(context).requestFocus(phoneNumFocus);
-                              },
-                              radius: 6.0,
-                              error: "Enter Full Name",
-                              textColor: Theme.of(context).primaryColor,
-                              borderColor: Theme.of(context).dividerColor,
-                              fillColor: Theme.of(context).focusColor,
-                              hintStyle: CustomWidget(context: context)
-                                  .CustomSizedTextStyle(
-                                      16.0,
-                                      Theme.of(context)
-                                          .primaryColor
-                                          .withOpacity(0.3),
-                                      FontWeight.w500,
-                                      'FontRegular'),
-                              textStyle: CustomWidget(context: context)
-                                  .CustomSizedTextStyle(
-                                      16.0,
-                                      Theme.of(context).primaryColor,
-                                      FontWeight.w500,
-                                      'FontRegular'),
-                              textInputAction: TextInputAction.next,
-                              focusNode: reviewFocus,
-                              maxlines: 5,
-                              text: '',
-                              hintText: "What did you like or dislike?",
-                              obscureText: false,
-                              textChanged: (value) {},
-                              onChanged: () {},
-                              suffix: Container(
-                                width: 0.0,
-                              ),
-                              validator: (value) {},
-                              enabled: true,
-                              textInputType: TextInputType.text,
-                              controller: reviewController,
-                            ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  AppLocalizations.instance
-                                      .text("loc_give_star"),
-                                  style: CustomWidget(context: context)
-                                      .CustomSizedTextStyle(
-                                          9.0,
-                                          Theme.of(context).primaryColor,
-                                          FontWeight.w600,
-                                          'FontRegular'),
-                                  textAlign: TextAlign.start,
-                                ),
-                                const SizedBox(
-                                  height: 10.0,
-                                ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.5,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Flexible(
-                                          child: Column(
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.all(5.0),
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  width: 1.0,
-                                                  color: Theme.of(context)
-                                                      .shadowColor
-                                                      .withOpacity(0.5),
-                                                )),
-                                            child: SvgPicture.asset(
-                                              "assets/images/star.svg",
-                                              height: 15.0,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Text(
-                                            "1",
-                                            style:
-                                                CustomWidget(context: context)
-                                                    .CustomSizedTextStyle(
-                                                        9.0,
-                                                        Theme.of(context)
-                                                            .primaryColor,
-                                                        FontWeight.w600,
-                                                        'FontRegular'),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      )),
-                                      Flexible(
-                                          child: Column(
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.all(5.0),
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  width: 1.0,
-                                                  color: Theme.of(context)
-                                                      .shadowColor
-                                                      .withOpacity(0.5),
-                                                )),
-                                            child: SvgPicture.asset(
-                                              "assets/images/star.svg",
-                                              height: 15.0,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Text(
-                                            "2",
-                                            style:
-                                                CustomWidget(context: context)
-                                                    .CustomSizedTextStyle(
-                                                        9.0,
-                                                        Theme.of(context)
-                                                            .primaryColor,
-                                                        FontWeight.w600,
-                                                        'FontRegular'),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      )),
-                                      Flexible(
-                                          child: Column(
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.all(5.0),
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  width: 1.0,
-                                                  color: Theme.of(context)
-                                                      .shadowColor
-                                                      .withOpacity(0.5),
-                                                )),
-                                            child: SvgPicture.asset(
-                                              "assets/images/star.svg",
-                                              height: 15.0,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Text(
-                                            "3",
-                                            style:
-                                                CustomWidget(context: context)
-                                                    .CustomSizedTextStyle(
-                                                        9.0,
-                                                        Theme.of(context)
-                                                            .primaryColor,
-                                                        FontWeight.w600,
-                                                        'FontRegular'),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      )),
-                                      Flexible(
-                                          child: Column(
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.all(5.0),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                width: 1.0,
-                                                color:
-                                                    Theme.of(context).cardColor,
-                                              ),
-                                              color:
-                                                  Theme.of(context).cardColor,
-                                            ),
-                                            child: SvgPicture.asset(
-                                                "assets/images/star.svg",
-                                                height: 15.0,
-                                                color: Theme.of(context)
-                                                    .focusColor),
-                                          ),
-                                          const SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Text(
-                                            "4",
-                                            style:
-                                                CustomWidget(context: context)
-                                                    .CustomSizedTextStyle(
-                                                        9.0,
-                                                        Theme.of(context)
-                                                            .primaryColor,
-                                                        FontWeight.w600,
-                                                        'FontRegular'),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      )),
-                                      Flexible(
-                                          child: Column(
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.all(5.0),
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  width: 1.0,
-                                                  color: Theme.of(context)
-                                                      .shadowColor
-                                                      .withOpacity(0.5),
-                                                )),
-                                            child: SvgPicture.asset(
-                                              "assets/images/star.svg",
-                                              height: 15.0,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Text(
-                                            "5",
-                                            style:
-                                                CustomWidget(context: context)
-                                                    .CustomSizedTextStyle(
-                                                        9.0,
-                                                        Theme.of(context)
-                                                            .primaryColor,
-                                                        FontWeight.w600,
-                                                        'FontRegular'),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20.0,
-                            ),
-                            Center(
-                              child: InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      30.0, 10.0, 30.0, 10.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                    color: Theme.of(context).dialogBackgroundColor,
-                                  ),
-                                  child: Text(
-                                    AppLocalizations.instance
-                                        .text("loc_submit"),
-                                    style: CustomWidget(context: context)
-                                        .CustomSizedTextStyle(
-                                            14.0,
-                                            Theme.of(context).focusColor,
-                                            FontWeight.w600,
-                                            'FontRegular'),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.18,
-                        margin: EdgeInsets.only(top: 20.0),
-                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                        child: Stack(
-                          children: [
-                            Container(
-                                padding: EdgeInsets.only(
-                                    top: 20.0,
-                                    left: 20.0,
-                                    right: 20.0,
-                                    bottom: 20.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  gradient: LinearGradient(
-                                    begin: Alignment.bottomLeft,
-                                    end: Alignment.topRight,
-                                    colors: [
-                                      const Color(0xFF0DD8FF),
-                                      const Color(0xFF0FABFF),
-                                      const Color(0xFF1457FF).withOpacity(0.8),
-                                      const Color(0xFF1636FF),
-                                      const Color(0xFF0E69C7),
-                                    ],
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Refer and get \nfree services",
-                                            style:
-                                                CustomWidget(context: context)
-                                                    .CustomSizedTextStyle(
-                                                        18.0,
-                                                        Theme.of(context)
-                                                            .focusColor,
-                                                        FontWeight.w600,
-                                                        'FontRegular'),
-                                            textAlign: TextAlign.start,
-                                          ),
-                                          Text(
-                                            "Invite and get ₹300*",
-                                            style:
-                                                CustomWidget(context: context)
-                                                    .CustomSizedTextStyle(
-                                                        14.0,
-                                                        Theme.of(context)
-                                                            .focusColor,
-                                                        FontWeight.w400,
-                                                        'FontRegular'),
-                                            textAlign: TextAlign.start,
-                                          )
-                                        ],
-                                      ),
-                                      flex: 2,
-                                    ),
-                                    Flexible(
-                                      child: Container(),
-                                      flex: 1,
-                                    )
-                                  ],
-                                )),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Image.asset("assets/images/gift_1.png"),
-                            )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 40.0,
-                      ),
+                      // Container(
+                      //   width: MediaQuery.of(context).size.width,
+                      //   padding: EdgeInsets.only(
+                      //       left: 20.0, right: 20.0, bottom: 20.0, top: 0.0),
+                      //   decoration: BoxDecoration(
+                      //       color: Theme.of(context).focusColor,
+                      //       boxShadow: [
+                      //         BoxShadow(
+                      //             color: Theme.of(context)
+                      //                 .cardColor
+                      //                 .withOpacity(0.2),
+                      //             blurRadius: 10.0,
+                      //             offset: Offset(0.0, 0.5)),
+                      //       ]),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       SizedBox(
+                      //         height: 15.0,
+                      //       ),
+                      //       Text(
+                      //         AppLocalizations.instance.text("loc_add_review"),
+                      //         style: CustomWidget(context: context)
+                      //             .CustomSizedTextStyle(
+                      //                 16.0,
+                      //                 Theme.of(context).primaryColor,
+                      //                 FontWeight.w600,
+                      //                 'FontRegular'),
+                      //         textAlign: TextAlign.start,
+                      //       ),
+                      //       SizedBox(
+                      //         height: 15.0,
+                      //       ),
+                      //       TextFormFieldCustom(
+                      //         onEditComplete: () {
+                      //           reviewFocus.unfocus();
+                      //           // FocusScope.of(context).requestFocus(phoneNumFocus);
+                      //         },
+                      //         radius: 6.0,
+                      //         error: "Enter Full Name",
+                      //         textColor: Theme.of(context).primaryColor,
+                      //         borderColor: Theme.of(context).dividerColor,
+                      //         fillColor: Theme.of(context).focusColor,
+                      //         hintStyle: CustomWidget(context: context)
+                      //             .CustomSizedTextStyle(
+                      //                 16.0,
+                      //                 Theme.of(context)
+                      //                     .primaryColor
+                      //                     .withOpacity(0.3),
+                      //                 FontWeight.w500,
+                      //                 'FontRegular'),
+                      //         textStyle: CustomWidget(context: context)
+                      //             .CustomSizedTextStyle(
+                      //                 16.0,
+                      //                 Theme.of(context).primaryColor,
+                      //                 FontWeight.w500,
+                      //                 'FontRegular'),
+                      //         textInputAction: TextInputAction.next,
+                      //         focusNode: reviewFocus,
+                      //         maxlines: 5,
+                      //         text: '',
+                      //         hintText: "What did you like or dislike?",
+                      //         obscureText: false,
+                      //         textChanged: (value) {},
+                      //         onChanged: () {},
+                      //         suffix: Container(
+                      //           width: 0.0,
+                      //         ),
+                      //         validator: (value) {},
+                      //         enabled: true,
+                      //         textInputType: TextInputType.text,
+                      //         controller: reviewController,
+                      //       ),
+                      //       SizedBox(
+                      //         height: 15.0,
+                      //       ),
+                      //       Column(
+                      //         crossAxisAlignment: CrossAxisAlignment.start,
+                      //         children: [
+                      //           Text(
+                      //             AppLocalizations.instance
+                      //                 .text("loc_give_star"),
+                      //             style: CustomWidget(context: context)
+                      //                 .CustomSizedTextStyle(
+                      //                     9.0,
+                      //                     Theme.of(context).primaryColor,
+                      //                     FontWeight.w600,
+                      //                     'FontRegular'),
+                      //             textAlign: TextAlign.start,
+                      //           ),
+                      //           const SizedBox(
+                      //             height: 10.0,
+                      //           ),
+                      //           Container(
+                      //             width:
+                      //                 MediaQuery.of(context).size.width * 0.5,
+                      //             child: Row(
+                      //               crossAxisAlignment:
+                      //                   CrossAxisAlignment.center,
+                      //               mainAxisAlignment:
+                      //                   MainAxisAlignment.spaceBetween,
+                      //               children: [
+                      //                 Flexible(
+                      //                     child: Column(
+                      //                   children: [
+                      //                     Container(
+                      //                       padding: EdgeInsets.all(5.0),
+                      //                       decoration: BoxDecoration(
+                      //                           shape: BoxShape.circle,
+                      //                           border: Border.all(
+                      //                             width: 1.0,
+                      //                             color: Theme.of(context)
+                      //                                 .shadowColor
+                      //                                 .withOpacity(0.5),
+                      //                           )),
+                      //                       child: SvgPicture.asset(
+                      //                         "assets/images/star.svg",
+                      //                         height: 15.0,
+                      //                       ),
+                      //                     ),
+                      //                     const SizedBox(
+                      //                       height: 5.0,
+                      //                     ),
+                      //                     Text(
+                      //                       "1",
+                      //                       style:
+                      //                           CustomWidget(context: context)
+                      //                               .CustomSizedTextStyle(
+                      //                                   9.0,
+                      //                                   Theme.of(context)
+                      //                                       .primaryColor,
+                      //                                   FontWeight.w600,
+                      //                                   'FontRegular'),
+                      //                       textAlign: TextAlign.center,
+                      //                     ),
+                      //                   ],
+                      //                 )),
+                      //                 Flexible(
+                      //                     child: Column(
+                      //                   children: [
+                      //                     Container(
+                      //                       padding: EdgeInsets.all(5.0),
+                      //                       decoration: BoxDecoration(
+                      //                           shape: BoxShape.circle,
+                      //                           border: Border.all(
+                      //                             width: 1.0,
+                      //                             color: Theme.of(context)
+                      //                                 .shadowColor
+                      //                                 .withOpacity(0.5),
+                      //                           )),
+                      //                       child: SvgPicture.asset(
+                      //                         "assets/images/star.svg",
+                      //                         height: 15.0,
+                      //                       ),
+                      //                     ),
+                      //                     const SizedBox(
+                      //                       height: 5.0,
+                      //                     ),
+                      //                     Text(
+                      //                       "2",
+                      //                       style:
+                      //                           CustomWidget(context: context)
+                      //                               .CustomSizedTextStyle(
+                      //                                   9.0,
+                      //                                   Theme.of(context)
+                      //                                       .primaryColor,
+                      //                                   FontWeight.w600,
+                      //                                   'FontRegular'),
+                      //                       textAlign: TextAlign.center,
+                      //                     ),
+                      //                   ],
+                      //                 )),
+                      //                 Flexible(
+                      //                     child: Column(
+                      //                   children: [
+                      //                     Container(
+                      //                       padding: EdgeInsets.all(5.0),
+                      //                       decoration: BoxDecoration(
+                      //                           shape: BoxShape.circle,
+                      //                           border: Border.all(
+                      //                             width: 1.0,
+                      //                             color: Theme.of(context)
+                      //                                 .shadowColor
+                      //                                 .withOpacity(0.5),
+                      //                           )),
+                      //                       child: SvgPicture.asset(
+                      //                         "assets/images/star.svg",
+                      //                         height: 15.0,
+                      //                       ),
+                      //                     ),
+                      //                     const SizedBox(
+                      //                       height: 5.0,
+                      //                     ),
+                      //                     Text(
+                      //                       "3",
+                      //                       style:
+                      //                           CustomWidget(context: context)
+                      //                               .CustomSizedTextStyle(
+                      //                                   9.0,
+                      //                                   Theme.of(context)
+                      //                                       .primaryColor,
+                      //                                   FontWeight.w600,
+                      //                                   'FontRegular'),
+                      //                       textAlign: TextAlign.center,
+                      //                     ),
+                      //                   ],
+                      //                 )),
+                      //                 Flexible(
+                      //                     child: Column(
+                      //                   children: [
+                      //                     Container(
+                      //                       padding: EdgeInsets.all(5.0),
+                      //                       decoration: BoxDecoration(
+                      //                         shape: BoxShape.circle,
+                      //                         border: Border.all(
+                      //                           width: 1.0,
+                      //                           color:
+                      //                               Theme.of(context).cardColor,
+                      //                         ),
+                      //                         color:
+                      //                             Theme.of(context).cardColor,
+                      //                       ),
+                      //                       child: SvgPicture.asset(
+                      //                           "assets/images/star.svg",
+                      //                           height: 15.0,
+                      //                           color: Theme.of(context)
+                      //                               .focusColor),
+                      //                     ),
+                      //                     const SizedBox(
+                      //                       height: 5.0,
+                      //                     ),
+                      //                     Text(
+                      //                       "4",
+                      //                       style:
+                      //                           CustomWidget(context: context)
+                      //                               .CustomSizedTextStyle(
+                      //                                   9.0,
+                      //                                   Theme.of(context)
+                      //                                       .primaryColor,
+                      //                                   FontWeight.w600,
+                      //                                   'FontRegular'),
+                      //                       textAlign: TextAlign.center,
+                      //                     ),
+                      //                   ],
+                      //                 )),
+                      //                 Flexible(
+                      //                     child: Column(
+                      //                   children: [
+                      //                     Container(
+                      //                       padding: EdgeInsets.all(5.0),
+                      //                       decoration: BoxDecoration(
+                      //                           shape: BoxShape.circle,
+                      //                           border: Border.all(
+                      //                             width: 1.0,
+                      //                             color: Theme.of(context)
+                      //                                 .shadowColor
+                      //                                 .withOpacity(0.5),
+                      //                           )),
+                      //                       child: SvgPicture.asset(
+                      //                         "assets/images/star.svg",
+                      //                         height: 15.0,
+                      //                       ),
+                      //                     ),
+                      //                     const SizedBox(
+                      //                       height: 5.0,
+                      //                     ),
+                      //                     Text(
+                      //                       "5",
+                      //                       style:
+                      //                           CustomWidget(context: context)
+                      //                               .CustomSizedTextStyle(
+                      //                                   9.0,
+                      //                                   Theme.of(context)
+                      //                                       .primaryColor,
+                      //                                   FontWeight.w600,
+                      //                                   'FontRegular'),
+                      //                       textAlign: TextAlign.center,
+                      //                     ),
+                      //                   ],
+                      //                 )),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       const SizedBox(
+                      //         height: 20.0,
+                      //       ),
+                      //       Center(
+                      //         child: InkWell(
+                      //           onTap: () {},
+                      //           child: Container(
+                      //             padding: EdgeInsets.fromLTRB(
+                      //                 30.0, 10.0, 30.0, 10.0),
+                      //             decoration: BoxDecoration(
+                      //               borderRadius: BorderRadius.circular(30.0),
+                      //               color: Theme.of(context).dialogBackgroundColor,
+                      //             ),
+                      //             child: Text(
+                      //               AppLocalizations.instance
+                      //                   .text("loc_submit"),
+                      //               style: CustomWidget(context: context)
+                      //                   .CustomSizedTextStyle(
+                      //                       14.0,
+                      //                       Theme.of(context).focusColor,
+                      //                       FontWeight.w600,
+                      //                       'FontRegular'),
+                      //               textAlign: TextAlign.center,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 10.0,
+                      // ),
+                      // Container(
+                      //   height: MediaQuery.of(context).size.height * 0.18,
+                      //   margin: EdgeInsets.only(top: 20.0),
+                      //   padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                      //   child: Stack(
+                      //     children: [
+                      //       Container(
+                      //           padding: EdgeInsets.only(
+                      //               top: 20.0,
+                      //               left: 20.0,
+                      //               right: 20.0,
+                      //               bottom: 20.0),
+                      //           decoration: BoxDecoration(
+                      //             borderRadius: BorderRadius.circular(15.0),
+                      //             gradient: LinearGradient(
+                      //               begin: Alignment.bottomLeft,
+                      //               end: Alignment.topRight,
+                      //               colors: [
+                      //                 const Color(0xFF0DD8FF),
+                      //                 const Color(0xFF0FABFF),
+                      //                 const Color(0xFF1457FF).withOpacity(0.8),
+                      //                 const Color(0xFF1636FF),
+                      //                 const Color(0xFF0E69C7),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //           child: Row(
+                      //             children: [
+                      //               Flexible(
+                      //                 child: Column(
+                      //                   crossAxisAlignment:
+                      //                       CrossAxisAlignment.start,
+                      //                   mainAxisAlignment:
+                      //                       MainAxisAlignment.center,
+                      //                   children: [
+                      //                     Text(
+                      //                       "Refer and get \nfree services",
+                      //                       style:
+                      //                           CustomWidget(context: context)
+                      //                               .CustomSizedTextStyle(
+                      //                                   18.0,
+                      //                                   Theme.of(context)
+                      //                                       .focusColor,
+                      //                                   FontWeight.w600,
+                      //                                   'FontRegular'),
+                      //                       textAlign: TextAlign.start,
+                      //                     ),
+                      //                     Text(
+                      //                       "Invite and get ₹300*",
+                      //                       style:
+                      //                           CustomWidget(context: context)
+                      //                               .CustomSizedTextStyle(
+                      //                                   14.0,
+                      //                                   Theme.of(context)
+                      //                                       .focusColor,
+                      //                                   FontWeight.w400,
+                      //                                   'FontRegular'),
+                      //                       textAlign: TextAlign.start,
+                      //                     )
+                      //                   ],
+                      //                 ),
+                      //                 flex: 2,
+                      //               ),
+                      //               Flexible(
+                      //                 child: Container(),
+                      //                 flex: 1,
+                      //               )
+                      //             ],
+                      //           )),
+                      //       Align(
+                      //         alignment: Alignment.bottomRight,
+                      //         child: Image.asset("assets/images/gift_1.png"),
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 )),

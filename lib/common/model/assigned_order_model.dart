@@ -34,8 +34,8 @@ class AssignedOrdersResult {
   List<String>? attachment;
   List<String>? notes;
   String? taskTitle;
-  DateTime? startTime;
-  DateTime? endTime;
+  dynamic startTime;
+  dynamic endTime;
   String? location;
   String? latitude;
   String? longitude;
@@ -65,8 +65,8 @@ class AssignedOrdersResult {
     attachment: List<String>.from(json["Attachment"].map((x) => x)),
     notes: List<String>.from(json["Notes"].map((x) => x)),
     taskTitle: json["Task_Title"],
-    startTime: DateTime.parse(json["Start_Time"]),
-    endTime: DateTime.parse(json["End_Time"]),
+    startTime: json["Start_Time"],
+    endTime: json["End_Time"],
     location: json["Location"],
     latitude: json["latitude"],
     longitude: json["longitude"],
@@ -81,8 +81,8 @@ class AssignedOrdersResult {
     "Attachment": List<dynamic>.from(attachment!.map((x) => x)),
     "Notes": List<dynamic>.from(notes!.map((x) => x)),
     "Task_Title": taskTitle,
-    "Start_Time": startTime!.toIso8601String(),
-    "End_Time": endTime!.toIso8601String(),
+    "Start_Time": startTime!,
+    "End_Time": endTime!,
     "Location": location,
     "latitude": latitude,
     "longitude": longitude,
@@ -162,7 +162,7 @@ class Services {
   List<String>? coverImage;
   String? serviceName;
   String? category;
-  String? amount;
+  dynamic amount;
   String? time;
   String? notes;
   dynamic rattings;

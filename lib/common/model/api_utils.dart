@@ -30,6 +30,7 @@ class APIUtils {
   static const String assignedServicesURL = '/technician/AssignedJobsList';
   static const String assignedServicesDetailsURL = '/technician/AssignedJobs';
   static const String googleRegisterURL = '/googleregister';
+  static const String serviceHistoryURL = '';
 
 
   Future<CommonModel> doRegisterEmail(
@@ -167,7 +168,7 @@ class APIUtils {
 
     final response =
     await http.post(Uri.parse(baseURL + assignedServicesDetailsURL),headers: requestHeaders, body: bodyData);
-    // print(response.body);
+    print(response.body);
     return AssignedOrdersModel.fromJson(json.decode(response.body));
   }
 
@@ -181,6 +182,17 @@ class APIUtils {
 
     final response =
     await http.post(Uri.parse(baseURL + googleRegisterURL), body: bodyData);
+    return Login.fromJson(json.decode(response.body));
+  }
+
+  Future<Login> serviceHistory(
+      String date) async {
+    var bodyData = {
+      'name': date,
+    };
+
+    final response =
+    await http.post(Uri.parse(baseURL + serviceHistoryURL), body: bodyData);
     return Login.fromJson(json.decode(response.body));
   }
 
