@@ -6,8 +6,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:coolwell_tech/common/textformfield_custom.dart';
 
+import '../../../common/model/api_utils.dart';
+import '../../../common/model/assigned_order_model.dart';
+
 class Service_History_Details extends StatefulWidget {
-  const Service_History_Details({Key? key}) : super(key: key);
+  final String s_id;
+  const Service_History_Details({Key? key, required this.s_id}) : super(key: key);
 
   @override
   State<Service_History_Details> createState() =>
@@ -15,16 +19,41 @@ class Service_History_Details extends StatefulWidget {
 }
 
 class _Service_History_DetailsState extends State<Service_History_Details> {
+
+  bool loading = false;
+  APIUtils apiUtils = APIUtils();
   ScrollController _scrollController = ScrollController();
   bool photos = true;
   bool video = false;
   FocusNode reviewFocus = FocusNode();
   TextEditingController reviewController = TextEditingController();
 
+  AssignedOrdersResult? OrderFullList;
+  Services? ServiceList;
+  String Servicename ="";
+  String Serviceamount ="";
+  String Servicetime ="";
+  String CustomerNum ="";
+  String Customername ="";
+  String CustomerAdd ="";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loading= true;
+    servicesDetails();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: loading
+          ? CustomWidget(context: context).loadingIndicator(
+        Theme.of(context).cardColor,
+      )
+          :   Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(top: 30.0),
@@ -122,7 +151,7 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
                                   offset: Offset(0.0, 0.5)),
                             ]),
                         child: Text(
-                          "Deep clean AC Service",
+                          Servicename.toString(),
                           style: CustomWidget(context: context)
                               .CustomSizedTextStyle(
                                   18.0,
@@ -153,61 +182,37 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Row(
-                            //   crossAxisAlignment: CrossAxisAlignment.center,
-                            //   children: [
-                            //     Text(
-                            //       AppLocalizations.instance.text("loc_tech_name"),
-                            //       style: CustomWidget(context: context)
-                            //           .CustomSizedTextStyle(
-                            //           18.0,
-                            //           Theme.of(context).primaryColor,
-                            //           FontWeight.w700,
-                            //           'FontRegular'),
-                            //       textAlign: TextAlign.start,
-                            //     ),
-                            //     const SizedBox(height: 2.0,),
-                            //     Text(
-                            //       AppLocalizations.instance.text("loc_tech_id"),
-                            //       style: CustomWidget(context: context)
-                            //           .CustomSizedTextStyle(
-                            //           10.0,
-                            //           Theme.of(context).primaryColor,
-                            //           FontWeight.w700,
-                            //           'FontRegular'),
-                            //       textAlign: TextAlign.start,
-                            //     ),
-                            //   ],
-                            // ),
                             Flexible(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    AppLocalizations.instance
-                                        .text("loc_user_name"),
-                                    style: CustomWidget(context: context)
-                                        .CustomSizedTextStyle(
-                                            18.0,
-                                            Theme.of(context).primaryColor,
-                                            FontWeight.w700,
-                                            'FontRegular'),
-                                    textAlign: TextAlign.start,
+                                  Container(
+                                    child: Text(
+                                      Customername.toString(),
+                                      style: CustomWidget(context: context)
+                                          .CustomSizedTextStyle(
+                                          18.0,
+                                          Theme.of(context).primaryColor,
+                                          FontWeight.w700,
+                                          'FontRegular'),
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
-                                  const SizedBox(
-                                    height: 2.0,
-                                  ),
-                                  Text(
-                                    AppLocalizations.instance
-                                        .text("loc_user_id"),
-                                    style: CustomWidget(context: context)
-                                        .CustomSizedTextStyle(
-                                            10.0,
-                                            Theme.of(context).primaryColor,
-                                            FontWeight.w700,
-                                            'FontRegular'),
-                                    textAlign: TextAlign.start,
-                                  ),
+                                  // const SizedBox(
+                                  //   height: 2.0,
+                                  // ),
+                                  // Text(
+                                  //   AppLocalizations.instance
+                                  //       .text("loc_user_id"),
+                                  //   style: CustomWidget(context: context)
+                                  //       .CustomSizedTextStyle(
+                                  //           10.0,
+                                  //           Theme.of(context).primaryColor,
+                                  //           FontWeight.w700,
+                                  //           'FontRegular'),
+                                  //   textAlign: TextAlign.start,
+                                  // ),
                                   const SizedBox(
                                     height: 10.0,
                                   ),
@@ -221,16 +226,20 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
                                       const SizedBox(
                                         width: 5.0,
                                       ),
-                                      Text(
-                                        "+91 9876543210",
-                                        style: CustomWidget(context: context)
-                                            .CustomSizedTextStyle(
-                                                12.0,
-                                                Theme.of(context).primaryColor,
-                                                FontWeight.w600,
-                                                'FontRegular'),
-                                        textAlign: TextAlign.start,
-                                      ),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width * 0.3,
+                                        child: Text(
+                                          "+91 " +CustomerNum.toString(),
+                                          style: CustomWidget(context: context)
+                                              .CustomSizedTextStyle(
+                                              12.0,
+                                              Theme.of(context).primaryColor,
+                                              FontWeight.w600,
+                                              'FontRegular'),
+                                          textAlign: TextAlign.start,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      )
                                     ],
                                   )
                                 ],
@@ -507,75 +516,55 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
                             const SizedBox(
                               height: 10.0,
                             ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    AppLocalizations.instance
-                                        .text("loc_clean_foam"),
-                                    style: CustomWidget(context: context)
-                                        .CustomSizedTextStyle(
-                                            14.0,
-                                            Theme.of(context).primaryColor,
-                                            FontWeight.w400,
-                                            'FontRegular'),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                  flex: 3,
-                                ),
-                                const SizedBox(
-                                  width: 2.0,
-                                ),
-                                Flexible(
-                                  child: Container(
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.check,
-                                        color:
-                                            Theme.of(context).selectedRowColor,
-                                      ),
+                            ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: ServiceList!.checkList!.length,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              controller: _scrollController,
+                              itemBuilder: (BuildContext context,
+                                  int index) {
+                                return Column(
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            // AppLocalizations.instance
+                                            //     .text("loc_clean_foam"),
+                                            ServiceList!.checkList![index].toString(),
+                                            style: CustomWidget(context: context)
+                                                .CustomSizedTextStyle(
+                                                14.0,
+                                                Theme.of(context).primaryColor,
+                                                FontWeight.w400,
+                                                'FontRegular'),
+                                            textAlign: TextAlign.start,
+                                          ),
+                                          flex: 3,
+                                        ),
+                                        const SizedBox(
+                                          width: 2.0,
+                                        ),
+                                        Flexible(
+                                          child: Container(
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.check,
+                                                color:
+                                                Theme.of(context).selectedRowColor,
+                                              ),
+                                            ),
+                                          ),
+                                          flex: 1,
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  flex: 1,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    AppLocalizations.instance
-                                        .text("loc_clean_power"),
-                                    style: CustomWidget(context: context)
-                                        .CustomSizedTextStyle(
-                                            14.0,
-                                            Theme.of(context).primaryColor,
-                                            FontWeight.w400,
-                                            'FontRegular'),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                  flex: 3,
-                                ),
-                                const SizedBox(
-                                  width: 2.0,
-                                ),
-                                Flexible(
-                                  child: Container(
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.check,
-                                        color:
-                                            Theme.of(context).selectedRowColor,
-                                      ),
-                                    ),
-                                  ),
-                                  flex: 1,
-                                ),
-                              ],
+                                  ],
+                                );
+                              },
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -1320,5 +1309,45 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
         ),
       ),
     );
+  }
+
+  servicesDetails() {
+    apiUtils
+        .getServiceFullDetails(widget.s_id.toString())
+        .then((AssignedOrdersModel loginData) {
+      setState(() {
+        if (loginData.success!) {
+          setState(() {
+            loading = false;
+            OrderFullList = loginData.result![0];
+            Servicename =OrderFullList!.services!.serviceName.toString();
+            Serviceamount =OrderFullList!.services!.amount.toString();
+            Servicetime =OrderFullList!.services!.time.toString();
+            ServiceList =OrderFullList!.services!;
+            CustomerNum =OrderFullList!.users!.phone.toString();
+            Customername =OrderFullList!.users!.name.toString();
+            CustomerAdd =OrderFullList!.complaints!.address.toString();
+
+          });
+          // CustomWidget(context: context).
+          // custombar("Service", loginData.message.toString(), true);
+
+        }
+        else {
+          loading = false;
+          CustomWidget(context: context)
+              .custombar("Service", loginData.message.toString(), false);
+
+        }
+      });
+
+    }).catchError((Object error) {
+
+
+      print(error);
+      setState(() {
+        loading = false;
+      });
+    });
   }
 }

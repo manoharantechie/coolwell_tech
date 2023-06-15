@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'assigned_order_model.dart';
 import 'complaint_history.dart';
+import 'date_service_history.dart';
 import 'get_assigned_job_list_model.dart';
 import 'get_profile_details_model.dart';
 import 'get_services_details.dart';
@@ -30,7 +31,7 @@ class APIUtils {
   static const String assignedServicesURL = '/technician/AssignedJobsList';
   static const String assignedServicesDetailsURL = '/technician/AssignedJobs';
   static const String googleRegisterURL = '/googleregister';
-  static const String serviceHistoryURL = '';
+  static const String serviceHistoryURL = '/technician/JobsListHistory';
 
 
   Future<CommonModel> doRegisterEmail(
@@ -185,15 +186,20 @@ class APIUtils {
     return Login.fromJson(json.decode(response.body));
   }
 
-  Future<Login> serviceHistory(
+  Future<DateServiceHistoryModel> serviceHistory(
       String date) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var auth = "Bearer "+preferences.getString("token").toString();
+    Map<String, String> requestHeaders = {
+      'authorization': auth.toString(),
+    };
     var bodyData = {
-      'name': date,
+      'Date': date,
     };
 
     final response =
-    await http.post(Uri.parse(baseURL + serviceHistoryURL), body: bodyData);
-    return Login.fromJson(json.decode(response.body));
+    await http.post(Uri.parse(baseURL + serviceHistoryURL),headers: requestHeaders, body: bodyData);
+    return DateServiceHistoryModel.fromJson(json.decode(response.body));
   }
 
 }

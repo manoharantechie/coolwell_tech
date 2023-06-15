@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import '../../../common/calendar/calendar_timeline.dart';
 import '../../../common/custom_widget.dart';
 import '../../../common/localization/localizations.dart';
+import '../../../common/model/api_utils.dart';
+import '../../../common/model/date_service_history.dart';
 
 class Tech_Service_History extends StatefulWidget {
   const Tech_Service_History({Key? key}) : super(key: key);
@@ -17,24 +19,34 @@ class Tech_Service_History extends StatefulWidget {
 class _Tech_Service_HistoryState extends State<Tech_Service_History> {
 
   late DateTime _selectedDate;
+  APIUtils apiUtils = APIUtils();
+  var snackBar;
   bool time = false;
   bool loading = false;
   ScrollController _scrollController = ScrollController();
   ScrollController _scroll = ScrollController();
   List<String> texts = ["Cleaning", "Repair", "Install"];
+  List<DateServiceResult> serviceList=[];
+  Services? serviceDetailsList;
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _selectedDate = DateTime.now().add(const Duration(days: 0));
-    bool loading = true;
+    loading = true;
+    serviceDetails();
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: loading
+          ? CustomWidget(context: context).loadingIndicator(
+        Theme.of(context).cardColor,
+      ): Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
@@ -152,17 +164,22 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                ],
              ),
            ),
-            Container(
+            serviceList.length>0 ? Container(
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.only(
                   top: MediaQuery.of(context).size.height * 0.37),
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount: texts.length,
+                itemCount: serviceList.length,
+                // itemCount: texts.length,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 controller: _scroll,
                 itemBuilder: (BuildContext context, int index) {
+                  var StartTime = DateTime.fromMillisecondsSinceEpoch(int.parse(serviceList[index].startTime.toString())*1000);
+                  var _timeString = "${int.parse(StartTime.toString().substring(11,13))}:${StartTime.toString().substring(14,16)}  ${int.parse(StartTime.toString().substring(11,13))>= 12 ? "PM" : "AM"}";
+                  var EndTime = DateTime.fromMillisecondsSinceEpoch(int.parse(serviceList[index].endTime.toString())*1000);
+                  var _endtime = "${int.parse(EndTime.toString().substring(11,13))}:${EndTime.toString().substring(14,16)}  ${int.parse(EndTime.toString().substring(11,13))>= 12 ? "PM" : "AM"}";
                   return Container(
                     padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                     width: MediaQuery.of(context).size.width,
@@ -177,7 +194,7 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  "10:50" + " Am",
+                                  _timeString.toString(),
                                   style: CustomWidget(context: context)
                                       .CustomSizedTextStyle(
                                       10.0,
@@ -189,7 +206,7 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                                 ),
                                 const SizedBox(height: 5.0,),
                                 Text(
-                                  "11:00" + " Am",
+                                  _endtime.toString(),
                                   style: CustomWidget(context: context)
                                       .CustomSizedTextStyle(
                                       8.0,
@@ -225,7 +242,7 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                           onTap:(){
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>
-                                    Service_History_Details()));
+                                    Service_History_Details(s_id: serviceList[index].id.toString())));
                           },
                           child: Container(
                             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -245,7 +262,8 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  texts[index].toString(),
+                                  // texts[index].toString(),
+                                  serviceList[index].services!.serviceName.toString() ,
                                   style: CustomWidget(context: context)
                                       .CustomSizedTextStyle(
                                       18.0,
@@ -256,44 +274,71 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 10.0,),
-                                Text(
-                                  "Cleaning foam",
-                                  style: CustomWidget(context: context)
-                                      .CustomSizedTextStyle(
-                                      14.0,
-                                      Theme.of(context).primaryColor,
-                                      FontWeight.w400,
-                                      'FontRegular'),
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.ellipsis,
+                                ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  itemCount: serviceList.length,
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  controller: _scrollController,
+                                  itemBuilder: (BuildContext context,
+                                      int index) {
+                                    return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          // AppLocalizations.instance
+                                          //     .text("loc_clean_foam"),
+                                          serviceList[index].services!.checkList![index].toString(),
+                                          style: CustomWidget(context: context)
+                                              .CustomSizedTextStyle(
+                                              14.0,
+                                              Theme.of(context).primaryColor,
+                                              FontWeight.w400,
+                                              'FontRegular'),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 ),
+                                // Text(
+                                //   "Cleaning foam",
+                                //   style: CustomWidget(context: context)
+                                //       .CustomSizedTextStyle(
+                                //       14.0,
+                                //       Theme.of(context).primaryColor,
+                                //       FontWeight.w400,
+                                //       'FontRegular'),
+                                //   textAlign: TextAlign.start,
+                                //   overflow: TextOverflow.ellipsis,
+                                // ),
+                                // const SizedBox(height: 5.0,),
+                                // Text(
+                                //   "Power jet cleaning",
+                                //   style: CustomWidget(context: context)
+                                //       .CustomSizedTextStyle(
+                                //       14.0,
+                                //       Theme.of(context).primaryColor,
+                                //       FontWeight.w400,
+                                //       'FontRegular'),
+                                //   textAlign: TextAlign.start,
+                                //   overflow: TextOverflow.ellipsis,
+                                // ),
+                                // const SizedBox(height: 5.0,),
+                                // Text(
+                                //   "indoor & outer unit servicing",
+                                //   style: CustomWidget(context: context)
+                                //       .CustomSizedTextStyle(
+                                //       14.0,
+                                //       Theme.of(context).primaryColor,
+                                //       FontWeight.w400,
+                                //       'FontRegular'),
+                                //   textAlign: TextAlign.start,
+                                //   overflow: TextOverflow.ellipsis,
+                                // ),
                                 const SizedBox(height: 5.0,),
                                 Text(
-                                  "Power jet cleaning",
-                                  style: CustomWidget(context: context)
-                                      .CustomSizedTextStyle(
-                                      14.0,
-                                      Theme.of(context).primaryColor,
-                                      FontWeight.w400,
-                                      'FontRegular'),
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 5.0,),
-                                Text(
-                                  "indoor & outer unit servicing",
-                                  style: CustomWidget(context: context)
-                                      .CustomSizedTextStyle(
-                                      14.0,
-                                      Theme.of(context).primaryColor,
-                                      FontWeight.w400,
-                                      'FontRegular'),
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 5.0,),
-                                Text(
-                                  "Duration",
+                                 "Duration: " + serviceList[index].services!.time.toString(),
                                   style: CustomWidget(context: context)
                                       .CustomSizedTextStyle(
                                       14.0,
@@ -315,7 +360,18 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                   );
                 },
               ),
+            ) : Center(
+              child: Text(
+                AppLocalizations.instance.text('loc_no_records'),
+                style: CustomWidget(context: context)
+                    .CustomSizedTextStyle(
+                    16.0,
+                    Theme.of(context).primaryColor,
+                    FontWeight.w700,
+                    'FontRegular'),
+              ),
             ),
+
             const SizedBox(height: 10.0,),
           ],
         ),
@@ -336,7 +392,7 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
             setState(() {
               _selectedDate = date;
               loading = true;
-
+              serviceDetails();
             });
           },
           leftMargin: 0,
@@ -352,4 +408,42 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
       ],
     );
   }
+
+
+  serviceDetails() {
+    apiUtils
+        .serviceHistory(_selectedDate.toString())
+        .then((DateServiceHistoryModel loginData) {
+      setState(() {
+        if (loginData.success!) {
+          setState(() {
+            loading = false;
+            serviceList = loginData.result!;
+
+          });
+          // CustomWidget(context: context).
+          // custombar("Service", loginData.message.toString(), true);
+
+        }
+        else {
+          setState(() {
+            loading = false;
+          });
+
+          CustomWidget(context: context)
+              .custombar("Service", loginData.message.toString(), false);
+
+        }
+      });
+
+    }).catchError((Object error) {
+
+
+      print("Err"+error.toString());
+      setState(() {
+        loading = false;
+      });
+    });
+  }
+
 }

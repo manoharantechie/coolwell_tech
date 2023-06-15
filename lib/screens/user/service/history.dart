@@ -139,9 +139,9 @@ class _Service_historyState extends State<Service_history> {
                       ),
                       InkWell(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    Service_History_Details()));
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         Service_History_Details()));
 
                           },
                           child: Container(

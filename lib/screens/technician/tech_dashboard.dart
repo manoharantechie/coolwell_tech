@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/custom_widget.dart';
 import '../../common/localization/localizations.dart';
 import '../../common/model/api_utils.dart';
+import '../../common/model/get_assigned_job_list_model.dart';
 import '../user/basics/notification.dart';
 
 class Tech_DashBoard_Screen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
   String userName ="";
   String name ="";
   GetProfileResult? details;
+  List<GetAssignedJobsResult> orderList = [];
 
   @override
   void initState() {
@@ -34,6 +36,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
     loading = true;
     profile();
     getData();
+    serviceDetails();
   }
 
   getData()async{
@@ -593,9 +596,38 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                         )
                       ],
                     ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
 
-                    ListView.builder(
-                      itemCount: 3,
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).focusColor,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.instance.text("loc_booked_serv"),
+                            style: CustomWidget(context: context)
+                                .CustomSizedTextStyle(
+                                12.0,
+                                Theme.of(context).primaryColor,
+                                FontWeight.w600,
+                                'FontRegular'),
+                            textAlign: TextAlign.start,
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                        ],
+                      ),
+                    ),
+                    orderList.length>0 ? ListView.builder(
+                      itemCount: orderList.length,
+                      padding: EdgeInsets.zero,
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       controller: _scrollController,
@@ -617,37 +649,31 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        AppLocalizations.instance.text("loc_booked_serv"),
-                                        style: CustomWidget(context: context)
-                                            .CustomSizedTextStyle(
-                                            12.0,
-                                            Theme.of(context).primaryColor,
-                                            FontWeight.w600,
-                                            'FontRegular'),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const SizedBox(
-                                        height: 15.0,
-                                      ),
                                       Container(
                                         child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Flexible(
                                               child: Container(
+                                                height: 80.0,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(10.0)),
-                                                child: Image.asset(
-                                                  "assets/images/cleaning.png",
-                                                  height: 80.0,
-                                                ),
+                                                    BorderRadius.circular(10.0),
+                                                  image: DecorationImage(
+                                                    image: NetworkImage(orderList[index].services!.coverImage![0].toString()),
+                                                    // image: AssetImage(
+                                                    //     "assets/images/serv_back_2.png"),
+                                                    fit: BoxFit.cover,
+                                                  ),),
+                                                // child: Image.asset(
+                                                //   "assets/images/cleaning.png",
+                                                //   height: 80.0,
+                                                // ),
                                               ),
                                               flex: 1,
                                             ),
                                             const SizedBox(
-                                              width: 5.0,
+                                              width: 10.0,
                                             ),
                                             Flexible(
                                               child: Column(
@@ -656,15 +682,26 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                 children: [
                                                   Text(
                                                     AppLocalizations.instance
-                                                        .text("loc_on_progrss"),
+                                                        .text("loc_proc"),
+                                                    // AppLocalizations.instance
+                                                    //     .text("loc_wait"),
+                                                    // AppLocalizations.instance
+                                                    //     .text("loc_comp"),
                                                     style: CustomWidget(context: context)
                                                         .CustomSizedTextStyle(
                                                         18.0,
+                                                        // Theme.of(context)
+                                                        //     .dialogBackgroundColor,
+                                                        // Theme.of(context)
+                                                        //     .disabledColor,
+                                                        // Theme.of(context)
+                                                        //     .selectedRowColor,
                                                         Theme.of(context)
                                                             .primaryColor,
                                                         FontWeight.w600,
                                                         'FontRegular'),
                                                     textAlign: TextAlign.start,
+                                                    overflow: TextOverflow.ellipsis,
                                                   ),
                                                   const SizedBox(
                                                     height: 10.0,
@@ -674,8 +711,9 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       Text(
-                                                        AppLocalizations.instance
-                                                            .text("loc_deep_clean"),
+                                                        // AppLocalizations.instance
+                                                        //     .text("loc_deep_clean"),
+                                                        orderList[index].services!.serviceName.toString(),
                                                         style: CustomWidget(context: context)
                                                             .CustomSizedTextStyle(
                                                             14.0,
@@ -753,8 +791,17 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                           ),
                         );
                       },
-                    ),
-
+                    ) : Center(
+                      child: Text(
+                              AppLocalizations.instance.text('loc_no_records'),
+                              style: CustomWidget(context: context)
+                                  .CustomSizedTextStyle(
+                                      16.0,
+                                      Theme.of(context).primaryColor,
+                                      FontWeight.w700,
+                                      'FontRegular'),
+                            ),
+                          ),
                   ],
                 ),
               ),
@@ -792,6 +839,39 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
           loading = false;
           CustomWidget(context: context)
               .custombar("Profile", loginData.message.toString(), false);
+
+        }
+      });
+
+    }).catchError((Object error) {
+
+
+      print(error);
+      setState(() {
+        loading = false;
+      });
+    });
+  }
+
+  serviceDetails() {
+    apiUtils
+        .getServiceDetails()
+        .then((GetAssignedJobsListModel loginData) {
+      setState(() {
+        if (loginData.success!) {
+          setState(() {
+            loading = false;
+            orderList = loginData.result!;
+
+          });
+          // CustomWidget(context: context).
+          // custombar("Service", loginData.message.toString(), true);
+
+        }
+        else {
+          loading = false;
+          CustomWidget(context: context)
+              .custombar("Service", loginData.message.toString(), false);
 
         }
       });
