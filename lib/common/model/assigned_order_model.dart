@@ -30,30 +30,24 @@ class AssignedOrdersModel {
 
 class AssignedOrdersResult {
   String? id;
-  List<String>? checklist;
-  List<String>? attachment;
-  List<String>? notes;
-  String? taskTitle;
   dynamic startTime;
   dynamic endTime;
-  String? location;
-  String? latitude;
+  String? taskTitle;
   String? longitude;
+  String? latitude;
+  String? location;
   Complaints? complaints;
   Services? services;
   Users? users;
 
   AssignedOrdersResult({
     this.id,
-    this.checklist,
-    this.attachment,
-    this.notes,
-    this.taskTitle,
     this.startTime,
     this.endTime,
-    this.location,
-    this.latitude,
+    this.taskTitle,
     this.longitude,
+    this.latitude,
+    this.location,
     this.complaints,
     this.services,
     this.users,
@@ -61,15 +55,12 @@ class AssignedOrdersResult {
 
   factory AssignedOrdersResult.fromJson(Map<String, dynamic> json) => AssignedOrdersResult(
     id: json["_id"],
-    checklist: List<String>.from(json["Checklist"].map((x) => x)),
-    attachment: List<String>.from(json["Attachment"].map((x) => x)),
-    notes: List<String>.from(json["Notes"].map((x) => x)),
-    taskTitle: json["Task_Title"],
     startTime: json["Start_Time"],
     endTime: json["End_Time"],
-    location: json["Location"],
-    latitude: json["latitude"],
+    taskTitle: json["Task_Title"],
     longitude: json["longitude"],
+    latitude: json["latitude"],
+    location: json["Location"],
     complaints: Complaints.fromJson(json["complaints"]),
     services: Services.fromJson(json["services"]),
     users: Users.fromJson(json["users"]),
@@ -77,15 +68,12 @@ class AssignedOrdersResult {
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "Checklist": List<dynamic>.from(checklist!.map((x) => x)),
-    "Attachment": List<dynamic>.from(attachment!.map((x) => x)),
-    "Notes": List<dynamic>.from(notes!.map((x) => x)),
+    "Start_Time": startTime,
+    "End_Time": endTime,
     "Task_Title": taskTitle,
-    "Start_Time": startTime!,
-    "End_Time": endTime!,
-    "Location": location,
-    "latitude": latitude,
     "longitude": longitude,
+    "latitude": latitude,
+    "Location": location,
     "complaints": complaints!.toJson(),
     "services": services!.toJson(),
     "users": users!.toJson(),
@@ -104,8 +92,8 @@ class Complaints {
   String? longitude;
   dynamic amount;
   String? userId;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
 
   Complaints({
     this.id,
@@ -151,8 +139,8 @@ class Complaints {
     "longitude": longitude,
     "Amount": amount,
     "user_id": userId,
-    "createdAt": createdAt!.toIso8601String(),
-    "updatedAt": updatedAt!.toIso8601String(),
+    "createdAt": createdAt.toIso8601String(),
+    "updatedAt": updatedAt.toIso8601String(),
   };
 }
 
@@ -162,12 +150,12 @@ class Services {
   List<String>? coverImage;
   String? serviceName;
   String? category;
-  dynamic amount;
+  String? amount;
   String? time;
   String? notes;
   dynamic rattings;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
 
   Services({
     this.id,
@@ -207,27 +195,27 @@ class Services {
     "Time": time,
     "Notes": notes,
     "Rattings": rattings,
-    "createdAt": createdAt!.toIso8601String(),
-    "updatedAt": updatedAt!.toIso8601String(),
+    "createdAt": createdAt.toIso8601String(),
+    "updatedAt": updatedAt.toIso8601String(),
   };
 }
 
 class Users {
-  String? name;
   String? phone;
+  String? name;
 
   Users({
-    this.name,
     this.phone,
+    this.name,
   });
 
   factory Users.fromJson(Map<String, dynamic> json) => Users(
-    name: json["name"],
     phone: json["phone"],
+    name: json["name"],
   );
 
   Map<String, dynamic> toJson() => {
-    "name": name,
     "phone": phone,
+    "name": name,
   };
 }

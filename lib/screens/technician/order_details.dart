@@ -333,7 +333,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
 
                                         ListView.builder(
                                           padding: EdgeInsets.zero,
-                                          itemCount: OrderFullList!.checklist!.length,
+                                          itemCount: OrderFullList!.services!.checkList!.length,
                                           scrollDirection: Axis.vertical,
                                           shrinkWrap: true,
                                           controller: _scrollController,
@@ -349,7 +349,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                                       child: Text(
                                                         // AppLocalizations.instance
                                                         //     .text("loc_clean_foam"),
-                                                        OrderFullList!.checklist![index].toString(),
+                                                        OrderFullList!.services!.checkList![index].toString(),
                                                         style: CustomWidget(context: context)
                                                             .CustomSizedTextStyle(
                                                             14.0,
@@ -382,45 +382,45 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                           },
                                         ),
 
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Flexible(
-                                              child: Text(
-                                                AppLocalizations.instance
-                                                    .text("loc_indoor_outer"),
-                                                style: CustomWidget(context: context)
-                                                    .CustomSizedTextStyle(
-                                                    14.0,
-                                                    Theme.of(context).primaryColor,
-                                                    FontWeight.w400,
-                                                    'FontRegular'),
-                                                textAlign: TextAlign.start,
-                                              ),
-                                              flex: 3,
-                                            ),
-                                            const SizedBox(
-                                              width: 2.0,
-                                            ),
-                                            Flexible(
-                                              child: Container(
-                                                child: Center(
-                                                    child: Text(
-                                                      "Intence",
-                                                      style: CustomWidget(context: context)
-                                                          .CustomSizedTextStyle(
-                                                          12.0,
-                                                          Theme.of(context).primaryColor,
-                                                          FontWeight.w600,
-                                                          'FontRegular'),
-                                                      textAlign: TextAlign.center,
-                                                    )),
-                                              ),
-                                              flex: 1,
-                                            ),
-                                          ],
-                                        ),
+                                        // Row(
+                                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        //   children: [
+                                        //     Flexible(
+                                        //       child: Text(
+                                        //         AppLocalizations.instance
+                                        //             .text("loc_indoor_outer"),
+                                        //         style: CustomWidget(context: context)
+                                        //             .CustomSizedTextStyle(
+                                        //             14.0,
+                                        //             Theme.of(context).primaryColor,
+                                        //             FontWeight.w400,
+                                        //             'FontRegular'),
+                                        //         textAlign: TextAlign.start,
+                                        //       ),
+                                        //       flex: 3,
+                                        //     ),
+                                        //     const SizedBox(
+                                        //       width: 2.0,
+                                        //     ),
+                                        //     Flexible(
+                                        //       child: Container(
+                                        //         child: Center(
+                                        //             child: Text(
+                                        //               "Intence",
+                                        //               style: CustomWidget(context: context)
+                                        //                   .CustomSizedTextStyle(
+                                        //                   12.0,
+                                        //                   Theme.of(context).primaryColor,
+                                        //                   FontWeight.w600,
+                                        //                   'FontRegular'),
+                                        //               textAlign: TextAlign.center,
+                                        //             )),
+                                        //       ),
+                                        //       flex: 1,
+                                        //     ),
+                                        //   ],
+                                        // ),
                                         Row(
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -446,7 +446,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                               child: Container(
                                                 child: Center(
                                                     child: Text(
-                                                      "45 mins",
+                                                      "-",
                                                       style: CustomWidget(context: context)
                                                           .CustomSizedTextStyle(
                                                           12.0,
@@ -593,13 +593,45 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                     ),
                   ),
                 ),
+                // Align(
+                //   alignment: Alignment.bottomCenter,
+                //   child: InkWell(
+                //     onTap: () {
+                //       setState(() {
+                //         showSuccessAlertDialog("Good luck! 🤗 ",
+                //             "You get your assigned task");
+                //       });
+                //     },
+                //     child: Container(
+                //       margin: EdgeInsets.only(bottom: 20.0),
+                //       padding:
+                //       EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(30.0),
+                //         color: Theme.of(context).dialogBackgroundColor,
+                //       ),
+                //       child: Text(
+                //         AppLocalizations.instance
+                //             .text("loc_proceed_to_process"),
+                //         style: CustomWidget(context: context)
+                //             .CustomSizedTextStyle(
+                //             14.0,
+                //             Theme.of(context).focusColor,
+                //             FontWeight.w800,
+                //             'FontRegular'),
+                //         textAlign: TextAlign.center,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: InkWell(
                     onTap: () {
                       setState(() {
-                        showSuccessAlertDialog("Good luck! 🤗 ",
-                            "You get your assigned task");
+                        Navigator.pop(context);
+
                       });
                     },
                     child: Container(
@@ -612,7 +644,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                       ),
                       child: Text(
                         AppLocalizations.instance
-                            .text("loc_proceed_to_process"),
+                            .text("loc_accept"),
                         style: CustomWidget(context: context)
                             .CustomSizedTextStyle(
                             14.0,
@@ -743,6 +775,10 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
             CustomerNum =OrderFullList!.users!.phone.toString();
             Customername =OrderFullList!.users!.name.toString();
             CustomerAdd =OrderFullList!.complaints!.address.toString();
+
+
+            // var StartTime = DateTime.fromMillisecondsSinceEpoch(int.parse(OrderFullList!.startTime.toString())*1000);
+            // print(StartTime);
 
           });
           // CustomWidget(context: context).

@@ -162,8 +162,10 @@
   "loc_proceed_to_process": "Proceed to Process",
   "loc_cus_support": "24x7 customer support",
   "loc_proc": "On Progress",
+  "loc_assign": "Assigned",
   "loc_wait": "Waiting",
   "loc_comp": "Completed",
-  "loc_gen_otp": "Generate OTP"
+  "loc_gen_otp": "Generate OTP",
+  "loc_accept": "Accept Order"
 
 }

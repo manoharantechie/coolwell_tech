@@ -275,7 +275,7 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 10.0,),
-                                serviceList.length>0 ? ListView.builder(
+                                ListView.builder(
                                   padding: EdgeInsets.zero,
                                   itemCount: serviceList[index].services!.checkList!.length,
                                   scrollDirection: Axis.vertical,
@@ -289,7 +289,7 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                                         Text(
                                           // AppLocalizations.instance
                                           //     .text("loc_clean_foam"),
-                                          serviceList![index].services!.checkList![index].toString(),
+                                          serviceList[0].services!.checkList![0].toString(),
                                           // serviceDetailsList!.checkList![index].toString(),
                                           style: CustomWidget(context: context)
                                               .CustomSizedTextStyle(
@@ -302,7 +302,7 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                                       ],
                                     );
                                   },
-                                ) : Container(),
+                                ) ,
                                 // Text(
                                 //   "Cleaning foam",
                                 //   style: CustomWidget(context: context)

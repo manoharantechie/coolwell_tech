@@ -692,8 +692,9 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                               orderList[index].serviceStatus ==0? AppLocalizations.instance
                                                   .text("loc_wait"): orderList[index].serviceStatus ==1?
                                                     AppLocalizations.instance
-                                                .text("loc_proc"):
-                                                    AppLocalizations.instance
+                                                .text("loc_proc"): orderList[index].serviceStatus ==3? AppLocalizations.instance
+                                                  .text("loc_assign"):
+                                              AppLocalizations.instance
                                                         .text("loc_comp"),
 
                                                     style: CustomWidget(context: context)
@@ -753,8 +754,8 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                         decoration: BoxDecoration(
                                                           shape: BoxShape.circle,
                                                           color: orderList[index].serviceStatus ==0? Theme.of(context)
-                                                              .disabledColor : orderList[index].serviceStatus ==1 ? Theme.of(context).dialogBackgroundColor: Theme.of(context)
-                                                          .selectedRowColor,
+                                                              .disabledColor : orderList[index].serviceStatus ==1 ? Theme.of(context).dialogBackgroundColor: orderList[index].serviceStatus ==3 ?Theme.of(context)
+                                                              .errorColor : Theme.of(context).selectedRowColor,
                                                         ),
                                                         height: 5.0,
                                                         width: 5.0,
