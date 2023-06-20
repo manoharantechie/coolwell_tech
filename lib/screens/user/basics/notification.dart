@@ -559,7 +559,37 @@ class _Notification_ScreenState extends State<Notification_Screen> {
                         )
                       ],
                     ),
+
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).focusColor,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.instance.text("loc_booked_serv"),
+                            style: CustomWidget(context: context)
+                                .CustomSizedTextStyle(
+                                12.0,
+                                Theme.of(context).primaryColor,
+                                FontWeight.w600,
+                                'FontRegular'),
+                            textAlign: TextAlign.start,
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                        ],
+                      ),
+                    ),
                     ListView.builder(
+                      padding: EdgeInsets.zero,
                       itemCount: 4,
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
@@ -582,19 +612,6 @@ class _Notification_ScreenState extends State<Notification_Screen> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        AppLocalizations.instance.text("loc_booked_serv"),
-                                        style: CustomWidget(context: context)
-                                            .CustomSizedTextStyle(
-                                            12.0,
-                                            Theme.of(context).primaryColor,
-                                            FontWeight.w600,
-                                            'FontRegular'),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const SizedBox(
-                                        height: 15.0,
-                                      ),
                                       Container(
                                         child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,

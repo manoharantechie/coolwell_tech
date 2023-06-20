@@ -229,7 +229,7 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
                                       Container(
                                         width: MediaQuery.of(context).size.width * 0.3,
                                         child: Text(
-                                          "+91 " +CustomerNum.toString(),
+                                          CustomerNum.toString(),
                                           style: CustomWidget(context: context)
                                               .CustomSizedTextStyle(
                                               12.0,

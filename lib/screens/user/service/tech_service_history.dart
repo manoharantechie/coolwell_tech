@@ -176,6 +176,7 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                 shrinkWrap: true,
                 controller: _scroll,
                 itemBuilder: (BuildContext context, int index) {
+                  print("time"+ serviceList[index].startTime.toString());
                   var StartTime = DateTime.fromMillisecondsSinceEpoch(int.parse(serviceList[index].startTime.toString())*1000);
                   var _timeString = "${int.parse(StartTime.toString().substring(11,13))}:${StartTime.toString().substring(14,16)}  ${int.parse(StartTime.toString().substring(11,13))>= 12 ? "PM" : "AM"}";
                   var EndTime = DateTime.fromMillisecondsSinceEpoch(int.parse(serviceList[index].endTime.toString())*1000);
@@ -274,9 +275,9 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 10.0,),
-                                ListView.builder(
+                                serviceList.length>0 ? ListView.builder(
                                   padding: EdgeInsets.zero,
-                                  itemCount: serviceList.length,
+                                  itemCount: serviceList[index].services!.checkList!.length,
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
                                   controller: _scrollController,
@@ -288,7 +289,8 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                                         Text(
                                           // AppLocalizations.instance
                                           //     .text("loc_clean_foam"),
-                                          serviceList[index].services!.checkList![index].toString(),
+                                          serviceList![index].services!.checkList![index].toString(),
+                                          // serviceDetailsList!.checkList![index].toString(),
                                           style: CustomWidget(context: context)
                                               .CustomSizedTextStyle(
                                               14.0,
@@ -300,7 +302,7 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
                                       ],
                                     );
                                   },
-                                ),
+                                ) : Container(),
                                 // Text(
                                 //   "Cleaning foam",
                                 //   style: CustomWidget(context: context)

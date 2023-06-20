@@ -16,7 +16,7 @@ import 'login.dart';
 class APIUtils {
   final appName = 'Coolwell';
   // static const baseURL = "http://164.92.128.14:5000";
-  static const baseURL = "http://139.59.30.46";
+  static const baseURL = "http://139.59.30.46/api";
 
 
   static const String registerURL = '/register';
@@ -153,7 +153,7 @@ class APIUtils {
 
     final response =
     await http.get(Uri.parse(baseURL + assignedServicesURL),headers: requestHeaders);
-    // print(response.body);
+    print(response.body);
     return GetAssignedJobsListModel.fromJson(json.decode(response.body));
   }
 

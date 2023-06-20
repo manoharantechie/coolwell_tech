@@ -30,20 +30,24 @@ class GetAssignedJobsListModel {
 
 class GetAssignedJobsResult {
   String? id;
+  dynamic serviceStatus;
   GetAssignedServices? services;
 
   GetAssignedJobsResult({
     this.id,
+    this.serviceStatus,
     this.services,
   });
 
   factory GetAssignedJobsResult.fromJson(Map<String, dynamic> json) => GetAssignedJobsResult(
     id: json["_id"],
+    serviceStatus: json["service_status"],
     services: GetAssignedServices.fromJson(json["services"]),
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
+    "service_status": serviceStatus,
     "services": services!.toJson(),
   };
 }

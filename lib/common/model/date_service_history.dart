@@ -30,12 +30,14 @@ class DateServiceHistoryModel {
 
 class DateServiceResult {
   String? id;
+  dynamic serviceStatus;
   dynamic startTime;
   dynamic endTime;
   Services? services;
 
   DateServiceResult({
     this.id,
+    this.serviceStatus,
     this.startTime,
     this.endTime,
     this.services,
@@ -43,6 +45,7 @@ class DateServiceResult {
 
   factory DateServiceResult.fromJson(Map<String, dynamic> json) => DateServiceResult(
     id: json["_id"],
+    serviceStatus: json["service_status"],
     startTime: json["Start_Time"],
     endTime: json["End_Time"],
     services: Services.fromJson(json["services"]),
@@ -50,6 +53,7 @@ class DateServiceResult {
 
   Map<String, dynamic> toJson() => {
     "_id": id,
+    "service_status": serviceStatus,
     "Start_Time": startTime,
     "End_Time": endTime,
     "services": services!.toJson(),
