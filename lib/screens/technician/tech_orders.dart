@@ -34,6 +34,7 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
   ScrollController _scrollController = ScrollController();
   List<GetAssignedJobsResult> orderList = [];
   bool loading = false;
+  String status = "";
 
   @override
   Widget build(BuildContext context) {
@@ -476,7 +477,14 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
         if (loginData.success!) {
           setState(() {
             loading = false;
-            orderList = loginData.result!;
+            List<GetAssignedJobsResult> processOrderList = [];
+            processOrderList = loginData.result!;
+            for(int i=0;i<processOrderList.length;i++){
+              if(processOrderList[i].serviceStatus.toString()=="1" || processOrderList[i].serviceStatus.toString()=="3"){
+                orderList.add(processOrderList[i]);
+              }
+            }
+
 
           });
           // CustomWidget(context: context).

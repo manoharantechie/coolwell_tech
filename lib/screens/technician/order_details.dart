@@ -8,7 +8,11 @@ import '../../common/dotted_line_widget.dart';
 import '../../common/localization/localizations.dart';
 import '../../common/model/api_utils.dart';
 import '../../common/model/assigned_order_model.dart';
+import '../../common/otp_fields/otp_field_custom.dart';
+import '../../common/otp_fields/style.dart';
+import '../../common/ticket_design.dart';
 import '../user/basics/notification.dart';
+import 'Tech_Home.dart';
 
 class Tech_Order_Details_Screen extends StatefulWidget {
   final String j_id;
@@ -32,6 +36,9 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
   String Customername ="";
   String CustomerAdd ="";
   ScrollController _scrollController = ScrollController();
+  ScrollController _scroll = ScrollController();
+  bool otp = false;
+  String pinValue="";
 
   @override
   void initState() {
@@ -626,12 +633,13 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                 //   ),
                 // ),
 
-                Align(
+                OrderFullList!.complaints!.serviceStatus! ==3 ? Align(
                   alignment: Alignment.bottomCenter,
                   child: InkWell(
                     onTap: () {
                       setState(() {
-                        jobDetails();
+                        showSuccesssAlertDialog("Accept Order",
+                            "Are you sure want to Accept Order ?");
                       });
                     },
                     child: Container(
@@ -645,6 +653,37 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                       child: Text(
                         AppLocalizations.instance
                             .text("loc_accept"),
+                        style: CustomWidget(context: context)
+                            .CustomSizedTextStyle(
+                            14.0,
+                            Theme.of(context).focusColor,
+                            FontWeight.w800,
+                            'FontRegular'),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ) :
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        viewDetails();
+                        otp = false;
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 20.0),
+                      padding:
+                      EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                        color: Theme.of(context).dialogBackgroundColor,
+                      ),
+                      child: Text(
+                        AppLocalizations.instance
+                            .text("loc_complete_order"),
                         style: CustomWidget(context: context)
                             .CustomSizedTextStyle(
                             14.0,
@@ -759,6 +798,624 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
     // show the dialog
   }
 
+  showSuccesssAlertDialog(
+      String title,
+      String message,
+      ) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14.0)), //this right here
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14.0),
+                color: Theme.of(context).focusColor,
+              ),
+              height: MediaQuery.of(context).size.height * 0.28,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      title.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 17.0,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'OpenSansBold',
+                      ),
+                    ),
+                    Text(
+                      message,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'OpenSans',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 7.0, bottom: 10.0),
+                      height: 2.0,
+                      color: Theme.of(context).dividerColor,
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          loading = true;
+                        });
+                        jobDetails();
+                        Navigator.of(context).pop(true);
+                      },
+                      child: Text(
+                        "Accept Order",
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          color: Color(0xFF007AFF),
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 7.0, bottom: 10.0),
+                      height: 2.0,
+                      color: Theme.of(context).dividerColor,
+                    ),
+                    InkWell(
+                      onTap: (){
+                        Navigator.of(context).pop(true);
+                      },
+                      child:  Text(
+                        "Cancel",
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          color: Color(0xFF007AFF),
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+    // show the dialog
+  }
+
+
+  viewDetails() {
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+        ),
+        backgroundColor: Colors.transparent,
+        enableDrag: true,
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext con) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter ssetState) {
+                return Container(
+                  margin: EdgeInsets.only(top: 5.0),
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.only(right: 5.0, left: 0.0,),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(30.0),
+                        topLeft: Radius.circular(30.0),
+                      )
+                  ),
+                  child: SingleChildScrollView(
+                    controller: _scroll,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 30.0,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding:EdgeInsets.all(15.0),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).indicatorColor,
+                                ),
+                                child: Icon(
+                                  Icons.check,
+                                  color: Theme.of(context).focusColor,
+                                  size: 55.0,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10.0,
+                              ),
+                              Text(
+                                "Job completed!🤩",
+                                style: CustomWidget(context: context)
+                                    .CustomSizedTextStyle(
+                                    18.0,
+                                    Theme.of(context).primaryColor,
+                                    FontWeight.w600,
+                                    'FontRegular'),
+                              ),
+                              const SizedBox(
+                                height: 25.0,
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(
+                                    left: 20.0,
+                                    right: 20.0,
+                                    top: 0.0,
+                                    bottom: 20.0),
+                                child: TicketWidget(
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height:
+                                    MediaQuery.of(context).size.height *
+                                        0.25,
+                                    padding: EdgeInsets.fromLTRB(
+                                        10.0, 15.0, 10.0, 5.0),
+                                    decoration: BoxDecoration(
+                                        color: Color(0xFF1F598E),
+                                        image: DecorationImage(
+                                          colorFilter: ColorFilter.mode(
+                                              Color(0xFF1F598E)
+                                                  .withOpacity(0.6),
+                                              BlendMode.dstATop),
+                                          image: AssetImage(
+                                              "assets/images/serv_back_2.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(15.0)),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            right: 10.0,
+                                          ),
+                                          child: SvgPicture.asset(
+                                            "assets/menu/cool.svg",
+                                            height: 25.0,
+                                            color:
+                                            Theme.of(context).cardColor,
+                                          ),
+                                        ),
+                                        DottedLine(
+                                          direction: Axis.vertical,
+                                          dashColor:
+                                          Theme.of(context).dividerColor,
+                                        ),
+                                        Flexible(
+                                            child: Container(
+                                              padding: EdgeInsets.only(
+                                                left: 10.0,
+                                                right: 10.0,
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
+                                                      children: [
+                                                        Container(
+                                                          width: MediaQuery.of(context).size.width* 0.5,
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                // name.toString(),
+                                                                // "Customer name",
+                                                                Customername.toString(),
+                                                                style: CustomWidget(context: context).CustomSizedTextStyle(
+                                                                    16.0,
+                                                                    Theme.of(
+                                                                        context)
+                                                                        .focusColor,
+                                                                    FontWeight
+                                                                        .w600,
+                                                                    'FontRegular'),
+                                                                textAlign:
+                                                                TextAlign
+                                                                    .start,
+                                                                overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 5.0,
+                                                              ),
+                                                              Text(
+                                                                Servicename.toString(),
+                                                                style: CustomWidget(context: context).CustomSizedTextStyle(
+                                                                    12.0,
+                                                                    Theme.of(
+                                                                        context)
+                                                                        .focusColor,
+                                                                    FontWeight
+                                                                        .w600,
+                                                                    'FontRegular'),
+                                                                textAlign:
+                                                                TextAlign
+                                                                    .start,
+                                                                overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 5.0,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .center,
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                      children: [
+                                                        Flexible(
+                                                          child: Container(
+                                                            width: MediaQuery.of(context).size.width *0.5,
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                              children: [
+                                                                Row(
+                                                                  crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                                  children: [
+                                                                    Icon(
+                                                                      Icons.location_on_outlined,
+                                                                      size: 15.0,
+                                                                      color: Theme.of(
+                                                                          context)
+                                                                          .focusColor,
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      width: 5.0,
+                                                                    ),
+                                                                    Flexible(
+                                                                      child:  Text(
+                                                                        CustomerAdd.toString(),
+                                                                        style: CustomWidget(context: context).CustomSizedTextStyle(
+                                                                            8.0,
+                                                                            Theme.of(context)
+                                                                                .focusColor,
+                                                                            FontWeight
+                                                                                .w600,
+                                                                            'FontRegular'),
+                                                                        textAlign:
+                                                                        TextAlign
+                                                                            .start,
+                                                                        // overflow: TextOverflow.ellipsis,
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                const SizedBox(
+                                                                  height: 5.0,
+                                                                ),
+                                                                Row(
+                                                                  crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                                  children: [
+                                                                    Icon(
+                                                                      Icons.access_time,
+                                                                      size: 15.0,
+                                                                      color: Theme.of(
+                                                                          context)
+                                                                          .focusColor,
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 5.0,
+                                                                    ),
+                                                                    Text(
+                                                                      // _timeString.toString() + " - " + _endtime.toString(),
+                                                                      "-",
+                                                                      style: CustomWidget(context: context).CustomSizedTextStyle(
+                                                                          8.0,
+                                                                          Theme.of(context)
+                                                                              .focusColor,
+                                                                          FontWeight
+                                                                              .w600,
+                                                                          'FontRegular'),
+                                                                      textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                const SizedBox(
+                                                                  height: 5.0,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          flex: 1,
+                                                        ),
+                                                        Flexible(
+                                                          child: Container(
+                                                            decoration:
+                                                            BoxDecoration(
+                                                              borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                  10.0),
+                                                            ),
+                                                            child: Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              children: [
+                                                                Text(
+                                                                  // day,
+                                                                  "Thursday",
+                                                                  style: CustomWidget(context: context).CustomSizedTextStyle(
+                                                                      10.0,
+                                                                      Theme.of(context)
+                                                                          .focusColor,
+                                                                      FontWeight
+                                                                          .w700,
+                                                                      'FontRegular'),
+                                                                  textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 5.0,
+                                                                ),
+                                                                Text(
+                                                                  // dateOnly,
+                                                                  "16",
+                                                                  style: CustomWidget(context: context).CustomSizedTextStyle(
+                                                                      20.0,
+                                                                      Theme.of(context)
+                                                                          .focusColor,
+                                                                      FontWeight
+                                                                          .w700,
+                                                                      'FontRegular'),
+                                                                  textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 5.0,
+                                                                ),
+                                                                Text(
+                                                                  // dateName,
+                                                                  "March 2023",
+                                                                  style: CustomWidget(context: context).CustomSizedTextStyle(
+                                                                      10.0,
+                                                                      Theme.of(context)
+                                                                          .focusColor,
+                                                                      FontWeight
+                                                                          .w700,
+                                                                      'FontRegular'),
+                                                                  textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          flex: 1,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            )),
+                                        DottedLine(
+                                          direction: Axis.vertical,
+                                          dashColor:
+                                          Theme.of(context).dividerColor,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            left: 10.0,
+                                            right: 10.0,
+                                          ),
+
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.24,
+                                  width: MediaQuery.of(context).size.width,
+                                  isCornerRounded: true,
+                                ),
+                              ),
+                              const SizedBox(height: 30.0,),
+
+                              otp ? Container(
+                                padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                child:  Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      AppLocalizations.instance
+                                          .text("loc_enter_code"),
+                                      style: CustomWidget(context: context)
+                                          .CustomSizedTextStyle(
+                                          16.0,
+                                          Theme.of(context).primaryColor,
+                                          FontWeight.w600,
+                                          'FontRegular'),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                    const SizedBox(height: 15.0,),
+                                    OTPTextField(
+                                      length: 6,
+                                      width: MediaQuery.of(context).size.width,
+                                      fieldWidth: 45,
+                                      style: CustomWidget(context: context)
+                                          .CustomSizedTextStyle(
+                                          14.0,
+                                          Theme.of(context).primaryColor,
+                                          FontWeight.w600,
+                                          'FontRegular'),
+                                      textFieldAlignment: MainAxisAlignment.spaceAround,
+                                      fieldStyle: FieldStyle.underline,
+                                      onCompleted: (pin) {
+                                        // print("Completed: " + pin);
+                                        setState(() {
+
+                                          pinValue=pin;
+                                        });
+                                      },
+                                    ),
+                                    const SizedBox(height: 25.0,),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: InkWell(
+                                        onTap: (){
+                                          if(pinValue.isEmpty || pinValue.length<6)
+
+                                          {
+                                            CustomWidget(context: context)
+                                                .custombar("Jop Completed","Please enter OTP", false);
+                                          }
+                                          else{
+                                            ssetState(() {
+                                              loading=true;
+                                              Navigator.pop(context);
+                                            });
+                                          }
+
+
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width * 0.6,
+                                          padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                                          decoration: BoxDecoration(
+                                            // border: Border.all(
+                                            //   width: 1.0,
+                                            //   color: Theme.of(context).cardColor,
+                                            // ),
+                                            borderRadius: BorderRadius.circular(6.0),
+                                            color: Theme.of(context).indicatorColor,
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              AppLocalizations.instance
+                                                  .text("loc_done"),
+                                              style: CustomWidget(context: context)
+                                                  .CustomSizedTextStyle(
+                                                  16.0,
+                                                  Theme.of(context).focusColor,
+                                                  FontWeight.w800,
+                                                  'FontRegular'),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 15.0,),
+                                  ],
+                                ),
+                              ) :
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+
+                                        ssetState(() {
+                                          otp = true;
+                                        });
+                                        // Navigator.pop(context);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.fromLTRB(
+                                            60.0, 10.0, 60.0, 10.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(30.0),
+                                          color:
+                                          Theme.of(context).dialogBackgroundColor,
+                                        ),
+                                        child: Text(
+                                          AppLocalizations.instance
+                                              .text("loc_gen_otp"),
+                                          style:
+                                          CustomWidget(context: context)
+                                              .CustomSizedTextStyle(
+                                              14.0,
+                                              Theme.of(context)
+                                                  .focusColor,
+                                              FontWeight.w800,
+                                              'FontRegular'),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20.0,),
+                                    Text(
+                                      "Customer verification need ",
+                                      style: CustomWidget(context: context)
+                                          .CustomSizedTextStyle(
+                                          10.0,
+                                          Theme.of(context).primaryColor,
+                                          FontWeight.w400,
+                                          'FontRegular'),
+                                    ),
+                                    const SizedBox(height: 20.0,),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+
+                      ],
+                    ),
+                  ),
+                );
+              });
+        });
+  }
+
+
+
   servicesDetails() {
     apiUtils
         .getServiceFullDetails(widget.j_id)
@@ -811,7 +1468,9 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
         if (loginData.success!) {
           setState(() {
             loading = false;
-            Navigator.pop(context);
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    TechHome()));
             // serviceList = loginData.result!;
 
           });

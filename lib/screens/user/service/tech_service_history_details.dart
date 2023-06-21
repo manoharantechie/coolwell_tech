@@ -566,45 +566,7 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
                                 );
                               },
                             ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    AppLocalizations.instance
-                                        .text("loc_indoor_outer"),
-                                    style: CustomWidget(context: context)
-                                        .CustomSizedTextStyle(
-                                            14.0,
-                                            Theme.of(context).primaryColor,
-                                            FontWeight.w400,
-                                            'FontRegular'),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                  flex: 3,
-                                ),
-                                const SizedBox(
-                                  width: 2.0,
-                                ),
-                                Flexible(
-                                  child: Container(
-                                    child: Center(
-                                        child: Text(
-                                      "Intence",
-                                      style: CustomWidget(context: context)
-                                          .CustomSizedTextStyle(
-                                              12.0,
-                                              Theme.of(context).primaryColor,
-                                              FontWeight.w600,
-                                              'FontRegular'),
-                                      textAlign: TextAlign.center,
-                                    )),
-                                  ),
-                                  flex: 1,
-                                ),
-                              ],
-                            ),
+
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -630,7 +592,7 @@ class _Service_History_DetailsState extends State<Service_History_Details> {
                                   child: Container(
                                     child: Center(
                                         child: Text(
-                                      "45 mins",
+                                      "-",
                                       style: CustomWidget(context: context)
                                           .CustomSizedTextStyle(
                                               12.0,

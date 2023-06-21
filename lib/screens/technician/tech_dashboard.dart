@@ -3,12 +3,14 @@ import 'package:coolwell_tech/screens/technician/tech_orders.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/custom_widget.dart';
 import '../../common/dotted_line_widget.dart';
 import '../../common/localization/localizations.dart';
 import '../../common/model/api_utils.dart';
+import '../../common/model/assigned_order_model.dart';
 import '../../common/model/get_assigned_job_list_model.dart';
 import '../../common/otp_fields/otp_field_custom.dart';
 import '../../common/otp_fields/style.dart';
@@ -31,10 +33,20 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
   String pinValue="";
   APIUtils apiUtils = APIUtils();
   var snackBar;
+  var _timeString;
+  var _endtime;
   String userName ="";
   String name ="";
   GetProfileResult? details;
   List<GetAssignedJobsResult> orderList = [];
+  AssignedOrdersResult? OrderFullList;
+  String Servicename ="";
+  String Customername ="";
+  String CustomerAdd ="";
+  String FinalDate ="";
+  String dateName="";
+  String dateOnly="";
+  String day="";
 
   @override
   void initState() {
@@ -44,6 +56,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
     profile();
     getData();
     serviceDetails();
+
   }
 
   getData()async{
@@ -649,8 +662,19 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                             children: [
                               InkWell(
                                 onTap:(){
-                                  viewDetails();
-                                  otp = false;
+                                  if(orderList[index].serviceStatus ==2){
+                                    setState(() {
+                                      loading =true;
+                                      servicesDetails(orderList[index].id.toString());
+                                    });
+                                    print(orderList[index].id.toString());
+                                    otp = false;
+                                  }else {
+                                    CustomWidget(context: context)
+                                        .custombar("Service", "Order has been Processed", false);
+                                  }
+
+
                                 },
                                 child: Container(
                                   padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -971,7 +995,8 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                             children: [
                                                               Text(
                                                                 // name.toString(),
-                                                                "Customer name",
+                                                                // "Customer name",
+                                                                Customername.toString(),
                                                                 style: CustomWidget(context: context).CustomSizedTextStyle(
                                                                     16.0,
                                                                     Theme.of(
@@ -991,7 +1016,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                                 height: 5.0,
                                                               ),
                                                               Text(
-                                                                "service type",
+                                                                Servicename.toString(),
                                                                 style: CustomWidget(context: context).CustomSizedTextStyle(
                                                                     12.0,
                                                                     Theme.of(
@@ -1036,7 +1061,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                                 Row(
                                                                   crossAxisAlignment:
                                                                   CrossAxisAlignment
-                                                                      .center,
+                                                                      .start,
                                                                   children: [
                                                                     Icon(
                                                                       Icons.location_on_outlined,
@@ -1050,7 +1075,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                                     ),
                                                                     Flexible(
                                                                       child:  Text(
-                                                                        "Location",
+                                                                        CustomerAdd.toString(),
                                                                         style: CustomWidget(context: context).CustomSizedTextStyle(
                                                                             8.0,
                                                                             Theme.of(context)
@@ -1061,7 +1086,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                                         textAlign:
                                                                         TextAlign
                                                                             .start,
-                                                                        overflow: TextOverflow.ellipsis,
+                                                                        // overflow: TextOverflow.ellipsis,
                                                                       ),
                                                                     )
                                                                   ],
@@ -1085,7 +1110,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                                       width: 5.0,
                                                                     ),
                                                                     Text(
-                                                                      "19:30 BST - 23:00 BST",
+                                                                      _timeString.toString() + " - " + _endtime.toString(),
                                                                       style: CustomWidget(context: context).CustomSizedTextStyle(
                                                                           8.0,
                                                                           Theme.of(context)
@@ -1120,8 +1145,8 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                               crossAxisAlignment: CrossAxisAlignment.center,
                                                               children: [
                                                                 Text(
-                                                                  // day,
-                                                                  "Thursday",
+                                                                  day,
+                                                                  // "Thursday",
                                                                   style: CustomWidget(context: context).CustomSizedTextStyle(
                                                                       10.0,
                                                                       Theme.of(context)
@@ -1137,8 +1162,8 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                                   width: 5.0,
                                                                 ),
                                                                 Text(
-                                                                  // dateOnly,
-                                                                  "16",
+                                                                  dateOnly,
+                                                                  // "16",
                                                                   style: CustomWidget(context: context).CustomSizedTextStyle(
                                                                       20.0,
                                                                       Theme.of(context)
@@ -1154,8 +1179,8 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                                                   width: 5.0,
                                                                 ),
                                                                 Text(
-                                                                  // dateName,
-                                                                  "March 2023",
+                                                                  dateName,
+                                                                  // "March 2023",
                                                                   style: CustomWidget(context: context).CustomSizedTextStyle(
                                                                       10.0,
                                                                       Theme.of(context)
@@ -1194,7 +1219,7 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                     ),
                                   ),
                                   height: MediaQuery.of(context).size.height *
-                                      0.22,
+                                      0.24,
                                   width: MediaQuery.of(context).size.width,
                                   isCornerRounded: true,
                                 ),
@@ -1242,15 +1267,15 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
                                       ),
                                     ),
                                     const SizedBox(height: 20.0,),
-                                    Text(
-                                      "Customer verification need ",
-                                      style: CustomWidget(context: context)
-                                          .CustomSizedTextStyle(
-                                          10.0,
-                                          Theme.of(context).primaryColor,
-                                          FontWeight.w400,
-                                          'FontRegular'),
-                                    ),
+                                    // Text(
+                                    //   "Customer verification need ",
+                                    //   style: CustomWidget(context: context)
+                                    //       .CustomSizedTextStyle(
+                                    //       10.0,
+                                    //       Theme.of(context).primaryColor,
+                                    //       FontWeight.w400,
+                                    //       'FontRegular'),
+                                    // ),
                                     const SizedBox(height: 20.0,),
                                   ],
                                 ),
@@ -1474,6 +1499,70 @@ class _Tech_DashBoard_ScreenState extends State<Tech_DashBoard_Screen> {
 
 
       print(error);
+      setState(() {
+        loading = false;
+      });
+    });
+  }
+
+  servicesDetails( String id) {
+    apiUtils
+        .getServiceFullDetails( id)
+        .then((AssignedOrdersModel loginData) {
+      setState(() {
+        if (loginData.success!) {
+          setState(() {
+            loading = false;
+            viewDetails();
+            OrderFullList = loginData.result![0];
+            Servicename =OrderFullList!.services!.serviceName.toString();
+            Customername =OrderFullList!.users!.name.toString();
+            CustomerAdd =OrderFullList!.complaints!.address.toString();
+
+            var FinalDate = DateTime.fromMillisecondsSinceEpoch(int.parse(OrderFullList!.complaints!.date.toString())*1000);
+            var dat= FinalDate.toString().split(' ');
+            // print(FinalDate.toString() + "fdf");
+            // print(dat[0] + "fdf");
+
+            var StartTime = DateTime.fromMillisecondsSinceEpoch(int.parse(OrderFullList!.startTime.toString())*1000);
+              _timeString = "${int.parse(StartTime.toString().substring(11,13))}:${StartTime.toString().substring(14,16)}  ${int.parse(StartTime.toString().substring(11,13))>= 12 ? "PM" : "AM"}";
+            var EndTime = DateTime.fromMillisecondsSinceEpoch(int.parse(OrderFullList!.endTime.toString())*1000);
+             _endtime = "${int.parse(EndTime.toString().substring(11,13))}:${EndTime.toString().substring(14,16)}  ${int.parse(EndTime.toString().substring(11,13))>= 12 ? "PM" : "AM"}";
+
+            DateFormat tempDatee = new DateFormat("MM/dd/yyyy");
+            String fDate=tempDatee.format(DateTime.parse(dat[0]));
+            // print(fDate.toString() +"date" +"06/21/2023");
+            DateTime tempDate = new DateFormat("MM/dd/yyyy").parse(fDate.toString());
+            String formattedDate = DateFormat.yMMMM().format(tempDate);
+            String formattedDate1 = DateFormat.d().format(tempDate);
+            String formattedDate2 = DateFormat.yMMMMEEEEd().format(tempDate);
+
+            day=formattedDate2.split(",")[0];
+
+            dateName=formattedDate.toString();
+            dateOnly=formattedDate1.toString();
+
+            // var StartTime = DateTime.fromMillisecondsSinceEpoch(int.parse(OrderFullList!.startTime.toString())*1000);
+            // print(_timeString.toString() +"jeeva");
+
+          });
+          // CustomWidget(context: context).
+          // custombar("Service", loginData.message.toString(), true);
+
+        }
+        else {
+          loading = false;
+          CustomWidget(context: context)
+              .custombar("Service", loginData.message.toString(), false);
+
+        }
+      });
+
+    }).catchError((Object error) {
+
+
+      print(error);
+
       setState(() {
         loading = false;
       });

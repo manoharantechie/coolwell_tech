@@ -12,6 +12,7 @@ import 'get_assigned_job_list_model.dart';
 import 'get_profile_details_model.dart';
 import 'get_services_details.dart';
 import 'login.dart';
+import 'order_complete.dart';
 
 class APIUtils {
   final appName = 'Coolwell';
@@ -33,6 +34,7 @@ class APIUtils {
   static const String googleRegisterURL = '/googleregister';
   static const String serviceHistoryURL = '/technician/JobsListHistory';
   static const String jobAcceptURL = '/technician/updateStatus';
+  static const String finishJobURL = '/technician/servicefinishtime';
 
 
   Future<CommonModel> doRegisterEmail(
@@ -217,6 +219,23 @@ class APIUtils {
     final response =
     await http.post(Uri.parse(baseURL + jobAcceptURL),headers: requestHeaders, body: bodyData);
     return CommonModel.fromJson(json.decode(response.body));
+  }
+
+  Future<OrderCompleteModel> jobFinishService(
+      String id, String time) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var auth = "Bearer "+preferences.getString("token").toString();
+    Map<String, String> requestHeaders = {
+      'authorization': auth.toString(),
+    };
+    var bodyData = {
+      'id': id,
+      'End_Time': time,
+    };
+
+    final response =
+    await http.post(Uri.parse(baseURL + finishJobURL),headers: requestHeaders, body: bodyData);
+    return OrderCompleteModel.fromJson(json.decode(response.body));
   }
 
 }

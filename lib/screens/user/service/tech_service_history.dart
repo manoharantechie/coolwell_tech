@@ -404,7 +404,7 @@ class _Tech_Service_HistoryState extends State<Tech_Service_History> {
           activeDayColor: Colors.white,
           activeBackgroundDayColor: Theme.of(context).focusColor,
           dotsColor: const Color(0xFF333A47),
-          selectableDayPredicate: (date) => date.day != 23,
+          selectableDayPredicate: (date) => date.day != 32,
           locale: 'en',
         ),
       ],

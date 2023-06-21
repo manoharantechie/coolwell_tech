@@ -166,6 +166,7 @@
   "loc_wait": "Waiting",
   "loc_comp": "Completed",
   "loc_gen_otp": "Generate OTP",
-  "loc_accept": "Accept Order"
+  "loc_accept": "Accept Order",
+  "loc_complete_order": "Order Complete"
 
 }
