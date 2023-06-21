@@ -1,3 +1,4 @@
+import 'package:coolwell_tech/common/model/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -630,8 +631,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                   child: InkWell(
                     onTap: () {
                       setState(() {
-                        Navigator.pop(context);
-
+                        jobDetails();
                       });
                     },
                     child: Container(
@@ -797,6 +797,43 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
 
 
       print(error);
+      setState(() {
+        loading = false;
+      });
+    });
+  }
+
+  jobDetails() {
+    apiUtils
+        .acceptJobService(widget.j_id.toString())
+        .then((CommonModel loginData) {
+      setState(() {
+        if (loginData.success!) {
+          setState(() {
+            loading = false;
+            Navigator.pop(context);
+            // serviceList = loginData.result!;
+
+          });
+          CustomWidget(context: context).
+          custombar("Service", loginData.message.toString(), true);
+
+        }
+        else {
+          setState(() {
+            loading = false;
+          });
+
+          CustomWidget(context: context)
+              .custombar("Service", loginData.message.toString(), false);
+
+        }
+      });
+
+    }).catchError((Object error) {
+
+
+      print("Err"+error.toString());
       setState(() {
         loading = false;
       });

@@ -32,6 +32,7 @@ class APIUtils {
   static const String assignedServicesDetailsURL = '/technician/AssignedJobs';
   static const String googleRegisterURL = '/googleregister';
   static const String serviceHistoryURL = '/technician/JobsListHistory';
+  static const String jobAcceptURL = '/technician/updateStatus';
 
 
   Future<CommonModel> doRegisterEmail(
@@ -200,6 +201,22 @@ class APIUtils {
     final response =
     await http.post(Uri.parse(baseURL + serviceHistoryURL),headers: requestHeaders, body: bodyData);
     return DateServiceHistoryModel.fromJson(json.decode(response.body));
+  }
+
+  Future<CommonModel> acceptJobService(
+      String id) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var auth = "Bearer "+preferences.getString("token").toString();
+    Map<String, String> requestHeaders = {
+      'authorization': auth.toString(),
+    };
+    var bodyData = {
+      'id': id,
+    };
+
+    final response =
+    await http.post(Uri.parse(baseURL + jobAcceptURL),headers: requestHeaders, body: bodyData);
+    return CommonModel.fromJson(json.decode(response.body));
   }
 
 }

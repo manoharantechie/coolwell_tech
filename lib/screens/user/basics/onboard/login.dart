@@ -51,8 +51,8 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    nameController=TextEditingController(text: "raju@mailinator.com");
-    passController=TextEditingController(text: "Raju@123");
+    // nameController=TextEditingController(text: "raju@mailinator.com");
+    // passController=TextEditingController(text: "Raju@123");
   }
 
   void initCountry() async {
