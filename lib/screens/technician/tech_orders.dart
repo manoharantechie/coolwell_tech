@@ -216,8 +216,61 @@ class _Tech_Orders_ScreenState extends State<Tech_Orders_Screen> {
                                             crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                             mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                            MainAxisAlignment.spaceBetween,
                                             children: [
+                                              Align(
+                                                alignment: Alignment.topRight,
+                                                child: Container(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                    children: [
+                                                      Container(
+                                                        padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            10.0,
+                                                            3.0,
+                                                            10.0,
+                                                            5.0),
+                                                        decoration:
+                                                        BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              20.0),
+                                                          color: orderList[index].serviceStatus==1? Theme.of(context).dialogBackgroundColor
+                                                              .withOpacity(0.8) :  orderList[index].serviceStatus==3? Theme.of(context).selectedRowColor.withOpacity(0.8) : Theme.of(
+                                                              context)
+                                                              .hoverColor
+                                                              .withOpacity(0.8),
+                                                        ),
+                                                        child: Text(
+                                                          orderList[index]
+                                                              .serviceStatus ==
+                                                              1
+                                                              ? "Processing" : orderList[index]
+                                                              .serviceStatus == 3 ? "Waiting for Approve"
+                                                              : "Complete",
+                                                          style: CustomWidget(
+                                                              context:
+                                                              context)
+                                                              .CustomSizedTextStyle(
+                                                              10.0,
+                                                              Theme.of(context).focusColor,
+                                                              FontWeight
+                                                                  .w600,
+                                                              'FontRegular'),
+                                                          textAlign:
+                                                          TextAlign.start,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
                                               Container(
                                                 child: Row(
                                                   crossAxisAlignment:

@@ -2,12 +2,14 @@ import 'package:coolwell_tech/common/model/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 import '../../common/custom_widget.dart';
 import '../../common/dotted_line_widget.dart';
 import '../../common/localization/localizations.dart';
 import '../../common/model/api_utils.dart';
 import '../../common/model/assigned_order_model.dart';
+import '../../common/model/order_complete.dart';
 import '../../common/otp_fields/otp_field_custom.dart';
 import '../../common/otp_fields/style.dart';
 import '../../common/ticket_design.dart';
@@ -39,6 +41,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
   ScrollController _scroll = ScrollController();
   bool otp = false;
   String pinValue="";
+  String cdate = DateFormat("MM/dd/yyyy HH:mm").format(DateTime.now());
 
   @override
   void initState() {
@@ -46,6 +49,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
     super.initState();
     loading= true;
     servicesDetails();
+    print(cdate + " Jeeva");
 
   }
 
@@ -676,7 +680,7 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                     child: Container(
                       margin: EdgeInsets.only(bottom: 20.0),
                       padding:
-                      EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                      EdgeInsets.fromLTRB(50.0, 10.0, 50.0, 10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                         color: Theme.of(context).dialogBackgroundColor,
@@ -704,99 +708,99 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
     );
   }
 
-  showSuccessAlertDialog(
-      String title,
-      String message,
-      ) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14.0)), //this right here
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14.0),
-                color: Theme.of(context).focusColor,
-              ),
-              height: MediaQuery.of(context).size.height * 0.30,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      title.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 17.0,
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'OpenSansBold',
-                      ),
-                    ),
-                    Text(
-                      message,
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'OpenSans',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 7.0, bottom: 10.0),
-                      height: 2.0,
-                      color: Theme.of(context).dividerColor,
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).pop(true);
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                Notification_Screen()));
-                        loading = true;
-                      },
-                      child: Text(
-                        "Track process",
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          color: Color(0xFF007AFF),
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 7.0, bottom: 10.0),
-                      height: 2.0,
-                      color: Theme.of(context).dividerColor,
-                    ),
-                    InkWell(
-                      onTap: (){
-
-                      },
-                      child:  Text(
-                        "Track order location",
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          color: Color(0xFF007AFF),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
-    // show the dialog
-  }
+  // showSuccessAlertDialog(
+  //     String title,
+  //     String message,
+  //     ) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return Dialog(
+  //           shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(14.0)), //this right here
+  //           child: Container(
+  //             decoration: BoxDecoration(
+  //               borderRadius: BorderRadius.circular(14.0),
+  //               color: Theme.of(context).focusColor,
+  //             ),
+  //             height: MediaQuery.of(context).size.height * 0.30,
+  //             child: Padding(
+  //               padding: const EdgeInsets.all(12.0),
+  //               child: Column(
+  //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 children: [
+  //                   Text(
+  //                     title.toUpperCase(),
+  //                     style: TextStyle(
+  //                       fontSize: 17.0,
+  //                       color: Theme.of(context).primaryColor,
+  //                       fontWeight: FontWeight.w600,
+  //                       fontFamily: 'OpenSansBold',
+  //                     ),
+  //                   ),
+  //                   Text(
+  //                     message,
+  //                     style: TextStyle(
+  //                       fontSize: 15.0,
+  //                       color: Theme.of(context).primaryColor,
+  //                       fontWeight: FontWeight.w400,
+  //                       fontFamily: 'OpenSans',
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     height: 10.0,
+  //                   ),
+  //                   Container(
+  //                     margin: EdgeInsets.only(top: 7.0, bottom: 10.0),
+  //                     height: 2.0,
+  //                     color: Theme.of(context).dividerColor,
+  //                   ),
+  //                   GestureDetector(
+  //                     onTap: (){
+  //                       Navigator.of(context).pop(true);
+  //                       Navigator.of(context).push(MaterialPageRoute(
+  //                           builder: (context) =>
+  //                               Notification_Screen()));
+  //                       loading = true;
+  //                     },
+  //                     child: Text(
+  //                       "Track process",
+  //                       style: TextStyle(
+  //                         fontSize: 17.0,
+  //                         color: Color(0xFF007AFF),
+  //                         fontWeight: FontWeight.w600,
+  //                         fontFamily: 'OpenSans',
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   Container(
+  //                     margin: EdgeInsets.only(top: 7.0, bottom: 10.0),
+  //                     height: 2.0,
+  //                     color: Theme.of(context).dividerColor,
+  //                   ),
+  //                   InkWell(
+  //                     onTap: (){
+  //
+  //                     },
+  //                     child:  Text(
+  //                       "Track order location",
+  //                       style: TextStyle(
+  //                         fontSize: 17.0,
+  //                         color: Color(0xFF007AFF),
+  //                         fontWeight: FontWeight.w400,
+  //                         fontFamily: 'OpenSans',
+  //                       ),
+  //                     ),
+  //                   )
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         );
+  //       });
+  //   // show the dialog
+  // }
 
   showSuccesssAlertDialog(
       String title,
@@ -872,6 +876,100 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                     InkWell(
                       onTap: (){
                         Navigator.of(context).pop(true);
+                      },
+                      child:  Text(
+                        "Cancel",
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          color: Color(0xFF007AFF),
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+    // show the dialog
+  }
+
+  showSuccessAlertDialog(
+      String title,
+      String message,
+      ) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14.0)), //this right here
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14.0),
+                color: Theme.of(context).focusColor,
+              ),
+              height: MediaQuery.of(context).size.height * 0.30,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      title.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 17.0,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'OpenSansBold',
+                      ),
+                    ),
+                    Text(
+                      message,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'OpenSans',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 7.0, bottom: 10.0),
+                      height: 2.0,
+                      color: Theme.of(context).dividerColor,
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        CompleteOrder();
+                        setState(() {
+                          loading = true;
+                        });
+                        Navigator.of(context).pop(true);
+                      },
+                      child: Text(
+                        "Complete Order",
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          color: Color(0xFF007AFF),
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 7.0, bottom: 10.0),
+                      height: 2.0,
+                      color: Theme.of(context).dividerColor,
+                    ),
+                    InkWell(
+                      onTap: (){
+                        Navigator.pop(context);
                       },
                       child:  Text(
                         "Cancel",
@@ -1182,7 +1280,8 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                                               children: [
                                                                 Text(
                                                                   // day,
-                                                                  "Thursday",
+                                                                  // "Thursday",
+                                                                  " ",
                                                                   style: CustomWidget(context: context).CustomSizedTextStyle(
                                                                       10.0,
                                                                       Theme.of(context)
@@ -1199,7 +1298,8 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                                                 ),
                                                                 Text(
                                                                   // dateOnly,
-                                                                  "16",
+                                                                  // "16",
+                                                                  " ",
                                                                   style: CustomWidget(context: context).CustomSizedTextStyle(
                                                                       20.0,
                                                                       Theme.of(context)
@@ -1216,7 +1316,8 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                                                                 ),
                                                                 Text(
                                                                   // dateName,
-                                                                  "March 2023",
+                                                                  // "March 2023",
+                                                                  " ",
                                                                   style: CustomWidget(context: context).CustomSizedTextStyle(
                                                                       10.0,
                                                                       Theme.of(context)
@@ -1262,143 +1363,208 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
                               ),
                               const SizedBox(height: 30.0,),
 
-                              otp ? Container(
-                                padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                                child:  Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      AppLocalizations.instance
-                                          .text("loc_enter_code"),
-                                      style: CustomWidget(context: context)
-                                          .CustomSizedTextStyle(
-                                          16.0,
-                                          Theme.of(context).primaryColor,
-                                          FontWeight.w600,
-                                          'FontRegular'),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                    const SizedBox(height: 15.0,),
-                                    OTPTextField(
-                                      length: 6,
-                                      width: MediaQuery.of(context).size.width,
-                                      fieldWidth: 45,
-                                      style: CustomWidget(context: context)
-                                          .CustomSizedTextStyle(
-                                          14.0,
-                                          Theme.of(context).primaryColor,
-                                          FontWeight.w600,
-                                          'FontRegular'),
-                                      textFieldAlignment: MainAxisAlignment.spaceAround,
-                                      fieldStyle: FieldStyle.underline,
-                                      onCompleted: (pin) {
-                                        // print("Completed: " + pin);
-                                        setState(() {
-
-                                          pinValue=pin;
-                                        });
-                                      },
-                                    ),
-                                    const SizedBox(height: 25.0,),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: InkWell(
-                                        onTap: (){
-                                          if(pinValue.isEmpty || pinValue.length<6)
-
-                                          {
-                                            CustomWidget(context: context)
-                                                .custombar("Jop Completed","Please enter OTP", false);
-                                          }
-                                          else{
-                                            ssetState(() {
-                                              loading=true;
-                                              Navigator.pop(context);
-                                            });
-                                          }
-
-
-                                        },
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width * 0.6,
-                                          padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                                          decoration: BoxDecoration(
-                                            // border: Border.all(
-                                            //   width: 1.0,
-                                            //   color: Theme.of(context).cardColor,
-                                            // ),
-                                            borderRadius: BorderRadius.circular(6.0),
-                                            color: Theme.of(context).indicatorColor,
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              AppLocalizations.instance
-                                                  .text("loc_done"),
-                                              style: CustomWidget(context: context)
-                                                  .CustomSizedTextStyle(
-                                                  16.0,
-                                                  Theme.of(context).focusColor,
-                                                  FontWeight.w800,
-                                                  'FontRegular'),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 15.0,),
-                                  ],
-                                ),
-                              ) :
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-
-                                        ssetState(() {
-                                          otp = true;
-                                        });
-                                        // Navigator.pop(context);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.fromLTRB(
-                                            60.0, 10.0, 60.0, 10.0),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(30.0),
-                                          color:
-                                          Theme.of(context).dialogBackgroundColor,
-                                        ),
-                                        child: Text(
-                                          AppLocalizations.instance
-                                              .text("loc_gen_otp"),
-                                          style:
-                                          CustomWidget(context: context)
-                                              .CustomSizedTextStyle(
-                                              14.0,
-                                              Theme.of(context)
-                                                  .focusColor,
-                                              FontWeight.w800,
-                                              'FontRegular'),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20.0,),
-                                    Text(
-                                      "Customer verification need ",
-                                      style: CustomWidget(context: context)
-                                          .CustomSizedTextStyle(
-                                          10.0,
-                                          Theme.of(context).primaryColor,
-                                          FontWeight.w400,
-                                          'FontRegular'),
-                                    ),
-                                    const SizedBox(height: 20.0,),
-                                  ],
+                             otp ? InkWell(
+                               onTap: () {
+                                 ssetState(() {
+                                   String cdate = DateFormat("MM/dd/yyyy HH:mm").format(DateTime.now());
+                                   print(cdate +" Jeeva Subash");
+                                 });
+                                 // Navigator.pop(context);
+                               },
+                               child: Container(
+                                 padding: EdgeInsets.fromLTRB(
+                                     50.0, 10.0, 50.0, 10.0),
+                                 decoration: BoxDecoration(
+                                   borderRadius:
+                                   BorderRadius.circular(30.0),
+                                   color:
+                                   Theme.of(context).dialogBackgroundColor,
+                                 ),
+                                 child: Text(
+                                   AppLocalizations.instance
+                                       .text("loc_done"),
+                                   style:
+                                   CustomWidget(context: context)
+                                       .CustomSizedTextStyle(
+                                       14.0,
+                                       Theme.of(context)
+                                           .focusColor,
+                                       FontWeight.w800,
+                                       'FontRegular'),
+                                   textAlign: TextAlign.center,
+                                 ),
+                               ),
+                             ) : InkWell(
+                                onTap: () {
+                                  ssetState(() {
+                                    showSuccessAlertDialog("Complete Order",
+                                        "Are you sure want to Complete Order ?");
+                                  });
+                                  // Navigator.pop(context);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.fromLTRB(
+                                      50.0, 10.0, 50.0, 10.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                    BorderRadius.circular(30.0),
+                                    color:
+                                    Theme.of(context).dialogBackgroundColor,
+                                  ),
+                                  child: Text(
+                                    AppLocalizations.instance
+                                        .text("loc_complete_order"),
+                                    style:
+                                    CustomWidget(context: context)
+                                        .CustomSizedTextStyle(
+                                        14.0,
+                                        Theme.of(context)
+                                            .focusColor,
+                                        FontWeight.w800,
+                                        'FontRegular'),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
                               ),
+                              const SizedBox(height: 20.0,),
+
+                              // otp ? Container(
+                              //   padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                              //   child:  Column(
+                              //     crossAxisAlignment: CrossAxisAlignment.start,
+                              //     children: [
+                              //       Text(
+                              //         AppLocalizations.instance
+                              //             .text("loc_enter_code"),
+                              //         style: CustomWidget(context: context)
+                              //             .CustomSizedTextStyle(
+                              //             16.0,
+                              //             Theme.of(context).primaryColor,
+                              //             FontWeight.w600,
+                              //             'FontRegular'),
+                              //         textAlign: TextAlign.start,
+                              //       ),
+                              //       const SizedBox(height: 15.0,),
+                              //       OTPTextField(
+                              //         length: 6,
+                              //         width: MediaQuery.of(context).size.width,
+                              //         fieldWidth: 45,
+                              //         style: CustomWidget(context: context)
+                              //             .CustomSizedTextStyle(
+                              //             14.0,
+                              //             Theme.of(context).primaryColor,
+                              //             FontWeight.w600,
+                              //             'FontRegular'),
+                              //         textFieldAlignment: MainAxisAlignment.spaceAround,
+                              //         fieldStyle: FieldStyle.underline,
+                              //         onCompleted: (pin) {
+                              //           // print("Completed: " + pin);
+                              //           setState(() {
+                              //
+                              //             pinValue=pin;
+                              //           });
+                              //         },
+                              //       ),
+                              //       const SizedBox(height: 25.0,),
+                              //       Align(
+                              //         alignment: Alignment.center,
+                              //         child: InkWell(
+                              //           onTap: (){
+                              //             if(pinValue.isEmpty || pinValue.length<6)
+                              //
+                              //             {
+                              //               CustomWidget(context: context)
+                              //                   .custombar("Jop Completed","Please enter OTP", false);
+                              //             }
+                              //             else{
+                              //               ssetState(() {
+                              //                 loading=true;
+                              //                 Navigator.pop(context);
+                              //               });
+                              //             }
+                              //
+                              //
+                              //           },
+                              //           child: Container(
+                              //             width: MediaQuery.of(context).size.width * 0.6,
+                              //             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                              //             decoration: BoxDecoration(
+                              //               // border: Border.all(
+                              //               //   width: 1.0,
+                              //               //   color: Theme.of(context).cardColor,
+                              //               // ),
+                              //               borderRadius: BorderRadius.circular(6.0),
+                              //               color: Theme.of(context).indicatorColor,
+                              //             ),
+                              //             child: Center(
+                              //               child: Text(
+                              //                 AppLocalizations.instance
+                              //                     .text("loc_done"),
+                              //                 style: CustomWidget(context: context)
+                              //                     .CustomSizedTextStyle(
+                              //                     16.0,
+                              //                     Theme.of(context).focusColor,
+                              //                     FontWeight.w800,
+                              //                     'FontRegular'),
+                              //               ),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       ),
+                              //       const SizedBox(height: 15.0,),
+                              //     ],
+                              //   ),
+                              // ) :
+                              // Container(
+                              //   child: Column(
+                              //     crossAxisAlignment: CrossAxisAlignment.center,
+                              //     children: [
+                              //       InkWell(
+                              //         onTap: () {
+                              //
+                              //           ssetState(() {
+                              //             otp = true;
+                              //           });
+                              //           // Navigator.pop(context);
+                              //         },
+                              //         child: Container(
+                              //           padding: EdgeInsets.fromLTRB(
+                              //               60.0, 10.0, 60.0, 10.0),
+                              //           decoration: BoxDecoration(
+                              //             borderRadius:
+                              //             BorderRadius.circular(30.0),
+                              //             color:
+                              //             Theme.of(context).dialogBackgroundColor,
+                              //           ),
+                              //           child: Text(
+                              //             AppLocalizations.instance
+                              //                 .text("loc_gen_otp"),
+                              //             style:
+                              //             CustomWidget(context: context)
+                              //                 .CustomSizedTextStyle(
+                              //                 14.0,
+                              //                 Theme.of(context)
+                              //                     .focusColor,
+                              //                 FontWeight.w800,
+                              //                 'FontRegular'),
+                              //             textAlign: TextAlign.center,
+                              //           ),
+                              //         ),
+                              //       ),
+                              //       const SizedBox(height: 20.0,),
+                              //       Text(
+                              //         "Customer verification need ",
+                              //         style: CustomWidget(context: context)
+                              //             .CustomSizedTextStyle(
+                              //             10.0,
+                              //             Theme.of(context).primaryColor,
+                              //             FontWeight.w400,
+                              //             'FontRegular'),
+                              //       ),
+                              //       const SizedBox(height: 20.0,),
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -1464,6 +1630,46 @@ class _Tech_Order_Details_ScreenState extends State<Tech_Order_Details_Screen> {
     apiUtils
         .acceptJobService(widget.j_id.toString())
         .then((CommonModel loginData) {
+      setState(() {
+        if (loginData.success!) {
+          setState(() {
+            loading = false;
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    TechHome()));
+            // serviceList = loginData.result!;
+
+          });
+          CustomWidget(context: context).
+          custombar("Service", loginData.message.toString(), true);
+
+        }
+        else {
+          setState(() {
+            loading = false;
+          });
+
+          CustomWidget(context: context)
+              .custombar("Service", loginData.message.toString(), false);
+
+        }
+      });
+
+    }).catchError((Object error) {
+
+
+      print("Err"+error.toString());
+      setState(() {
+        loading = false;
+      });
+    });
+  }
+
+
+  CompleteOrder() {
+    apiUtils
+        .jobFinishService(widget.j_id.toString(), cdate.toString())
+        .then((OrderCompleteModel loginData) {
       setState(() {
         if (loginData.success!) {
           setState(() {
